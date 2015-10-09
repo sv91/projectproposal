@@ -1,10 +1,10 @@
 from django import forms
 
-class ContactForm1(forms.Form):
+class ProposalForm1(forms.Form):
 	possible_types = ['Testing','Development','Production']
     type = ChoiceField(choices=possible_types, label="Project Type")
 
-class ContactForm2(forms.Form):
+class ProposalForm2(forms.Form):
     start_date = DateField(label="Project Start Date")
     end_date = DateField(label="Project End Date")
     ongoing_projects = CharField(max_length=1000, label="On going related projects")
