@@ -1,5 +1,6 @@
 from django.conf.urls import include, url
+from django.contrib import admin
 
 urlpatterns = [
-    url(r'^', include('forms.urls')),
+    url(r'^formular/', include('formular.urls')),
 ]
