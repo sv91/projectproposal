@@ -1,7 +1,8 @@
-from django.http import HttpResponseRedirect
+from django.shortcuts import render_to_response
 from django.contrib.formtools.wizard.views import SessionWizardView
 
-class ProposalWizard(SessionWizardView):
+class ContactWizard(SessionWizardView):
     def done(self, form_list, **kwargs):
-        do_something_with_the_form_data(form_list)
-        return HttpResponseRedirect('/page-to-redirect-to-when-done/')
+        return render_to_response('wizard_form.html', {
+            'form_data': [form.cleaned_data for form in form_list],
+        })
