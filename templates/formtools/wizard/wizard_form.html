@@ -31,8 +31,8 @@
     {{ wizard.form }}
 {% endif %}
 </table>
-{% if wizard.steps.prev %}
 <nav class="steps navbar navbar-form navbar-fixed-bottom">
+{% if wizard.steps.prev %}
 <button class="btn btn-default" name="wizard_goto_step" type="submit" value="{{ wizard.steps.first }}">First step</button>
 <button class="btn btn-default" name="wizard_goto_step" type="submit" value="{{ wizard.steps.prev }}">Previous</button>
 {% endif %}
