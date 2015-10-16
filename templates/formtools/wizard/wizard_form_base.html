@@ -1,5 +1,4 @@
 {% load staticfiles %}
-{% load widget_tweaks %}
 <!DOCTYPE html>
 
 <html>
@@ -30,7 +29,7 @@
 
 		<div class="form-group">
 			<label>{{ form.field.label }}</label>Blabla</p>
-			{{ form.field|add_class:"form-control" }}
+			{{ form.field }}
 		    <p class="error">
  		       {% if form.field.errors %}
  		           {% for error in form.field.errors %}
@@ -42,8 +41,7 @@
 		{% endblock %}
     {% endfor %}
 {% else %}
-			{{ form}}
-
+    {{ wizard.form }}
 {% endif %}
 </table>
 <nav class="steps navbar navbar-form navbar-fixed-bottom">
