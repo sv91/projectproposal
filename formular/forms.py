@@ -48,8 +48,7 @@ class ProposalForm5(forms.ModelForm):
 		fields = '__all__'
 	title = "Invite Team Members"
 	role = forms.ChoiceField(choices=Proposal5.possible_roles, label="Role")
-	involvement = forms.PositiveintegerFieldIntegerField(label="Involvement", help_text="Number of person months")
-	
+	involvement = forms.PositiveSmallIntegerField(label="Involvement", help_text="Number of person months")	
 	
 class ProposalForm6(forms.ModelForm):
 	class Meta:
@@ -82,9 +81,6 @@ class ProposalForm6(forms.ModelForm):
 	code_optimization = forms.ChoiceField(choices=Proposal6.levels, label="Code optimization", help_text="Vectorization, ...")
 	performance_modeling = forms.ChoiceField(choices=Proposal6.levels, label="Performance modeling", help_text="Algorithmic density, Roofline model, ...")
 	software_optimization_help = forms.BooleanField(label="Would you be interested in getting support in software performance modeling and optimization ?")
-	
-	
-	
 	
 class ProposalForm7(forms.ModelForm):
 	class Meta:
