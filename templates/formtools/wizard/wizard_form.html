@@ -45,10 +45,12 @@
 	{% for field in form %}
     <div class="form-group">
         {{ field.errors }}
-        <label>{{ field.label_tag }} </label></p>{{ field }}
-        {% if field.help_text %}
-        <p class="help">{{ field.help_text|safe }}</p>
-        {% endif %}
+        <label>{{ field.label_tag }} </label>
+        <div style="padding:0px 20px;"><p>{{ field }}</p>
+        	{% if field.help_text %}
+        	<p class="help">{{ field.help_text|safe }}</p>
+        	{% endif %}
+        </div>
     </div>
 {% endfor %}
 
