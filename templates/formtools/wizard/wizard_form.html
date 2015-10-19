@@ -17,12 +17,12 @@
       <div class="page-header">
           <h1>HPC Computing Platform: Production Project Request</h1>
       </div>
+		{{ wizard.management_form }}
 
 {% block content %}
-<p>Step {{ wizard.steps.step1 }} of {{ wizard.steps.count }}</p>
+<h2>Step {{ wizard.steps.step1 }} of {{ wizard.steps.count }}: {{ form.title }}</h2>
 <form action="" method="post">{% csrf_token %}
 <table>
-{{ wizard.management_form }}
 {% if wizard.form.forms %}
     {{ wizard.form.management_form }}
     {% for form in wizard.form.forms %}
