@@ -1,5 +1,7 @@
 {% load staticfiles %}
 {% load widget_tweaks %}
+{% load fom_extras %}
+
 <!DOCTYPE html>
 
 <html>
@@ -43,10 +45,10 @@
     {% endfor %}
 {% else %}
 	{% for field in form %}
-		{% if field.field.widget|klass == "Bool" %}
+		{% if field.field.widget|klass == "CheckboxInput" %}
     		<div class="form-group">
       	  {{ field.errors }}
-     	   <label>{{ field }}{{ field.label_tag }} </label>
+     	   <label>{{ field }} {{ field.label_tag }} </label>
     	    <div style="padding:0px 20px;">
       		  	<p class="help">{{ field.help_text|safe }}</p>
       	  </div>
@@ -54,7 +56,6 @@
     		
     	{% else %}
     	<div class="form-group">
-    	{{ field.field.widget|klass }}
       	  {{ field.errors }}
      	   <label>{{ field.label_tag }} </label>
     	    <div style="padding:0px 20px;"><p>{{ field }}</p>
