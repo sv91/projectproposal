@@ -29,7 +29,7 @@
     	{% block form_if %}
 
 		<div class="form-group">
-			<label>{{ form.field.label }}</label>Blabla</p>
+			<label>{{ form.field.label }}</label></p>
 			{{ form.field|add_class:"form-control" }}
 		    <p class="error">
  		       {% if form.field.errors %}
@@ -42,7 +42,15 @@
 		{% endblock %}
     {% endfor %}
 {% else %}
-			{{ form}}
+	{% for field in form %}
+    <div class="form-group">
+        {{ field.errors }}
+        <label>{{ field.label_tag }} </label></p>{{ field }}
+        {% if field.help_text %}
+        <p class="help">{{ field.help_text|safe }}</p>
+        {% endif %}
+    </div>
+{% endfor %}
 
 {% endif %}
 </table>

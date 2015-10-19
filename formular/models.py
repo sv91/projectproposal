@@ -12,11 +12,11 @@ class Proposal2(models.Model):
 	possible_editing_styles = [['plain','Plain text'],['latex','Latex']]
 	editing_styles = models.CharField(max_length=5,choices=possible_editing_styles)
 	
-class ProposalForm3(models.Model):
+class Proposal3(models.Model):
 	pi = models.CharField(max_length=100)
 	cpi = models.CharField(max_length=100)
 	
-class ProposalForm4(models.Model):
+class Proposal4(models.Model):
 	possible_tasks = [['t111','T1.1.1'],['t112','T1.1.2']]
 	hbp_task = models.CharField(max_length=20, choices=possible_tasks)
 	project_title = models.CharField(max_length=300)
@@ -29,11 +29,13 @@ class ProposalForm4(models.Model):
 	delivrables = models.TextField(max_length=1000)
 	references = models.TextField(max_length=1000)
 	
-class ProposalForm5(models.Model):
-	role = models.CharField(max_length=20, choices=Proposal5.possible_roles)
+class Proposal5(models.Model):
+	possible_roles=[['1','Test'],['2','2']]
+	
+	role = models.CharField(max_length=20, choices=possible_roles)
 	involvement = models.PositiveSmallIntegerField()	
 	
-class ProposalForm6(models.Model):
+class Proposal6(models.Model):
 	levels= [['beginner','Begginer'],['intermediate','Intermediate'],['advanced','Advanced']]
 
 	scientific_experience = models.BooleanField()
