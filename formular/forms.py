@@ -6,12 +6,14 @@ class ProposalForm1(forms.ModelForm):
 	class Meta:
 		model = Proposal1
 		fields = '__all__'
+	title = "What type of project would you like to apply for ?"
 	project_type = forms.ChoiceField(choices=Proposal1.possible_types, label="Project Type")
 
 class ProposalForm2(forms.ModelForm):
 	class Meta:
 		model = Proposal2
 		fields = '__all__'
+	title = "Time line of the project and related projects"
 	start_date = forms.DateField(label="Project Start Date")
 	end_date = forms.DateField(label="Project End Date")
 	ongoing_projects = forms.CharField(widget=forms.Textarea, max_length=1000, label="On going related projects")
