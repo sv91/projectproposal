@@ -7,7 +7,7 @@ class ProposalForm1(forms.ModelForm):
 	class Meta:
 		model = Proposal1
 		fields = '__all__'
-	title = "What type of project would you like to apply for ?"
+	title = "What type of project would you like to apply for?"
 	project_type = forms.ChoiceField(choices=Proposal1.possible_types, label="Project Type")
 
 class ProposalForm2(forms.ModelForm):

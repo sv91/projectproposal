@@ -1,6 +1,6 @@
 {% load staticfiles %}
 {% load widget_tweaks %}
-{% load fom_extras %}
+{% load form_extras %}
 
 <!DOCTYPE html>
 
@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="{% static 'formular/assets/hbp-collaboratory-theme/dist/css/bootstrap.css' %}">
     <link rel="stylesheet" href="{% static 'formular/css/app.css' %}">
 
-    <title>HPC: Project Requestssss</title>
+    <title>HPC: Project Requests</title>
   </head>
   
   <body>
@@ -19,12 +19,12 @@
       <div class="page-header">
           <h1>HPC Computing Platform: Production Project Request</h1>
       </div>
-		{{ wizard.management_form }}
 
 {% block content %}
 <h2>Step {{ wizard.steps.step1 }} of {{ wizard.steps.count }}: {{ form.title }}</h2>
 <form action="" method="post">{% csrf_token %}
 <table>
+{{ wizard.management_form }}
 {% if wizard.form.forms %}
     {{ wizard.form.management_form }}
     {% for form in wizard.form.forms %}
@@ -54,7 +54,7 @@
       		  			<p class="help">{{ field.help_text|safe }}</p>
       	  			</div>
    				</div>
-      	  		<div style="padding:0px 20px;">
+      	  		<div style="padding:0px 40px;">
       	  	{% else %}
     			<div class="form-group">
      	   			<p>{{ field }} {{ field.label_tag }}</p>
@@ -65,9 +65,8 @@
     		{% endif %}
     	{% else %}
     	<div class="form-group">
-      	  {{ field.errors }}
      	   <label>{{ field.label_tag }} </label>
-    	    <div style="padding:0px 20px;"><p>{{ field }}</p>
+    	    <div style="padding:0px 20px;">{{ field.errors }}<p>{{ field }}</p>
       		  	{% if field.help_text %}
       		  	<p class="help">{{ field.help_text|safe }}</p>
       		  	{% endif %}
