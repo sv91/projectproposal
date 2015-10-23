@@ -74,18 +74,55 @@
    		</div>
    		{% endif %}
 {% endfor %}
-
 {% endif %}
 </table>
 <nav class="steps navbar navbar-form navbar-fixed-bottom">
 {% if wizard.steps.prev %}
+<input id="initial" type="hidden" value="{{ form.initial}}">
 <button class="btn btn-default" name="wizard_goto_step" type="submit" value="{{ wizard.steps.first }}">First step</button>
 <button class="btn btn-default" name="wizard_goto_step" type="submit" value="{{ wizard.steps.prev }}">Previous</button>
+<a class="btn  btn-primary pull-middle" onclick="extract(cleanString(document.getElementById('initial').value));">Save current version</a>
 {% endif %}
 <input class="btn btn-default" type="submit" value="Next"/>
 </nav>
 </form>
 {% endblock %}
     </div>
+      	<script>
+      	function cleanString(str)
+      	{
+      		var clean = str.replace(/{u'/g,"{'");
+      		clean = clean.replace(/\[u'/g,"['");
+      		clean = clean.replace(/, u'/g,", '");
+      		clean = clean.replace(/<MultiValueDict: /g,"");
+      		clean = clean.replace(/'csrfmiddlewaretoken': \[[^\]]*\],/,"");
+      		return clean;
+      	}
+      	
+      	function extract(textToWrite)
+		{
+      		var textFileAsBlob = new Blob([textToWrite], {type:'text/plain'});
+			var fileNameToSaveAs = "ProjectProposal.txt";
+
+			var downloadLink = document.createElement("a");
+			downloadLink.download = fileNameToSaveAs;
+			if (window.URL != null)
+			{
+				// Chrome allows the link to be clicked
+				// without actually adding it to the DOM.
+				downloadLink.href = window.URL.createObjectURL(textFileAsBlob);
+			}
+			else
+			{
+				// Firefox requires the link to be added to the DOM
+				// before it can be clicked.
+				downloadLink.href = window.URL.createObjectURL(textFileAsBlob);
+				downloadLink.onclick = destroyClickedElement;
+				downloadLink.style.display = "none";
+				document.body.appendChild(downloadLink);
+			}
+			downloadLink.click();
+		}
+    	</script>
   </body>
 </html>

@@ -1,6 +1,7 @@
 from django import forms
 
 from .models import Proposal1, Proposal2, Proposal3, Proposal4, Proposal5, Proposal6
+from .views import ProposalWizard
 
 
 class ProposalForm1(forms.ModelForm):
