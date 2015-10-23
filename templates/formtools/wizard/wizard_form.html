@@ -96,7 +96,7 @@
       	*	such as the sessionId.
       	*	
       	*	Input:
-      	*		str: String to clean.
+      	*		str: 	String to clean.
       	*
       	*	Return:
       	*		The cleaned version of the input string.
@@ -116,7 +116,7 @@
       	*	order to download it.
       	*	
       	*	Input:
-      	*		textToWrite: The desired content of the file to download.
+      	*		textToWrite: 	The desired content of the file to download.
       	*/
       	function extract(textToWrite)
 		{
@@ -148,7 +148,100 @@
 		*/
 		function importOld()
 		{
-		
+			var filePath = document.getElementById('load');
+			var fileToLoad = filePath.files[0];
+
+			var fileReader = new FileReader();
+			fileReader.onload = function(fileLoadedEvent) 
+			{
+				var textFromFileLoaded = fileLoadedEvent.target.result;
+				alert(textFromFileLoaded);
+				copyToSession(textFromFileLoaded);
+			};
+			fileReader.readAsText(fileToLoad, "UTF-8");
+		}
+
+		/*
+		* 	Look for the specified key and return the value associated.
+		*
+		* 	Input:
+		*		val:	Key to look for.
+		*		txt:	String in which the function should look for the key.
+		*
+		*	Return:
+		*		The value associated to the key.
+		*/
+		function getValueOf(val,txt)
+		{
+			var pos = 0;
+			var result = "";
+			var lookFor = '"'+ val +'":"';
+			if(txt.indexOf(lookFor) > -1){
+				var temp = "";
+				pos = txt.indexOf(lookFor) + lookFor.length;
+				while(txt.charAt(pos) != '"'){
+					temp += txt.charAt(pos);
+					pos ++;
+				}
+				result = temp;
+			} 
+			return result;
+		}
+
+
+		/*
+		* 	Look for the specified key and return the array associated.
+		*
+		* 	Input:
+		*		val:	Key to look for.
+		*		txt:	String in which the function should look for the key.
+		*
+		*	Return:
+		*		The array associated to the key.
+		*/
+		function getArrayValueOf(val,txt)
+		{
+			var pos = 0;
+			var result = "";
+			var lookFor = '"'+ val +'":';
+			if(txt.indexOf(lookFor) > -1){
+				var temp = "";
+				pos = txt.indexOf(lookFor) + lookFor.length;
+				while(txt.charAt(pos) != ']'){
+					temp += txt.charAt(pos);
+					pos ++;
+				}
+				result = temp + ']';
+			} 
+			return result;
+		}
+
+		/*
+		* 	Get the values out of the JSON text and create the associated session variables.
+		*
+		* 	Input:
+		*		txt:	The JSON to transform into session variables.
+		*/
+		function copyToSession(txt)
+		{
+			sessionStorage.startDate = getValueOf('startDate',txt);
+			sessionStorage.endDate = getValueOf('endDate',txt);
+			sessionStorage.projectOngoing = getValueOf('projectOngoing',txt);
+			sessionStorage.projectPast = getValueOf('projectPast',txt);
+			sessionStorage.editingStyle = getValueOf('editingStyle',txt);
+			sessionStorage.pi = getArrayValueOf('pi',txt);
+			sessionStorage.coPi = getArrayValueOf('coPi',txt);		
+			sessionStorage.hbpTask = getArrayValueOf('hbpTask',txt);		
+			sessionStorage.projectTitle = getArrayValueOf('projectTitle',txt);		
+			sessionStorage.projectTags = getArrayValueOf('projectTags',txt);		
+			sessionStorage.projectKeywords = getArrayValueOf('projectKeywords',txt);		
+			sessionStorage.projectExecSum = getArrayValueOf('projectExecSum',txt);		
+			sessionStorage.projectImpact = getArrayValueOf('projectImpact',txt);		
+			sessionStorage.projectBenefit = getArrayValueOf('projectBenefit',txt);		
+			sessionStorage.projectScienceDesc = getArrayValueOf('projectScienceDesc',txt);		
+			sessionStorage.projectTechDesc = getArrayValueOf('projectTechDesc',txt);		
+			sessionStorage.delivrablesDesc = getArrayValueOf('delivrablesDesc',txt);		
+			sessionStorage.projectRef = getArrayValueOf('projectRef',txt);		
 		}
     	</script>
   </body>
