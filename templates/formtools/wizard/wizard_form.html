@@ -77,19 +77,22 @@
 {% endif %}
 </table>
 <nav class="steps navbar navbar-form navbar-fixed-bottom">
-{% if wizard.steps.prev %}
-<input id="initial" type="hidden" value="{{ form.initial}}">
-<button class="btn btn-default" name="wizard_goto_step" type="submit" value="{{ wizard.steps.first }}">First step</button>
-<button class="btn btn-default" name="wizard_goto_step" type="submit" value="{{ wizard.steps.prev }}">Previous</button>
-<a class="btn  btn-primary pull-middle" onclick="extract(cleanString(document.getElementById('initial').value));">Save current version</a>
-{% endif %}
-<input class="btn btn-default" type="submit" value="Next"/>
+	{% if wizard.steps.prev %}
+	<input id="initial" type="hidden" value="{{ form.initial}}">
+	<button class="btn btn-default" name="wizard_goto_step" type="submit" value="{{ wizard.steps.first }}">First step</button>
+	<button class="btn btn-default" name="wizard_goto_step" type="submit" value="{{ wizard.steps.prev }}">Previous</button>
+	<a class="btn  btn-primary pull-middle" onclick="extract(cleanString(document.getElementById('initial').value));">Save current version</a>
+	{% endif %}
+	<a class="btn  btn-primary pull-centered" onclick="document.getElementById('load').click();">Load previous version</a>
+	<input id="load" type="file" name="load" style="display: none;" onchange="importOld();" />
+	<input class="btn btn-default" type="submit" value="Next"/>
 </nav>
 </form>
 {% endblock %}
     </div>
       	<script>
-      	/*	Getting rid of all the ugly characters and of the fields that we don't need 
+      	/*	
+      	*	Getting rid of all the ugly characters and of the fields that we don't need 
       	*	such as the sessionId.
       	*	
       	*	Input:
@@ -108,7 +111,8 @@
       		return clean;
       	}
       	
-      	/*	Creating a file containing some specified text and a link to that file in  
+      	/*	
+      	*	Creating a file containing some specified text and a link to that file in  
       	*	order to download it.
       	*	
       	*	Input:
@@ -137,6 +141,14 @@
 				document.body.appendChild(downloadLink);
 			}
 			downloadLink.click();
+		}
+		
+		/*	
+		*	Function to fill the form by using an imported file.
+		*/
+		function importOld()
+		{
+		
 		}
     	</script>
   </body>
