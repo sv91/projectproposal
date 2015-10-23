@@ -175,43 +175,15 @@
 		{
 			var pos = 0;
 			var result = "";
-			var lookFor = '"'+ val +'":"';
+			var lookFor = "'"+ val +"': '[";
 			if(txt.indexOf(lookFor) > -1){
 				var temp = "";
 				pos = txt.indexOf(lookFor) + lookFor.length;
-				while(txt.charAt(pos) != '"'){
+				while(txt.charAt(pos) != "'"){
 					temp += txt.charAt(pos);
 					pos ++;
 				}
 				result = temp;
-			} 
-			return result;
-		}
-
-
-		/*
-		* 	Look for the specified key and return the array associated.
-		*
-		* 	Input:
-		*		val:	Key to look for.
-		*		txt:	String in which the function should look for the key.
-		*
-		*	Return:
-		*		The array associated to the key.
-		*/
-		function getArrayValueOf(val,txt)
-		{
-			var pos = 0;
-			var result = "";
-			var lookFor = '"'+ val +'":';
-			if(txt.indexOf(lookFor) > -1){
-				var temp = "";
-				pos = txt.indexOf(lookFor) + lookFor.length;
-				while(txt.charAt(pos) != ']'){
-					temp += txt.charAt(pos);
-					pos ++;
-				}
-				result = temp + ']';
 			} 
 			return result;
 		}
