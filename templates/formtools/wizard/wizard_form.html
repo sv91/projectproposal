@@ -89,6 +89,15 @@
 {% endblock %}
     </div>
       	<script>
+      	/*	Getting rid of all the ugly characters and of the fields that we don't need 
+      	*	such as the sessionId.
+      	*	
+      	*	Input:
+      	*		str: String to clean.
+      	*
+      	*	Return:
+      	*		The cleaned version of the input string.
+      	*/
       	function cleanString(str)
       	{
       		var clean = str.replace(/{u'/g,"{'");
@@ -99,6 +108,12 @@
       		return clean;
       	}
       	
+      	/*	Creating a file containing some specified text and a link to that file in  
+      	*	order to download it.
+      	*	
+      	*	Input:
+      	*		textToWrite: The desired content of the file to download.
+      	*/
       	function extract(textToWrite)
 		{
       		var textFileAsBlob = new Blob([textToWrite], {type:'text/plain'});
