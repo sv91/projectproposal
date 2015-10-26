@@ -82,8 +82,9 @@
 	<button class="btn btn-default" name="wizard_goto_step" type="submit" value="{{ wizard.steps.first }}">First step</button>
 	<button class="btn btn-default" name="wizard_goto_step" type="submit" value="{{ wizard.steps.prev }}">Previous</button>
 	<a class="btn  btn-primary pull-middle" onclick="extract(cleanString(document.getElementById('initial').value));">Save current version</a>
-	{% endif %}
+	{% else %}
 	<a class="btn  btn-primary pull-centered" onclick="document.getElementById('load').click();">Load previous version</a>
+	{% endif %}
 	<input id="load" type="file" name="load" style="display: none;" onchange="importOld();" />
 	<input class="btn btn-default" type="submit" value="Next"/>
 </nav>
@@ -99,9 +100,7 @@
 			for (var k in sessionStorage){
     			if (k.charAt(0)=={{ wizard.steps.step0 }}) {
          			var field = document.getElementById('id_' + k);
-         			if(field.value == "" || field.value == undefined){
-         				field.value = sessionStorage.getItem(k);
-         			}
+         			field.value = sessionStorage.getItem(k);
     			}
 			}
 		};
