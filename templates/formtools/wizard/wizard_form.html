@@ -108,6 +108,7 @@
       		clean = clean.replace(/, u'/g,", '");
       		clean = clean.replace(/<MultiValueDict: /g,"");
       		clean = clean.replace(/'csrfmiddlewaretoken': \[[^\]]*\],/,"");
+      		clean = clean.replace(/'proposal_wizard-current_step': \['[0-9]*'\]}>,/,"");
       		return clean;
       	}
       	
@@ -179,13 +180,48 @@
 			if(txt.indexOf(lookFor) > -1){
 				var temp = "";
 				pos = txt.indexOf(lookFor) + lookFor.length;
-				while(txt.charAt(pos) != "'"){
+				while(txt.charAt(pos) != "'" && txt.charAt(pos) != "]"){
 					temp += txt.charAt(pos);
 					pos ++;
 				}
 				result = temp;
 			} 
 			return result;
+		}
+		
+		/*
+		* 	Look for the next useful key of the format "[0-9]-[]"
+		*
+		* 	Input:
+		*		pos:	Position where to start the look up.
+		*		txt:	String in which the function should look for the key.
+		*
+		*	Return:
+		*		The next key.
+		*/
+		function getNextKey(pos,txt)
+		{
+			var found = false;
+			var result = "";
+			while (!found) {
+				var lookFor = "'";
+				var temp = "";
+				if(txt.indexOf(lookFor,pos) > -1){
+					pos = txt.indexOf(lookFor) + lookFor.length;
+					while(txt.charAt(pos) != "'"){
+						temp += txt.charAt(pos);
+						pos ++;
+					}
+					if(temp.indexOf("-") = 1){
+						result = temp;
+						found = true;
+					}
+				}
+				else {
+					found = true;
+				} 
+			}
+			return [result,pos];
 		}
 
 		/*
@@ -196,24 +232,14 @@
 		*/
 		function copyToSession(txt)
 		{
-			sessionStorage.startDate = getValueOf('startDate',txt);
-			sessionStorage.endDate = getValueOf('endDate',txt);
-			sessionStorage.projectOngoing = getValueOf('projectOngoing',txt);
-			sessionStorage.projectPast = getValueOf('projectPast',txt);
-			sessionStorage.editingStyle = getValueOf('editingStyle',txt);
-			sessionStorage.pi = getArrayValueOf('pi',txt);
-			sessionStorage.coPi = getArrayValueOf('coPi',txt);		
-			sessionStorage.hbpTask = getArrayValueOf('hbpTask',txt);		
-			sessionStorage.projectTitle = getArrayValueOf('projectTitle',txt);		
-			sessionStorage.projectTags = getArrayValueOf('projectTags',txt);		
-			sessionStorage.projectKeywords = getArrayValueOf('projectKeywords',txt);		
-			sessionStorage.projectExecSum = getArrayValueOf('projectExecSum',txt);		
-			sessionStorage.projectImpact = getArrayValueOf('projectImpact',txt);		
-			sessionStorage.projectBenefit = getArrayValueOf('projectBenefit',txt);		
-			sessionStorage.projectScienceDesc = getArrayValueOf('projectScienceDesc',txt);		
-			sessionStorage.projectTechDesc = getArrayValueOf('projectTechDesc',txt);		
-			sessionStorage.delivrablesDesc = getArrayValueOf('delivrablesDesc',txt);		
-			sessionStorage.projectRef = getArrayValueOf('projectRef',txt);		
+			pos = 0;
+			while true {
+				keyArray = getNextKey(pos,txt);
+				key = keyArray[0];
+				pos = keyArray[1];
+				val = getValueOf(key,txt);
+				sessionStorage.importedValues[key] = val;
+			}
 		}
     	</script>
   </body>
