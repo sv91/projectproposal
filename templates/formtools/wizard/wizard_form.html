@@ -96,11 +96,11 @@
       	* if no other value have been set.
       	*/
 		window.onload = function() {
-			for (var k in sessionStorage.importedValues){
-    			if (typeof target[k] !== 'function' && k.charAt(0)=='{{ wizard.steps.step0 }}') {
+			for (var k in sessionStorage){
+    			if (k.charAt(0)=={{ wizard.steps.step0 }}) {
          			var field = document.getElementById('id_' + k);
          			if(field.value == "" || field.value == undefined){
-         				field.value = target[k];
+         				field.value = sessionStorage.getItem(k);
          			}
     			}
 			}
@@ -173,6 +173,7 @@
 			{
 				var textFromFileLoaded = fileLoadedEvent.target.result;
 				copyToSession(textFromFileLoaded);
+				alert('The file was successfully imported');
 			};
 			fileReader.readAsText(fileToLoad, "UTF-8");
 		}
@@ -236,7 +237,6 @@
 					pos ++;
 				}
 				else {
-					alert("Finish");
 					found = true;
 				} 
 			}
@@ -256,14 +256,12 @@
 				keyArray = getNextKey(pos,txt);
 				key = keyArray[0];
 				if(key == "" || key == undefined){
-					alert("Vide");
 					break;
 				}
 				pos = keyArray[1];
 				val = getValueOf(key,txt);
 				sessionStorage.setItem(key,val);
 			}
-			alert("Done");
 		}
     	</script>
   </body>
