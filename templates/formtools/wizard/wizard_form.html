@@ -91,6 +91,22 @@
 {% endblock %}
     </div>
       	<script>
+      	/*
+      	* Method that verify if any session variable is set for this window and import it 
+      	* if no other value have been set.
+      	*/
+		window.onload = function() {
+			for (var k in target){
+    			if (typeof target[k] !== 'function' && k.charAt(0)='{{ wizard.steps.step0 }}' {
+         			var field = document.getElementById('id_' + k);
+         			if(field.value == "" || field.value == undefined){
+         				field.value = target[k];
+         			}
+    			}
+			}
+		};
+      	
+      	
       	/*	
       	*	Getting rid of all the ugly characters and of the fields that we don't need 
       	*	such as the sessionId.
