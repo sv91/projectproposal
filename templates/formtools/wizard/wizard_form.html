@@ -84,8 +84,8 @@
 	<a class="btn  btn-primary pull-middle" onclick="extract(cleanString(document.getElementById('initial').value));">Save current version</a>
 	{% else %}
 	<a class="btn  btn-primary pull-centered" onclick="document.getElementById('load').click();">Load previous version</a>
-	{% endif %}
 	<input id="load" type="file" name="load" style="display: none;" onchange="importOld();" />
+	{% endif %}
 	<input class="btn btn-default" type="submit" value="Next"/>
 </nav>
 </form>

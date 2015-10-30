@@ -20,7 +20,6 @@ class ProposalForm2(forms.ModelForm):
 	end_date = forms.DateField(label="Project End Date")
 	ongoing_projects = forms.CharField(widget=forms.Textarea, max_length=1000, label="On going related projects", required=False)
 	past_projects = forms.CharField(widget=forms.Textarea, max_length=1000, label="Past related projects", required=False)
-	editing_styles = forms.ChoiceField(choices=Proposal2.possible_editing_styles, label="Choose your editing style")
 	
 class ProposalForm3(forms.ModelForm):
 	class Meta:
