@@ -10,17 +10,37 @@ Content layout for step 6.
 <form action="" method="post"  ng-controller="Step6 as vm">{% csrf_token %}
 <div id="info">
 <table border="0" cellpadding="0" cellspacing="0" width="100%" style="padding-bottom:10px;padding-top:10px;">
-	<td style="width:50%; vertical-align:top">
+	<td style="width:48%; vertical-align:top">
 		<label>Human Ressources Summary</label><br>
-		Total Person/Month: <input type="number" disabled id="totalPM"><br>
+		<table border="0" cellpadding="0" cellspacing="0" width="100%">
+			<tr>
+				<td style="width:85%; vertical-align:top">Total Person/Month: </td> 
+				<td style="width:15%;" align="right"><input type="number" disabled id="totalPM" style="width:60px; font-weight: bold"></td> 
+			</tr>
+		</table>
 		<div style="overflow: auto;height:80px; padding-left:10px" id="memberList">
 		</div>
 	</td>
-	<td style="width:50%; vertical-align:top">
+	<td style="width:2%; vertical-align:top">
+	</td>
+	<td style="width:2%; vertical-align:top;border-left:1px solid #EEEEEE;">
+	</td>
+	<td style="width:48%; vertical-align:top">
 		<label>Computing Ressources Summary</label><br>
-		Total core hours: <input type="number" disabled id="cycle"><br>
-		Total disk storage(TB):  <input type="number" disabled id="storage"><br>
-		Total tape storage(TB):  <input type="number" disabled id="tape">
+		<table border="0" cellpadding="0" cellspacing="0" width="100%">
+			<tr>
+				<td style="width:85%; vertical-align:top">Total core hours:</td> 
+				<td style="width:15%;" align="right"><input type="number" disabled id="cycle" style="width:60px; align:right;"></td>
+			</tr>
+			<tr>
+				<td style="width:85%; vertical-align:top">Total disk storage(TB):</td> 
+				<td style="width:15%;" align="right"><input type="number" disabled id="storage" style="width:60px; align:right;"></td>
+			</tr>
+			<tr>
+				<td style="width:85%; vertical-align:top">Total tape storage(TB):  </td> 
+				<td style="width:15%;" align="right"><input type="number" disabled id="tape" style="width:60px; align:right;"></td>
+			</tr>
+		</table>
 	</td>
 </table>
 <hr>
@@ -118,23 +138,25 @@ function addMore(where){
 		}
 	
 		var form_idx = parseInt(document.getElementById('id_form_'+where+'-TOTAL_FORMS').value);
-		var inH = '<label style="padding-right:130px;">Member</label><label style="padding-right:25px;">Role</label><label style="padding-right:65px;">Person/Month</label><label style="padding-right:100px;">Description</label><br />';
-		inH += '<select id="id_form_'+where+'_'+form_idx+'-member" onclick="document.getElementById(this.id+\'-old\').value=this.value;" onchange="updatePM(this.value,document.getElementById(this.id+\'-old\').value);">'+people+'</select><input type="hidden" id="id_form_'+where+'_'+form_idx+'-member-old"><select id="id_form_'+where+'_'+form_idx+'-role">'+role+'</select><input id="id_form_'+where+'_'+form_idx+'-pm" type="number" min="0" step="0.1" onchange="updatePM(this.parentNode.getElementsByTagName(\'select\')[0].value,null);"><input id="id_form_'+where+'_'+form_idx+'-description" type="text" maxlength="200"><br />';
+		var inH = '<select id="id_form_'+where+'_'+form_idx+'-member" onclick="document.getElementById(this.id+\'-old\').value=this.value;" onchange="updatePM(this.value,document.getElementById(this.id+\'-old\').value);" style="width:180px">'+people+'</select><span style="padding-left:40px;"><input type="hidden" id="id_form_'+where+'_'+form_idx+'-member-old"><select id="id_form_'+where+'_'+form_idx+'-role" style="width:120px">'+role+'</select><span style="padding-left:40px;"><input id="id_form_'+where+'_'+form_idx+'-pm" type="number" min="0" step="0.1" onchange="updatePM(this.parentNode.getElementsByTagName(\'select\')[0].value,null);" style="width:100px"><span style="padding-left:40px;"><input id="id_form_'+where+'_'+form_idx+'-description" type="text" maxlength="150" style="width:200px"><br />';
 		
 		var newD = document.createElement('div');
 		newD.innerHTML= inH;
+		newD.style.padding='0px 0px 5px 0px';
 	    document.getElementById(where).appendChild(newD);
 	    document.getElementById('id_form_'+where+'-TOTAL_FORMS').value = form_idx + 1;
 	}
 	else {
 		var form_idx = parseInt(document.getElementById('id_form_delivrable-TOTAL_FORMS').value)+1;
-		var inH = '<label>Delivrable n°'+form_idx+':</label><br><div style="padding-left:20px;">';
+		var inH = '<label>Delivrable '+form_idx+'</label><br><div style="padding-left:20px;">';
 		inH += '<input type="hidden" id ="id_form_delivrable_'+form_idx+'-HR-TOTAL_FORMS" value=0><br />';
-		inH += '<div style="padding-bottom:10px;"><label style="padding-right:120px;">Date</label><label>Description</label><br />';
-		inH += '<input id="id_form_delivrable_'+form_idx+'-date" type="date" style="height:21px"><input id="id_form_delivrable_'+form_idx+'-description" type="text" maxlength="200"></div><br />';
-		inH += '<div style="padding-bottom:10px;"><label style="padding-right:65px;">Core hours</label><label>Disk storage(TB)</label><label>Tape storage(TB)</label><br />';
-		inH += '<input id="id_form_delivrable_'+form_idx+'-cycle" type="number" min="0" onchange="updateRessources(\'cycle\')"><input id="id_form_delivrable_'+form_idx+'-storage" type="number" min="0" onchange="updateRessources(\'storage\')"><input id="id_form_delivrable_'+form_idx+'-tape" type="number" min="0" onchange="updateRessources(\'tape\')"></div><br />';
-		inH += '<div id="delivrable_'+form_idx+'-HR"></div><input type="button" value="Add More" onclick="addMore(\'delivrable_'+form_idx+'-HR\')"><hr />';
+		inH += '<div style="padding-bottom:10px;"><label style="padding-right:120px;">Date</label><label>Description</label> (max. 150 characters)<br />';
+		inH += '<input id="id_form_delivrable_'+form_idx+'-date" type="date" style="height:21px; width:120px;vertical-align:top"><span style="padding-left:28px;"></span><textarea id="id_form_delivrable_'+form_idx+'-description" maxlength="150" rows="1" cols="79"></textarea></div><br />';
+		inH += '<div style="padding-bottom:10px;"><label style="padding-right:195px;">Core hours</label><label style="padding-right:158px;">Disk storage(TB)</label><label>Tape storage(TB)</label><br />';
+		inH += '<input id="id_form_delivrable_'+form_idx+'-cycle" type="number" min="0" onchange="updateRessources(\'cycle\')" style="width:200px"><span style="padding-left:60px;"><input id="id_form_delivrable_'+form_idx+'-storage" type="number" min="0" onchange="updateRessources(\'storage\')" style="width:200px"><span style="padding-left:60px;"><input id="id_form_delivrable_'+form_idx+'-tape" type="number" min="0" onchange="updateRessources(\'tape\')" style="width:200px"></div><br />';
+		inH += '<div style="padding-bottom:10px;"><label >Risks</label> (max. 150 characters)<br />';
+		inH += '<textarea id="id_form_delivrable_'+form_idx+'-description" maxlength="150" rows="1" cols="100"></textarea></div>';
+		inH += '<div id="delivrable_'+form_idx+'-HR"><label style="padding-right:175px;">Member</label><label style="padding-right:130px;">Role</label><label style="padding-right:53px;">Person/Month</label><label>Description</label></div><input type="button" value="Add More" onclick="addMore(\'delivrable_'+form_idx+'-HR\')"><hr />';
 		
 		var newD = document.createElement('div');
 		newD.innerHTML= inH;
@@ -147,15 +169,15 @@ function addMore(where){
 
 function addMembers(){
 	var people = '<table border="0" cellpadding="0" cellspacing="0" width="100%">';
-	people += '<tr><td style="width:85%; vertical-align:top">' + sessionStorage.getItem('2-id_name_1')+'</td><td style="width:15%;" align="right"> <input type="number" disabled id="'+sessionStorage.getItem('2-id_name_1')+'" style="width:50px; align:right;" value="0"></td></tr>';
+	people += '<tr><td style="width:85%; vertical-align:top">' + sessionStorage.getItem('2-id_name_1')+'</td><td style="width:15%;" align="right"> <input type="number" disabled id="'+sessionStorage.getItem('2-id_name_1')+'" style="width:60px; align:right;" value="0"></td></tr>';
 	if(sessionStorage.getItem('2-id_name_2') != '' && sessionStorage.getItem('2-id_name_2') != undefined){
-		people += '<tr><td style="width:85%; vertical-align:top">' + sessionStorage.getItem('2-id_name_2')+'</td><td style="width:15%;" align="right"> <input type="number" disabled id="'+sessionStorage.getItem('2-id_name_2')+'" style="width:50px; align:right;" value="0"></td></tr>';
+		people += '<tr><td style="width:85%; vertical-align:top">' + sessionStorage.getItem('2-id_name_2')+'</td><td style="width:15%;" align="right"> <input type="number" disabled id="'+sessionStorage.getItem('2-id_name_2')+'" style="width:60px; align:right;" value="0"></td></tr>';
 	}
 	var i= 1;
 	var key = '4-id_form-'+i+'-name';
 	
 	while (key in sessionStorage){
-		people += '<tr><td style="width:85%; vertical-align:top">' + sessionStorage.getItem(key)+'</td><td style="width:15%;" align="right"> <input type="number" disabled id="'+sessionStorage.getItem(key)+'" style="width:50px; align:right;" value="0"></td></tr>';
+		people += '<tr><td style="width:85%; vertical-align:top">' + sessionStorage.getItem(key)+'</td><td style="width:15%;" align="right"> <input type="number" disabled id="'+sessionStorage.getItem(key)+'" style="width:60px; align:right;" value="0"></td></tr>';
 		i++;
 		key = '4-id_form-'+i+'-name';
 	}
