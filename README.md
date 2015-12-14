@@ -14,6 +14,7 @@ Fill the formular with those informations:
 * __Authorized redirect URLs:__ 'https://localhost:8000'
 * __Authorized scopes:__ openid, profile, offline_access, hbp.users
 * Leave the logo as it is.
+
 Press save and stay on the page that will appear.
 
 Create a file 'projectproposal/projectproposal/localsettings.py' and write:
