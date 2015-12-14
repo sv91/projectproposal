@@ -114,8 +114,8 @@ function initOnload(step,callback) {
 	
 		inH = '<label for="id_3-task">Choose the '+txt+' task(s) this allocation will support:</label> {{ form.hbp_task.errors }}';
     	inH +='<input type="hidden" id="taskNumber" value="0">';
-    	inH +='<div style="padding:0px 20px;" id="tasks">';
-    	inH +='</div><br /><input type="button" value="Add a Task" id="add_task" onclick="addTask()">';
+    	inH +='<div><div style="padding:0px 20px;" id="tasks">';
+    	inH +='</div></div><div><br /></div><br /><input type="button" value="Add a Task" id="add_task" onclick="addTask()">';
 	}
     var newD = document.createElement('div');
     newD.innerHTML= inH;
@@ -199,6 +199,7 @@ function initOnload(step,callback) {
 		}
 		var newD = document.createElement('div');
 		newD.innerHTML = inH;
+		newD.style.float = 'left';
     	document.getElementById('tasks').appendChild(newD);
     	document.getElementById('taskNumber').value=i+1;
     }
