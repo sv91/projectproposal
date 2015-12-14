@@ -51,7 +51,6 @@ function initOnload(step,callback) {
 	} else {
 		while(doc != undefined){
 			addMore('delivrable');
-			setValue('id_form_delivrable_'+i+'-number');
 			setValue('id_form_delivrable_'+i+'-date');
 			setValue('id_form_delivrable_'+i+'-description');
 			setValue('id_form_delivrable_'+i+'-cycle',0);
@@ -129,8 +128,8 @@ function addMore(where){
 		var form_idx = parseInt(document.getElementById('id_form_delivrable-TOTAL_FORMS').value)+1;
 		var inH = '<label>Delivrable n°'+form_idx+':</label><br><div style="padding-left:20px;">';
 		inH += '<input type="hidden" id ="id_form_delivrable_'+form_idx+'-HR-TOTAL_FORMS" value=0><br />';
-		inH += '<div style="padding-bottom:10px;"><label style="padding-right:105px;">Number</label><label style="padding-right:120px;">Date</label><label>Description</label><br />';
-		inH += '<input id="id_form_delivrable_'+form_idx+'-number" type="number" min="1"><input id="id_form_delivrable_'+form_idx+'-date" type="date" style="height:21px"><input id="id_form_delivrable_'+form_idx+'-description" type="text" maxlength="200"></div><br />';
+		inH += '<div style="padding-bottom:10px;"><label style="padding-right:120px;">Date</label><label>Description</label><br />';
+		inH += '<input id="id_form_delivrable_'+form_idx+'-date" type="date" style="height:21px"><input id="id_form_delivrable_'+form_idx+'-description" type="text" maxlength="200"></div><br />';
 		inH += '<div style="padding-bottom:10px;"><label style="padding-right:65px;">Cycle Number</label><label>Storage space</label><br />';
 		inH += '<input id="id_form_delivrable_'+form_idx+'-cycle" type="number" min="0" onchange="updateRessources(\'cycle\')"><input id="id_form_delivrable_'+form_idx+'-storage" type="number" min="0" onchange="updateRessources(\'storage\')"></div><br />';
 		inH += '<div id="delivrable_'+form_idx+'-HR"></div><input type="button" value="Add More" onclick="addMore(\'delivrable_'+form_idx+'-HR\')"><hr />';

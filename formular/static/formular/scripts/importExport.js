@@ -238,7 +238,6 @@ function saveValues(step){
 	if(step == 5){
 		var deli_idx = document.getElementById('id_form_delivrable-TOTAL_FORMS').value;
 		for(i=1; i<parseInt(deli_idx)+1; i++){
-			saveValue('id_form_delivrable_'+i+'-number',5);
 			saveValue('id_form_delivrable_'+i+'-date',5);
 			saveValue('id_form_delivrable_'+i+'-description',5);
 			saveValue('id_form_delivrable_'+i+'-cycle',5);
