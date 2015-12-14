@@ -117,7 +117,7 @@ function addMore(where){
 	
 		var form_idx = parseInt(document.getElementById('id_form_'+where+'-TOTAL_FORMS').value);
 		var inH = '<label style="padding-right:130px;">Member</label><label style="padding-right:25px;">Role</label><label style="padding-right:65px;">Person/Month</label><label style="padding-right:100px;">Description</label><br />';
-		inH += '<select id="id_form_'+where+'_'+form_idx+'-member" onclick="document.getElementById(this.id+\'-old\').value=this.value;" onchange="updatePM(this.value,document.getElementById(this.id+\'-old\').value);">'+people+'</select><input type="hidden" id="id_form_'+where+'_'+form_idx+'-member-old"><select id="id_form_'+where+'_'+form_idx+'-role">'+role+'</select><input id="id_form_'+where+'_'+form_idx+'-pm" type="number" min="0" step="0.01" onchange="updatePM(this.parentNode.getElementsByTagName(\'select\')[0].value,null);"><input id="id_form_'+where+'_'+form_idx+'-description" type="text" maxlength="200"><br />';
+		inH += '<select id="id_form_'+where+'_'+form_idx+'-member" onclick="document.getElementById(this.id+\'-old\').value=this.value;" onchange="updatePM(this.value,document.getElementById(this.id+\'-old\').value);">'+people+'</select><input type="hidden" id="id_form_'+where+'_'+form_idx+'-member-old"><select id="id_form_'+where+'_'+form_idx+'-role">'+role+'</select><input id="id_form_'+where+'_'+form_idx+'-pm" type="number" min="0" step="0.1" onchange="updatePM(this.parentNode.getElementsByTagName(\'select\')[0].value,null);"><input id="id_form_'+where+'_'+form_idx+'-description" type="text" maxlength="200"><br />';
 		
 		var newD = document.createElement('div');
 		newD.innerHTML= inH;
