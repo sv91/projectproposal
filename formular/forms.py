@@ -40,14 +40,12 @@ class ProposalForm4(forms.ModelForm):
 	task = forms.CharField(max_length=300,required = False)
 	project_title = forms.CharField(max_length=300, label="Project Title")
 	project_tags = forms.CharField(max_length=300, label="Project Key Words")
-	executive_summary = forms.CharField(widget=forms.Textarea, max_length=1000, label="Executive Summary")
-	impact_statement = forms.CharField(widget=forms.Textarea, max_length=1000, label="Impact Statement")
-	benefit_to_community = forms.CharField(widget=forms.Textarea, max_length=1000, label="Benefit to Community")
-	scientific_summary = forms.CharField(widget=forms.Textarea, max_length=1000, label="Scientific Summary")
-	technological_summary = forms.CharField(widget=forms.Textarea, max_length=1000, label="Technological Summary")
-	
-	delivrables = modelformset_factory(Delivrable,extra=1, exclude=('proposal',))
-	deli = delivrables(queryset=Delivrable.objects.order_by('idN'))
+	executive_summary = forms.CharField(widget=forms.Textarea(attrs={'rows':5, 'cols':100}), max_length=1000, label="Executive Summary")
+	impact_statement = forms.CharField(widget=forms.Textarea(attrs={'rows':5, 'cols':100}), max_length=1000, label="Impact Statement")
+	benefit_to_community = forms.CharField(widget=forms.Textarea(attrs={'rows':5, 'cols':100}), max_length=1000, label="Benefit to Community")
+	scientific_summary = forms.CharField(widget=forms.Textarea(attrs={'rows':5, 'cols':100}), max_length=1000, label="Scientific Summary")
+	technological_summary = forms.CharField(widget=forms.Textarea(attrs={'rows':5, 'cols':100}), max_length=1000, label="Technological Summary")
+
 	publications = modelformset_factory(Publication,extra=1, exclude=('proposal',))
 	publi = publications(queryset=Publication.objects.order_by('name'))
 	
