@@ -18,8 +18,9 @@ Content layout for step 6.
 	</td>
 	<td style="width:50%; vertical-align:top">
 		<label>Computing Ressources Summary</label><br>
-		Total cycles number: <input type="number" disabled id="cycle"><br>
-		Total storage space:  <input type="number" disabled id="storage">
+		Total core hours: <input type="number" disabled id="cycle"><br>
+		Total disk storage(TB):  <input type="number" disabled id="storage"><br>
+		Total tape storage(TB):  <input type="number" disabled id="tape">
 	</td>
 </table>
 <hr>
@@ -55,6 +56,7 @@ function initOnload(step,callback) {
 			setValue('id_form_delivrable_'+i+'-description');
 			setValue('id_form_delivrable_'+i+'-cycle',0);
 			setValue('id_form_delivrable_'+i+'-storage',0);
+			setValue('id_form_delivrable_'+i+'-tape',0);
 			var j = 0;
 			var doc2 = sessionStorage.getItem('5-id_form_delivrable_'+i+'-HR_'+j+'-member');
 			while(doc2 != undefined){
@@ -130,8 +132,8 @@ function addMore(where){
 		inH += '<input type="hidden" id ="id_form_delivrable_'+form_idx+'-HR-TOTAL_FORMS" value=0><br />';
 		inH += '<div style="padding-bottom:10px;"><label style="padding-right:120px;">Date</label><label>Description</label><br />';
 		inH += '<input id="id_form_delivrable_'+form_idx+'-date" type="date" style="height:21px"><input id="id_form_delivrable_'+form_idx+'-description" type="text" maxlength="200"></div><br />';
-		inH += '<div style="padding-bottom:10px;"><label style="padding-right:65px;">Cycle Number</label><label>Storage space</label><br />';
-		inH += '<input id="id_form_delivrable_'+form_idx+'-cycle" type="number" min="0" onchange="updateRessources(\'cycle\')"><input id="id_form_delivrable_'+form_idx+'-storage" type="number" min="0" onchange="updateRessources(\'storage\')"></div><br />';
+		inH += '<div style="padding-bottom:10px;"><label style="padding-right:65px;">Core hours</label><label>Disk storage(TB)</label><label>Tape storage(TB)</label><br />';
+		inH += '<input id="id_form_delivrable_'+form_idx+'-cycle" type="number" min="0" onchange="updateRessources(\'cycle\')"><input id="id_form_delivrable_'+form_idx+'-storage" type="number" min="0" onchange="updateRessources(\'storage\')"><input id="id_form_delivrable_'+form_idx+'-tape" type="number" min="0" onchange="updateRessources(\'tape\')"></div><br />';
 		inH += '<div id="delivrable_'+form_idx+'-HR"></div><input type="button" value="Add More" onclick="addMore(\'delivrable_'+form_idx+'-HR\')"><hr />';
 		
 		var newD = document.createElement('div');
