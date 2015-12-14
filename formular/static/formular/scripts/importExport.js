@@ -243,6 +243,7 @@ function saveValues(step){
 			saveValue('id_form_delivrable_'+i+'-cycle',5);
 			saveValue('id_form_delivrable_'+i+'-storage',5);
 			saveValue('id_form_delivrable_'+i+'-tape',5);
+			saveValue('id_form_delivrable_'+i+'-risk',5);
 			var hr_idx = document.getElementById('id_form_delivrable_'+i+'-HR-TOTAL_FORMS').value;
 			for(j=0; j<hr_idx; j++){
 				saveValue('id_form_delivrable_'+i+'-HR_'+j+'-member',5);
