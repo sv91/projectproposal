@@ -32,6 +32,17 @@ Content layout for step 3.
 </nav>
 </form>
 
-
+<script>
+function initOnload(step,callback) {
+	var val = sessionStorage.getItem('2-id_name_1');
+	if (val != null && val != undefined && val !=''){
+		document.getElementById('id_name_1').value = val;
+	}
+	var val2 = sessionStorage.getItem('2-id_name_2');
+	if (val2 != null && val2 != undefined && val2 !=''){
+		document.getElementById('id_name_2').value = val2;
+	}
+}
+</script>
 
 {% endblock %}
