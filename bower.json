@@ -1,0 +1,26 @@
+{
+  "name": "projectproposal",
+  "homepage": "https://github.com/sv91/projectproposal",
+  "authors": [
+    "Alexander Vostriakov <alexander.vostriakov@epfl.ch>"
+  ],
+  "description": "",
+  "main": "",
+  "moduleType": [],
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "projectproposal/formular/static/formular/bower_components",
+    "test",
+    "tests"
+  ],
+  "resolutions": {
+    "angular": "1.4.7"
+  },
+  "devDependencies": {
+    "angular-hbp-common": "~1.1.1",
+    "hbp-collaboratory-theme": "~0.0.18"
+  }
+}

@@ -1,0 +1,57 @@
+<!-- 
+==========================
+Content layout for step 1. 
+==========================
+-->
+{% extends "formular/layout.html" %}
+
+{% block content %}
+<h2>Step {{ wizard.steps.step1 }} of {{ wizard.steps.count }}: {{ form.title }}</h2>
+<form action="" method="post">{% csrf_token %}
+	<table>
+		{{ wizard.management_form }}
+		{% for field in form %}
+	 	   <div class="form-group">
+		     	<label>{{ field.label_tag }} </label>
+				<div style="padding:0px 20px;">{{ field.errors }}<p>{{ field }}</p>
+					{% if field.help_text %}
+ 		     		  	<p class="help">{{ field.help_text|safe }}</p>
+					{% endif %}
+		      	</div>
+			</div>	
+		{% endfor %}
+	</table>
+	<nav class="steps navbar navbar-form navbar-fixed-bottom">
+		<a class="btn  btn-primary pull-centered" onclick="document.getElementById('load').click();">Load previous version</a>
+		<input id="load" type="file" name="load" style="display: none;" onchange="importOld();" />
+		<input class="btn btn-default" type="submit" value="Next"  onclick="saveValues({{ wizard.steps.step0 }});"/>
+	</nav>
+</form>
+
+{% load staticfiles %}
+<script src="{% static 'bower_components/jquery/dist/jquery.js' %}"></script>
+<script>
+// Show or hide the Other Grant input depending of the saved value.
+$(document).ready(function(){
+	if($("#id_0-grant").val() == "none"){
+		$('#id_0-other').parent().parent().parent().show();
+	} else {
+		$('#id_0-other').parent().parent().parent().hide();
+	}
+});
+</script>
+<script>
+// Show or hide the Other Grant input depending of the selected value.
+$(document).ready(function(){
+	$("#id_0-grant").change(function(){
+		if($("#id_0-grant").val() == "none"){
+			$('#id_0-other').parent().parent().parent().show();
+		} else {
+			$('#id_0-other').parent().parent().parent().hide();
+		}
+	});
+});	
+
+</script>
+
+{% endblock %}

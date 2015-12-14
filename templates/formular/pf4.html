@@ -1,0 +1,207 @@
+<!-- 
+==========================
+Content layout for step 4. 
+==========================
+-->
+{% extends "formular/layout.html" %}
+{% load staticfiles %}
+<link rel="stylesheet" type="text/css" href="bower_components/ng-tags-input/ng-tags-input.min.css">
+
+{% block content %}
+<h2>Step {{ wizard.steps.step1 }} of {{ wizard.steps.count }}: {{ form.title }}</h2>
+<form action="" method="post">{% csrf_token %}
+{{ wizard.management_form }}
+<div class="form-group" id="task">
+</div>
+
+<div class="form-group">
+   	<label for="id_3-project_title">Project Title:</label> {{ form.project_title.errors }}
+	<div style="padding:0px 20px;">
+		<p>{{ form.project_title }}</p>
+	</div>
+</div>
+
+<div class="form-group">
+	<label for="id_3-project_tags">Project Key Words:</label> {{ form.project_tags.errors }}
+    <div style="padding:0px 20px;">
+		<p>
+			{{ form.project_tags}}
+		</p>
+	</div>
+</div>
+
+<div class="form-group">
+	<label for="id_3-executive_summary">Executive Summary:</label> {{ form.executive_summary.errors }}
+	<div style="padding:0px 20px;">
+		<p>{{ form.executive_summary }}</p>
+	</div>
+</div>
+
+<div class="form-group">
+	<label for="id_3-impact_statement">Impact Statement:</label> {{ form.impact_statement.errors }}
+	<div style="padding:0px 20px;">
+    	<p>{{ form.impact_statement }}</p>
+    </div>
+</div>
+
+<div class="form-group">
+	<label for="id_3-benefit_to_community">Benefit to Community:</label> {{ form.benefit_to_community.errors }}
+    <div style="padding:0px 20px;">
+    	<p>{{ form.benefit_to_community }}</p>
+    </div>
+</div>
+
+<div class="form-group">
+	<label for="id_3-scientific_summary">Scientific Summary:</label> {{ form.scientific_summary.errors }}
+	<div style="padding:0px 20px;">
+		<p>{{ form.scientific_summary }}</p>
+	</div>
+</div>
+
+<div class="form-group">
+	<label for="id_3-technological_summary">Technological Summary:</label> {{ form.technological_summary.errors }}
+	<div style="padding:0px 20px;">
+		<p>{{ form.technological_summary }}</p>
+	</div>
+</div>
+
+<div class="form-group">
+	<label for="id_3-publi">Publications:</label>
+	<div style="padding:0px 20px;">
+		<input id="id_form_publi-TOTAL_FORMS" name="form_publi-TOTAL_FORMS" type="hidden" value="1"><input id="id_form_publi-INITIAL_FORMS" name="form_publi-INITIAL_FORMS" type="hidden" value="0"><input id="id_form_publi-MIN_NUM_FORMS" name="form_publi-MIN_NUM_FORMS" type="hidden" value="0"><input id="id_form_publi-MAX_NUM_FORMS" name="form_publi-MAX_NUM_FORMS" type="hidden" value="1000">
+    	<div id="publi" style="padding-bottom:5px">
+    		<label for="id_form_publi-0-name"style="padding-right:5px">Name:</label>
+    		<input id="id_form_publi-0-name" name="form_publi-0-name" type="text" maxlength="200">
+    		
+    		<br />
+    		<label for="id_form_publi-0-link" style="padding-right:15px">Link:</label>
+    		<input id="id_form_publi-0-link" name="form_publi-0-link" type="text" maxlength="200">		
+    	</div>
+    	<input type="button" value="Add More" id="add_more" onclick="addMore('publi')">
+	</div>
+</div>
+
+<nav class="steps navbar navbar-form navbar-fixed-bottom">
+	<input id="initial" type="hidden" value="{{ form.initial}}">
+	<button class="btn btn-default" name="wizard_goto_step" type="submit" value="{{ wizard.steps.first }}" onclick="saveValues({{ wizard.steps.step0 }})">First step</button>
+	<button class="btn btn-default" name="wizard_goto_step" type="submit" value="{{ wizard.steps.prev }}" onclick="saveValues({{ wizard.steps.step0 }})">Previous</button>
+	<a class="btn  btn-primary pull-middle" onclick="extract(cleanString(document.getElementById('initial').value));" onclick="saveValues({{ wizard.steps.step0 }})">Save current version</a>
+	<input class="btn btn-default" type="submit" value="Next" onclick="saveValues({{ wizard.steps.step0 }})"/>
+</nav>
+</form>
+<script src="{% static 'bower_components/angular/angular.js' %}"></script>
+<script src="{% static 'bower_components/ng-tags-input/ng-tags-input.js' %}"></script>
+
+<script>
+function initOnload(step,callback) {
+	var key = '0-id_0-grant';
+	var inH = '';
+	if (key in sessionStorage){
+	
+		var val = sessionStorage.getItem(key);
+		var txt = '';
+		
+		switch(val) {
+    		case 'bbp':
+        		txt = 'BBP';
+        		break;
+    		case 'none':		
+    			callback.call();
+        		return;
+    		default:
+        		txt = 'HBP';
+		}
+	
+		inH = '<label for="id_3-task">Choose the '+txt+' task(s) this allocation will support:</label> {{ form.hbp_task.errors }}';
+    	inH +='<input type="hidden" id="taskNumber" value="0">';
+    	inH +='<div style="padding:0px 20px;" id="tasks">';
+    	inH +='</div><hr /><input type="button" value="Add a Task" id="add_task" onclick="addTask()">';
+	}
+    var newD = document.createElement('div');
+    newD.innerHTML= inH;
+        
+    document.getElementById('task').appendChild(newD);
+    
+    var key2 = '3-id_3-task';
+    if (key2 in sessionStorage){
+    	var array = sessionStorage.getItem(key2).split(';');
+    	if(array.length==1 && array[0] == ''){
+    		addTask();
+    	}
+    	for(var i=0;i<array.length;i++){ 
+    		if(array[i] == ''){
+    			break;
+    		}
+    		addTask();
+    		document.getElementById('id_3-task-'+i+'-'+array[i]).selected = true;
+
+    	}
+    } else {
+    	addTask();
+    }
+    
+    callback.call();
+}
+
+</script>
+
+<script>
+	/*
+	* Add an additional form for the related projects.
+	*/
+	function addMore(type){
+		var inH ='';
+    	if (type=='publi'){
+    		inH += '<hr>';
+    		inH += '<label for="id_form_publi-__prefix__-name"style="padding-right:5px">Name:</label>';
+    		inH += '<input id="id_form_publi-__prefix__-name" name="form_publi-__prefix__-name" type="text" maxlength="200">';
+    		inH += '<br />';
+    		inH += '<label for="id_form_publi-__prefix__-link" style="padding-right:15px">Link:</label>';
+    		inH += '<input id="id_form_publi-__prefix__-link" name="form_publi-__prefix__-link" type="text" maxlength="200">';
+    	}
+    	var newD = document.createElement('div');
+        var form_idx = parseInt(document.getElementById('id_form_'+type+'-TOTAL_FORMS').value);
+    	newD.id = type+'_'+ form_idx;
+        newD.innerHTML= inH.replace(/__prefix__/g, form_idx);
+        
+        document.getElementById(type).appendChild(newD);
+        document.getElementById('id_form_'+type+'-TOTAL_FORMS').value=(form_idx + 1);
+    }
+    
+    function addTask(){
+    	var key = '0-id_0-grant';
+		var inH = '';
+		var i = parseInt(document.getElementById('taskNumber').value);
+	
+		var taskHBP = ['T1.1.1','T1.1.2','T1.2.1','T1.2.2','T2.1.1','T2.1.2','T2.2.1','T2.2.2'];
+		var taskBBP = ['Task1','Task2','Task3','Task4','Task5'];
+		var array = undefined;
+	
+		if (key in sessionStorage){
+	
+			var val = sessionStorage.getItem(key);
+		
+			switch(val) {
+    			case 'bbp':
+        			array = taskBBP;
+	        		break;
+    			case 'none':		
+        			return;
+    			default:
+        			array = taskHBP;
+			}
+	
+			inH ='<select id="id_3-task-'+i+'" >';
+    		for(var j=0;j<array.length;j++){
+    			inH += '<option name="3-task-'+i+'-'+array[j]+'" id="id_3-task-'+i+'-'+array[j]+'" value="'+array[j]+'">'+array[j]+'</option>';
+    		}
+    		inH +='</select>';
+		}
+		var newD = document.createElement('div');
+		newD.innerHTML = inH;
+    	document.getElementById('tasks').appendChild(newD);
+    	document.getElementById('taskNumber').value=i+1;
+    }
+</script>
+
+{% endblock %}

@@ -1,0 +1,37 @@
+<!-- 
+==========================
+Content layout for step 3. 
+==========================
+-->
+{% extends "formular/layout.html" %}
+
+{% block content %}
+<h2>Step {{ wizard.steps.step1 }} of {{ wizard.steps.count }}: {{ form.title }}</h2>
+<form action="" method="post" ng-controller="Step3 as vm">{% csrf_token %}
+<table>
+{{ wizard.management_form }}
+	{% for field in form %}
+    	<div class="form-group">
+     	   <label>{{ field.label_tag }} </label>
+    	    <div style="padding:0px 20px;">{{ field.errors }}<p style="display:none;">{{ field }}</p>
+    	    	<input type="hidden" id="id_name_{{ forloop.counter }}"></a>
+    	    	<single-user-select></single-user-select>
+      		  	{% if field.help_text %}
+      		  	<p class="help">{{ field.help_text|safe }}</p>
+      		  	{% endif %}
+      	  </div>
+   		</div>
+	{% endfor %}
+</table>
+<nav class="steps navbar navbar-form navbar-fixed-bottom">
+	<input id="initial" type="hidden" value="{{ form.initial}}">
+	<button class="btn btn-default" name="wizard_goto_step" type="submit" value="{{ wizard.steps.first }}" onclick="saveValues({{ wizard.steps.step0 }})">First step</button>
+	<button class="btn btn-default" name="wizard_goto_step" type="submit" value="{{ wizard.steps.prev }}" onclick="saveValues({{ wizard.steps.step0 }})">Previous</button>
+	<a class="btn  btn-primary pull-middle" onclick="extract(cleanString(document.getElementById('initial').value));" onclick="saveValues({{ wizard.steps.step0 }})">Save current version</a>
+	<input class="btn btn-default" type="submit" value="Next" onclick="saveValues({{ wizard.steps.step0 }})"/>
+</nav>
+</form>
+
+
+
+{% endblock %}

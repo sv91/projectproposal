@@ -1,0 +1,73 @@
+<!-- 
+==========================
+Content layout for step 5. 
+==========================
+-->
+{% extends "formular/layout.html" %}
+
+{% block content %}
+<h2>Step {{ wizard.steps.step1 }} of {{ wizard.steps.count }}: {{ form.title }}</h2>
+<form action="" method="post" ng-controller="Step5 as vm">{% csrf_token %}
+{{ wizard.management_form }}
+	<div class="form-group">
+    	<label for="id_5-members">Members:</label> 
+    	<div style="padding:0px 20px;">
+				{{ form.members.management_form }}
+    		<div id="members">
+    		</div>
+    		<input type="button" value="Add More" id="add_more">
+      	</div>
+   	</div>
+<div style="display:none">
+</div>
+<nav class="steps navbar navbar-form navbar-fixed-bottom">
+	<input id="initial" type="hidden" value="{{ form.initial}}">
+	<button class="btn btn-default" name="wizard_goto_step" type="submit" value="{{ wizard.steps.first }}" onclick="saveValues({{ wizard.steps.step0 }})">First step</button>
+	<button class="btn btn-default" name="wizard_goto_step" type="submit" value="{{ wizard.steps.prev }}" onclick="saveValues({{ wizard.steps.step0 }})">Previous</button>
+	<a class="btn  btn-primary pull-middle" onclick="extract(cleanString(document.getElementById('initial').value));">Save current version</a>
+
+	<input class="btn btn-default" type="submit" value="Next" onclick="saveValues({{ wizard.steps.step0 }})"/>
+</nav>
+</form>
+
+<script>
+function initOnload(step,callback) {
+	addMore('');
+    callback.call();
+}
+function addMore(str){
+	var form_idx = parseInt(document.getElementById('id_form-TOTAL_FORMS').value);
+	var inH = '<div><label for="id_form-'+form_idx+'-member">Member n°'+form_idx+':</label><br><p><input type="hidden" id="id_form-'+form_idx+'-member"></p><input type="hidden" id="id_form-'+form_idx+'-name"><single-user-select></single-user-select></div><hr>';
+    var newD = document.createElement('div');
+    newD.id ='member_'+ form_idx;
+    newD.innerHTML= inH;
+        
+    document.getElementById('members').appendChild(newD);
+    document.getElementById('id_form-TOTAL_FORMS').value=form_idx+1;
+}
+</script>
+
+{% load staticfiles %}
+<script src="{% static 'bower_components/jquery/dist/jquery.js' %}"></script>
+<script>
+$(document).ready(function(){
+	$("#add_more").click(function(){
+    	// The new element to be added
+    	var $form_idx = parseInt($('#id_form-TOTAL_FORMS').val());
+		var $div = $('<div><label for="id_form-'+$form_idx+'-member">Member n°'+$form_idx+':</label><br><p><input type="hidden" id="id_form-'+$form_idx+'-member"></p><input type="hidden" id="id_form-'+$form_idx+'-name"><single-user-select></single-user-select></div><hr>');
+		// The parent of the new element
+  		var $target = $("#members");
+  		$('#id_form-TOTAL_FORMS').val($form_idx+1);
+
+  		angular.element($target).injector().invoke(function($compile) {
+    		var $scope = angular.element($target).scope();
+    		$target.append($compile($div)($scope));
+    		// Finally, refresh the watch expressions in the new element
+    		$scope.$apply();
+  		});
+    });
+});
+	 
+</script>
+
+{% endblock %}

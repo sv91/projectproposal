@@ -1,0 +1,22 @@
+* How to install:
+
+Unzip the 'projectproposal' archive.
+
+Open a terminal and go to the unzipped folder.
+Execute the command 'pip install -i https://bbpteam.epfl.ch/repository/devpi/simple --pre -r "requirements.txt"'.
+If you don't have pip installed: https://pip.pypa.io/en/stable/installing/ .
+
+Go to 'collab.humanbrainproject.eu/#/collab/54/nav/1051' and click on the '+ Create new Client' button.
+Fill the formular with those informations:
+	Name: 'HPC Computing Platform: Production Project Request'
+	Application type: Server flow
+	Authorized redirect URLs: 'https://localhost:8000'
+	Authorized scopes: openid, profile, offline_access, hbp.users
+	Leave the logo as it is.
+Press save and stay on the page that will appear.
+
+Open the file 'projectproposal/projectproposal/localsettings.py' and replace SOCIAL_AUTH_HBP_KEY by the Client ID value from the page and replace SOCIAL_AUTH_HBP_SECRET by the Client secret value.
+
+In your terminal execute the command 'python manage.py runsslserver'.
+If you dont have a certificate for your localhost: https://developer.humanbrainproject.eu/docs/projects/HBP%20Collaboratory%20Documentation/1.2/app-developer-manual/quickstart/setup/ssl-certificate.html
+Open your browser and go to 'https://localhost:8000/formular' and authorise the client you created.

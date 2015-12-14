@@ -1,22 +1,31 @@
 from django.db import models
+from django.utils import timezone
+	
 
+	
+# Data model corresponding to the first page of the form.
 class Proposal1(models.Model):
 	possible_types = [['test','Testing'],['dev','Development'],['prod','Production']]
+	possible_grants = [['hbp','Human Brain Project'],['bbp','Blue Brain Project'],['none','Other Grant']]
 	project_type = models.CharField(max_length=4,choices=possible_types)
-    
-class Proposal2(models.Model):
-	start_date = models.DateField()
-	end_date = models.DateField()
-	ongoing_projects = models.CharField(max_length=1000)
-	past_projects = models.CharField(max_length=1000)
+	grant = models.CharField(max_length=4,choices=possible_grants)
+	other = models.CharField(max_length=200)
 	
+class PastProject(models.Model):
+	project_title = models.CharField(max_length=200)
+	funding_agency = models.CharField(max_length=200)
+	starting_date = models.DateField()
+	end_date = models.DateField()
+	description = models.TextField(max_length=1000)
+	
+# Data model corresponding to the third page of the form.
 class Proposal3(models.Model):
 	pi = models.CharField(max_length=100)
 	cpi = models.CharField(max_length=100)
 	
+# Data model corresponding to the forth page of the form.
 class Proposal4(models.Model):
-	possible_tasks = [['t111','T1.1.1'],['t112','T1.1.2']]
-	hbp_task = models.CharField(max_length=20, choices=possible_tasks)
+	task = models.CharField(max_length=300)
 	project_title = models.CharField(max_length=300)
 	project_tags = models.CharField(max_length=300)
 	executive_summary = models.TextField(max_length=1000)
@@ -24,16 +33,35 @@ class Proposal4(models.Model):
 	benefit_to_community = models.TextField(max_length=1000)
 	scientific_summary = models.TextField(max_length=1000)
 	technological_summary = models.TextField(max_length=1000)
-	delivrables = models.TextField(max_length=1000)
-	references = models.TextField(max_length=1000)
 	
-class Proposal5(models.Model):
-	possible_roles=[['1','Test'],['2','2']]
+class Member(models.Model):
+	camipro = models.CharField(max_length=100)
 	
-	role = models.CharField(max_length=20, choices=possible_roles)
-	involvement = models.PositiveSmallIntegerField()	
+class MembersPosition(models.Model):
+	camipro = models.CharField(max_length=100)
+	deli = models.CharField(max_length=100)
+	role = models.CharField(max_length=20)
+	pm = models.PositiveSmallIntegerField()
 	
-class Proposal6(models.Model):
+	
+class Delivrable(models.Model):
+	idN = models.PositiveSmallIntegerField()
+	date = models.DateField()
+	description = models.CharField(max_length=200)
+	
+class DelivrableComp(models.Model):
+	idN = models.PositiveSmallIntegerField()
+	cycles = models.PositiveIntegerField()
+	storage = models.PositiveIntegerField()
+	
+	
+class Publication(models.Model):
+	name = models.CharField(max_length=300)
+	link = models.CharField(max_length=200)
+	
+	
+# Data model corresponding to the sixth page of the form.
+class Proposal8(models.Model):
 	levels= [['beginner','Begginer'],['intermediate','Intermediate'],['advanced','Advanced']]
 
 	scientific_experience = models.BooleanField()

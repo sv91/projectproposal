@@ -1,0 +1,77 @@
+<!-- 
+==========================
+Content layout for step 2. 
+==========================
+-->
+{% extends "formular/layout.html" %}
+
+{% block content %}
+<h2>Step {{ wizard.steps.step1 }} of {{ wizard.steps.count }}: {{ form.title }}</h2>
+<form action="" method="post">{% csrf_token %}
+{{ wizard.management_form }}
+
+	<div class="form-group">
+    	<label for="id_1-start_date">Project Start Date:</label> {{ form.start_date.errors }} 
+    	<div style="padding:0px 20px;">
+    		<p>{{form.start_date}}</p>
+      	</div>
+   	</div>
+	
+	<div class="form-group">
+    	<label for="id_1-end_date">Project End Date:</label> {{ form.end_date.errors }} 
+    	<div style="padding:0px 20px;">
+    	    <p>{{form.end_date}}</p>
+      	</div>
+   	</div>
+   	
+	<div class="form-group">
+    	<label for="id_1-past_projects">Related Projects:</label> 
+    	<div style="padding:0px 20px;">
+				{{ form.past.management_form }}
+    		<div id="past">
+    			{% for form in form.past %}
+        			<label for="id_form_{{ forloop.counter0 }}-project_title">Project title:</label><label for="id_form_{{ forloop.counter0 }}-funding_agency" style="padding-left:80px">Funding agency:</label>  <br>
+    				<input id="id_form_{{ forloop.counter0 }}-project_title" maxlength="200" name="form_{{ forloop.counter0 }}-project_title" type="text">  <input id="id_form_{{ forloop.counter0 }}-funding_agency" maxlength="200" name="for_{{ forloop.counter0 }}-funding_agency" type="text"> <p><br />
+    				<label for="id_form_{{ forloop.counter0 }}-starting_date">Starting date:</label><label for="id_form_{{ forloop.counter0 }}-end_date" style="padding-left:75px">End date:</label><br>
+    				<input id="id_form_{{ forloop.counter0 }}-starting_date" name="form_{{ forloop.counter0 }}-starting_date" type="date"> <input id="id_form_{{ forloop.counter0 }}-end_date" name="form_{{ forloop.counter0 }}-end_date" type="date"> <p><br>
+    				<label for="id_form_{{ forloop.counter0 }}-description">Description:</label><br> <textarea cols="40" id="id_form_{{ forloop.counter0 }}-description" maxlength="1000" name="form_{{ forloop.counter0 }}-description" rows="10"></textarea> <br>
+    				<hr>
+    			{% endfor %}
+    		</div>
+    		<input type="button" value="Add More" id="add_more" onclick="addMore()">
+      	</div>
+   	</div>
+<div style="display:none">
+</div>
+   	
+<nav class="steps navbar navbar-form navbar-fixed-bottom">
+	<input id="initial" type="hidden" value="{{ form.initial}}">
+	<button class="btn btn-default" name="wizard_goto_step" type="submit" value="{{ wizard.steps.first }}" onclick="saveValues({{ wizard.steps.step0 }})">First step</button>
+	<button class="btn btn-default" name="wizard_goto_step" type="submit" value="{{ wizard.steps.prev }}" onclick="saveValues({{ wizard.steps.step0 }})">Previous</button>
+	<a class="btn  btn-primary pull-middle" onclick="extract(cleanString(document.getElementById('initial').value));">Save current version</a>
+	<input class="btn btn-default" type="submit" value="Next" onclick="saveValues({{ wizard.steps.step0 }})"/>
+</nav>
+</form>
+
+<script>
+	/*
+	* Add an additional form for the related projects.
+	*/
+	function addMore(str){
+		var inH ='<label for="id_form___prefix__-project_title">Project title:</label><label for="id_form___prefix__-funding_agency" style="padding-left:80px">Funding agency:</label>  <br>';
+    	inH += '<input id="id_form___prefix__-project_title" maxlength="200" name="form___prefix__-project_title" type="text">  <input id="id_form___prefix__-funding_agency" maxlength="200" name="form___prefix__-funding_agency" type="text"> <p><br />';
+    	inH += '<label for="id_form___prefix__-starting_date">Starting date:</label><label for="id_form___prefix__-end_date" style="padding-left:75px">End date:</label><br> ';
+    	inH += '<input id="id_form___prefix__-starting_date" name="form___prefix__-starting_date" type="date"> <input id="id_form___prefix__-end_date" name="form___prefix__-end_date" type="date"> <p><br>';
+    	inH += '<label for="id_form___prefix__-description">Description:</label><br> <textarea cols="40" id="id_form___prefix__-description" maxlength="1000" name="form___prefix__-description" rows="10"></textarea> <br>';
+    	inH += '<hr>';
+    	
+    	var newD = document.createElement('div');
+        var form_idx = parseInt(document.getElementById('id_form-TOTAL_FORMS').value);
+    	newD.id = 'other_project_'+ form_idx;
+        newD.innerHTML= inH.replace(/__prefix__/g, form_idx);
+        
+        document.getElementById('past').appendChild(newD);
+        document.getElementById('id_form-TOTAL_FORMS').value=(form_idx + 1);
+    }
+</script>
+{% endblock %}

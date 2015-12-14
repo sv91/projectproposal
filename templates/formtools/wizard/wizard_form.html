@@ -91,8 +91,9 @@
 </form>
 {% endblock %}
     </div>
-      	<script>
-      	/*
+    <script>
+    
+        /*
       	* Method that verify if any session variable is set for this window and import it 
       	* if no other value have been set.
       	*/
@@ -104,164 +105,20 @@
     			}
 			}
 		};
-      	
-      	
-      	/*	
-      	*	Getting rid of all the ugly characters and of the fields that we don't need 
-      	*	such as the sessionId.
-      	*	
-      	*	Input:
-      	*		str: 	String to clean.
-      	*
-      	*	Return:
-      	*		The cleaned version of the input string.
-      	*/
-      	function cleanString(str)
-      	{
-      		var clean = str.replace(/{u'/g,"{'");
-      		clean = clean.replace(/\[u'/g,"['");
-      		clean = clean.replace(/, u'/g,", '");
-      		clean = clean.replace(/<MultiValueDict: /g,"");
-      		clean = clean.replace(/'csrfmiddlewaretoken': \[[^\]]*\],/,"");
-      		clean = clean.replace(/'proposal_wizard-current_step': \['[0-9]*'\]}>,/,"");
-      		return clean;
-      	}
-      	
-      	/*	
-      	*	Creating a file containing some specified text and a link to that file in  
-      	*	order to download it.
-      	*	
-      	*	Input:
-      	*		textToWrite: 	The desired content of the file to download.
-      	*/
-      	function extract(textToWrite)
-		{
-      		var textFileAsBlob = new Blob([textToWrite], {type:'text/plain'});
-			var fileNameToSaveAs = "ProjectProposal.txt";
-
-			var downloadLink = document.createElement("a");
-			downloadLink.download = fileNameToSaveAs;
-			if (window.URL != null)
-			{
-				// Chrome allows the link to be clicked
-				// without actually adding it to the DOM.
-				downloadLink.href = window.URL.createObjectURL(textFileAsBlob);
-			}
-			else
-			{
-				// Firefox requires the link to be added to the DOM
-				// before it can be clicked.
-				downloadLink.href = window.URL.createObjectURL(textFileAsBlob);
-				downloadLink.onclick = destroyClickedElement;
-				downloadLink.style.display = "none";
-				document.body.appendChild(downloadLink);
-			}
-			downloadLink.click();
-		}
-		
-		/*	
-		*	Function to fill the form by using an imported file.
-		*/
-		function importOld()
-		{
-			var filePath = document.getElementById('load');
-			var fileToLoad = filePath.files[0];
-
-			var fileReader = new FileReader();
-			fileReader.onload = function(fileLoadedEvent) 
-			{
-				var textFromFileLoaded = fileLoadedEvent.target.result;
-				copyToSession(textFromFileLoaded);
-				alert('The file was successfully imported');
-			};
-			fileReader.readAsText(fileToLoad, "UTF-8");
-		}
-
-		/*
-		* 	Look for the specified key and return the value associated.
-		*
-		* 	Input:
-		*		val:	Key to look for.
-		*		txt:	String in which the function should look for the key.
-		*
-		*	Return:
-		*		The value associated to the key.
-		*/
-		function getValueOf(val,txt)
-		{
-			var pos = 0;
-			var result = "";
-			var lookFor = "'"+ val +"': ['";
-			if(txt.indexOf(lookFor) > -1){
-				var temp = "";
-				pos = txt.indexOf(lookFor) + lookFor.length;
-				while(txt.charAt(pos) != "'" && txt.charAt(pos+1) != "]"){
-					temp += txt.charAt(pos);
-					pos ++;
-				}
-				result = temp;
-			} 
-			return result;
-		}
-		
-		/*
-		* 	Look for the next useful key of the format "[0-9]-[]"
-		*
-		* 	Input:
-		*		pos:	Position where to start the look up.
-		*		txt:	String in which the function should look for the key.
-		*
-		*	Return:
-		*		The next key.
-		*/
-		function getNextKey(posi,txt)
-		{	
-			var pos = posi;
-			var found = false;
-			var result = "";
-			while (!found || pos== txt.length) {
-				var lookFor = "'";
-				var temp = "";
-				
-				if(txt.indexOf(lookFor,pos) > -1){
-					pos = txt.indexOf(lookFor,pos) + lookFor.length;
-					while(txt.charAt(pos) != "'" || pos== txt.length){
-						temp += txt.charAt(pos);
-						pos ++;
-					}
-					if(temp.indexOf("-") == 1){
-						result = temp;
-						found = true;
-					}
-					pos ++;
-				}
-				else {
-					found = true;
-				} 
-			}
-			return [result,pos];
-		}
-
-		/*
-		* 	Get the values out of the JSON text and create the associated session variables.
-		*
-		* 	Input:
-		*		txt:	The JSON to transform into session variables.
-		*/
-		function copyToSession(txt)
-		{
-			pos = 0;
-			while (true) {
-				keyArray = getNextKey(pos,txt);
-				key = keyArray[0];
-				if(key == "" || key == undefined){
-					break;
-				}
-				pos = keyArray[1];
-				val = getValueOf(key,txt);
-				sessionStorage.setItem(key,val);
-			}
-		}
-    	</script>
+		</script>
+      	<script src="{% static 'formular/scripts/importExport.js' %}"></script>
+    	<script src="{% static 'bower_components/jquery/dist/jquery.js' %}"></script>
+    	<script src="{% static 'bower_components/angular/angular.js' %}"></script>
+    	<script src="{% static 'bower_components/angular-bbp-config/angular-bbp-config.js' %}"></script>
+    	<script src="{% static 'bower_components/angular-bootstrap/ui-bootstrap.js' %}"></script>
+    	<script src="{% static 'bower_components/angular-bootstrap/ui-bootstrap-tpls.js' %}"></script>
+    	<script src="{% static 'bower_components/angular-hbp-common/dist/angular-hbp-common.js' %}"></script>
+    	<script src="{% static 'bower_components/angular-resource/angular-resource.js' %}"></script>
+    	<script src="{% static 'bower_components/angular-ui-router/release/angular-ui-router.js' %}"></script>
+    	<script src="{% static 'bower_components/bbp-oidc-client/angular-bbp-oidc-client.js' %}"></script>
+    	<script src="{% static 'bower_components/lodash/lodash.js' %}"></script>
+    	<script src="{% static 'bower_components/marked-hbp/marked.js' %}"></script>
+    	
+    	<script src="{% static 'formular/scripts/app.js' %}"></script>
   </body>
 </html>

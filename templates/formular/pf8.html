@@ -1,0 +1,319 @@
+<!-- 
+==========================
+Content layout for step 6. 
+==========================
+-->
+{% extends "formular/layout.html" %}
+{% load form_extras %}
+
+{% block content %}
+<h2>Step {{ wizard.steps.step1 }} of {{ wizard.steps.count }}: {{ form.title }}</h2>
+<form action="" method="post">{% csrf_token %}
+
+<div class="form-group">
+	<h3><input id="id_7-scientific_experience" name="5-scientific_experience" type="checkbox" onchange="showHide('id_7-scientific_experience','scientific_experience')"> <label for="id_7-scientific_experience">Scientific experience:</label></h3>
+	<div style="padding:0px 20px;">
+		<p class="help"></p>
+	</div>
+</div>
+
+<div style="padding:0px 40px; display:none" id="scientific_experience">
+	<div class="form-group">
+		<label><label for="id_7-scientific_publications">List of scientific publications:</label> </label>
+		<div style="padding:0px 20px;"><p><textarea cols="40" id="id_7-scientific_publications" maxlength="1000" name="5-scientific_publications" rows="10"></textarea></p>
+			<p class="help">Add scientific publications in relation with the proposal</p>
+		</div>
+	</div>
+</div>
+   		
+   		
+<div class="form-group">
+	<h3><input id="id_7-software_engineering_experience" name="5-software_engineering_experience" type="checkbox" onchange="showHide('id_7-software_engineering_experience','software_engineering')"> <label for="id_7-software_engineering_experience">Software engineering experience:</label></h3>
+    <div style="padding:0px 20px;">
+		<p class="help"></p>
+	</div>
+</div>
+<div style="padding:0px 40px; display:none" id="software_engineering">
+	<div class="form-group">
+		<label><label for="id_7-software_testing">Software testing:</label> </label>
+    	    <div style="padding:0px 20px;"><p><select id="id_7-software_testing" name="5-software_testing">
+<option value="beginner">Begginer</option>
+<option value="intermediate">Intermediate</option>
+<option value="advanced">Advanced</option>
+</select></p>
+      		  	
+      		  	<p class="help">Unit, regression, integration testing</p>
+      		  	
+      	  </div>
+   		</div>
+   		
+	
+		
+    	<div class="form-group">
+     	   <label><label for="id_7-continuous_integretion">Continuous integration:</label> </label>
+    	    <div style="padding:0px 20px;"><p><select id="id_7-continuous_integretion" name="5-continuous_integretion">
+<option value="beginner">Begginer</option>
+<option value="intermediate">Intermediate</option>
+<option value="advanced">Advanced</option>
+</select></p>
+      		  	
+      		  	<p class="help">Using jenkins, bamboo, ...</p>
+      		  	
+      	  </div>
+   		</div>
+   		
+	
+		
+    	<div class="form-group">
+     	   <label><label for="id_7-software_realease_packaging">Software release and packaging:</label> </label>
+    	    <div style="padding:0px 20px;"><p><select id="id_7-software_realease_packaging" name="5-software_realease_packaging">
+<option value="beginner">Begginer</option>
+<option value="intermediate">Intermediate</option>
+<option value="advanced">Advanced</option>
+</select></p>
+      		  	
+      		  	<p class="help">RPM, Debian, ...</p>
+      		  	
+      	  </div>
+   		</div>
+   		
+	
+		
+			
+    			<div class="form-group">
+     	   			<p><input id="id_7-software_engineering_help" name="5-software_engineering_help" type="checkbox"> <label for="id_7-software_engineering_help">Would you be interested in getting support in software engineering ?</label></p>
+    	    		<div style="padding:0px 20px;">
+      		  			<p class="help"></p>
+      	  			</div>
+   				</div>
+    		
+    	
+	
+		
+			
+				</div><div class="form-group">
+     	   			<h3><input id="id_7-software_programming_experience" name="5-software_programming_experience" type="checkbox" onchange="showHide('id_7-software_programming_experience','software_programming')"> <label for="id_7-software_programming_experience">Software programming experience:</label></h3>
+    	    		<div style="padding:0px 20px;">
+      		  			<p class="help"></p>
+      	  			</div>
+   				</div><div style="padding:0px 40px; display:none"  id="software_programming">
+      	  	
+    	
+	
+		
+    	<div class="form-group">
+     	   <label><label for="id_7-interpreted_languages">Interpreted language:</label> </label>
+    	    <div style="padding:0px 20px;"><p><select id="id_7-interpreted_languages" name="5-interpreted_languages">
+<option value="beginner">Begginer</option>
+<option value="intermediate">Intermediate</option>
+<option value="advanced">Advanced</option>
+</select></p>
+      		  	
+      		  	<p class="help">Such as Python or Ruby</p>
+      		  	
+      	  </div>
+   		</div>
+   		
+	
+		
+    	<div class="form-group">
+     	   <label><label for="id_7-imperative_programming_languades">Imperative Programming language:</label> </label>
+    	    <div style="padding:0px 20px;"><p><select id="id_7-imperative_programming_languades" name="5-imperative_programming_languades">
+<option value="beginner">Begginer</option>
+<option value="intermediate">Intermediate</option>
+<option value="advanced">Advanced</option>
+</select></p>
+      		  	
+      		  	<p class="help">Such as C/C++/FORTRAN</p>
+      		  	
+      	  </div>
+   		</div>
+   		
+	
+		
+			
+    			<div class="form-group">
+     	   			<p><input id="id_7-software_programming_help" name="5-software_programming_help" type="checkbox"> <label for="id_7-software_programming_help">Would you be interested in getting support in programming?</label></p>
+    	    		<div style="padding:0px 20px;">
+      		  			<p class="help"></p>
+      	  			</div>
+   				</div>
+    		
+    	
+	
+		
+			
+				</div><div class="form-group">
+     	   			<h3><input id="id_7-parallel_programming_experience" name="5-parallel_programming_experience" type="checkbox" onchange="showHide('id_7-parallel_programming_experience','parallel_programming')"> <label for="id_7-parallel_programming_experience">Parallel programming experience:</label></h3>
+    	    		<div style="padding:0px 20px;">
+      		  			<p class="help"></p>
+      	  			</div>
+   				</div><div style="padding:0px 40px; display:none"  id="parallel_programming">
+      	  	
+    	
+	
+		
+    	<div class="form-group">
+     	   <label><label for="id_7-destributed_programming">Distributed Programming:</label> </label>
+    	    <div style="padding:0px 20px;"><p><select id="id_7-destributed_programming" name="5-destributed_programming">
+<option value="beginner">Begginer</option>
+<option value="intermediate">Intermediate</option>
+<option value="advanced">Advanced</option>
+</select></p>
+      		  	
+      		  	<p class="help">MPI, ...</p>
+      		  	
+      	  </div>
+   		</div>
+   		
+	
+		
+    	<div class="form-group">
+     	   <label><label for="id_7-concurrent_programming">Concurrent Programming:</label> </label>
+    	    <div style="padding:0px 20px;"><p><select id="id_7-concurrent_programming" name="5-concurrent_programming">
+<option value="beginner">Begginer</option>
+<option value="intermediate">Intermediate</option>
+<option value="advanced">Advanced</option>
+</select></p>
+      		  	
+      		  	<p class="help">OpenMP, Pthreads, ...</p>
+      		  	
+      	  </div>
+   		</div>
+   		
+	
+		
+    	<div class="form-group">
+     	   <label><label for="id_7-accelerator_programming">Accelerator Programming:</label> </label>
+    	    <div style="padding:0px 20px;"><p><select id="id_7-accelerator_programming" name="5-accelerator_programming">
+<option value="beginner">Begginer</option>
+<option value="intermediate">Intermediate</option>
+<option value="advanced">Advanced</option>
+</select></p>
+      		  	
+      		  	<p class="help">Cuda, OpenACC, OpenMP, ...</p>
+      		  	
+      	  </div>
+   		</div>
+   		
+	
+		
+    	<div class="form-group">
+     	   <label><label for="id_7-distributed_programming_cloud">Distributed programming in the cloud:</label> </label>
+    	    <div style="padding:0px 20px;"><p><select id="id_7-distributed_programming_cloud" name="5-distributed_programming_cloud">
+<option value="beginner">Begginer</option>
+<option value="intermediate">Intermediate</option>
+<option value="advanced">Advanced</option>
+</select></p>
+      		  	
+      		  	<p class="help">MapReduce, ...</p>
+      		  	
+      	  </div>
+   		</div>
+   		
+	
+		
+			
+    			<div class="form-group">
+     	   			<p><input id="id_7-parallel_programming_help" name="5-parallel_programming_help" type="checkbox"> <label for="id_7-parallel_programming_help">Would you be interested in getting support in parallel programming ?</label></p>
+    	    		<div style="padding:0px 20px;">
+      		  			<p class="help"></p>
+      	  			</div>
+   				</div>
+    		
+    	
+	
+		
+			
+				</div><div class="form-group">
+     	   			<h3><input id="id_7-software_optimization_experience" name="5-software_optimization_experience" type="checkbox" onchange="showHide('id_7-software_optimization_experience','software_optimization')"> <label for="id_7-software_optimization_experience">Software optimization experience:</label></h3>
+    	    		<div style="padding:0px 20px;">
+      		  			<p class="help"></p>
+      	  			</div>
+   				</div><div style="padding:0px 40px; display:none" id="software_optimization">
+      	  	
+    	
+	
+		
+    	<div class="form-group">
+     	   <label><label for="id_7-application_profiling">Application profiling using standard profiliers:</label> </label>
+    	    <div style="padding:0px 20px;"><p><select id="id_7-application_profiling" name="5-application_profiling">
+<option value="beginner">Begginer</option>
+<option value="intermediate">Intermediate</option>
+<option value="advanced">Advanced</option>
+</select></p>
+      		  	
+      		  	<p class="help">Scalasca, TAU, VTune, Extrae, ...</p>
+      		  	
+      	  </div>
+   		</div>
+   		
+	
+		
+    	<div class="form-group">
+     	   <label><label for="id_7-code_optimization">Code optimization:</label> </label>
+    	    <div style="padding:0px 20px;"><p><select id="id_7-code_optimization" name="5-code_optimization">
+<option value="beginner">Begginer</option>
+<option value="intermediate">Intermediate</option>
+<option value="advanced">Advanced</option>
+</select></p>
+      		  	
+      		  	<p class="help">Vectorization, ...</p>
+      		  	
+      	  </div>
+   		</div>
+   		
+	
+		
+    	<div class="form-group">
+     	   <label><label for="id_7-performance_modeling">Performance modeling:</label> </label>
+    	    <div style="padding:0px 20px;"><p><select id="id_7-performance_modeling" name="5-performance_modeling">
+<option value="beginner">Begginer</option>
+<option value="intermediate">Intermediate</option>
+<option value="advanced">Advanced</option>
+</select></p>
+      		  	
+      		  	<p class="help">Algorithmic density, Roofline model, ...</p>
+      		  	
+      	  </div>
+   		</div>
+   		
+	
+		
+			
+    			<div class="form-group">
+     	   			<p><input id="id_7-software_optimization_help" name="5-software_optimization_help" type="checkbox"> <label for="id_7-software_optimization_help">Would you be interested in getting support in software performance modeling and optimization ?</label></p>
+    	    		<div style="padding:0px 20px;">
+      		  			<p class="help"></p>
+      	  			</div>
+   				</div>
+    		
+    	
+	
+</div><table>
+<input id="id_proposal_wizard-current_step" name="proposal_wizard-current_step" type="hidden" value="7">
+</table>
+
+<nav class="steps navbar navbar-form navbar-fixed-bottom">
+	<input id="initial" type="hidden" value="{{ form.initial}}">
+	<button class="btn btn-default" name="wizard_goto_step" type="submit" value="{{ wizard.steps.first }}">First step</button>
+	<button class="btn btn-default" name="wizard_goto_step" type="submit" value="{{ wizard.steps.prev }}">Previous</button>
+	<a class="btn  btn-primary pull-middle" onclick="extract(cleanString(document.getElementById('initial').value));">Save current version</a>
+	<input class="btn btn-default" type="submit" value="Next"/>
+</nav>
+</form>
+
+<script>
+function showHide(input,hide)
+{
+	var elem = document.getElementById(hide);
+	if (document.getElementById(input).checked){
+		elem.style.display = '';
+	}
+	else
+	{
+		elem.style.display = 'none';
+	}
+}
+</script>
+{% endblock %}

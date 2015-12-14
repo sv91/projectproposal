@@ -1,0 +1,57 @@
+<!-- 
+==========================
+Content layout for step 7. 
+==========================
+-->
+{% extends "formular/layout.html" %}
+
+{% block content %}
+<h2>Step {{ wizard.steps.step1 }} of {{ wizard.steps.count }}: {{ form.title }}</h2>
+<form action="" method="post">{% csrf_token %}
+<div id="content">
+<input type="hidden" id ="id_form_delivrable-TOTAL_FORMS" value=0>
+</div>
+<table>
+<input id="id_proposal_wizard-current_step" name="proposal_wizard-current_step" type="hidden" value="6">
+</table>
+
+<nav class="steps navbar navbar-form navbar-fixed-bottom">
+	<input id="initial" type="hidden" value="{{ form.initial}}">
+	<button class="btn btn-default" name="wizard_goto_step" type="submit" value="{{ wizard.steps.first }}" onclick="saveValues({{ wizard.steps.step0 }})">First step</button>
+	<button class="btn btn-default" name="wizard_goto_step" type="submit" value="{{ wizard.steps.prev }}" onclick="saveValues({{ wizard.steps.step0 }})">Previous</button>
+	<a class="btn  btn-primary pull-middle" onclick="extract(cleanString(document.getElementById('initial').value));" onclick="saveValues({{ wizard.steps.step0 }})">Save current version</a>
+	<input class="btn btn-default" type="submit" value="Next"  onclick="saveValues({{ wizard.steps.step0 }})"/>
+</nav>
+</form>
+
+<script>
+function initOnload(step,callback) {
+	var i= 0;
+	var key = '3-id_form_deli-'+i+'-idN';
+	var key2 = '3-id_form_deli-'+i+'-description';
+	
+	while (key in sessionStorage){
+	
+		var inH ='<label>Delivrable Id:</label> '+sessionStorage.getItem(key)+'<br>';
+		inH +='<label>Delivrable Description:</label> '+sessionStorage.getItem(key2)+'<br>';
+		inH += '<label for="id_form_delivrable-'+i+'-cycle">Cycles number:</label><label for="id_form_delivrable-'+i+'-storage" style="padding-left:62px">Storage Amount:</label> <br/>'
+    	inH += '<input id="id_form_delivrable-'+i+'-cycle" min="0" type="number">  <input id="id_form_delivrable-'+i+'-storage"  min="0" type="number">';
+    	inH += '<hr>';
+    	
+    	var newD = document.createElement('div');
+    	newD.id = 'delivrable-'+ i;
+        newD.innerHTML= inH.replace(/__prefix__/g, i);
+        
+    	document.getElementById('content').appendChild(newD);
+    	i++;
+    	key = '3-id_form_deli-'+i+'-idN';
+		key2 = '3-id_form_deli-'+i+'-description';
+    }
+    document.getElementById('id_form_delivrable-TOTAL_FORMS').value = i;
+    callback.call();
+}
+</script>
+
+
+
+{% endblock %}

@@ -1,0 +1,79 @@
+<!-- 
+==================================
+File used to do tests on the forms 
+==================================
+-->
+
+{% load staticfiles %}
+{% load widget_tweaks %}
+{% load form_extras %}
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <link rel="stylesheet" href="{% static 'formular/assets/hbp-collaboratory-theme/dist/css/bootstrap.css' %}">
+    <link rel="stylesheet" href="{% static 'formular/css/app.css' %}">
+
+    <title>HPC: Project Requests</title>
+  </head>
+  
+  <body>
+    <div class="container-fluid form-step">
+      <div class="page-header">
+          <h1>HPC Computing Platform: Production Project Request</h1>
+      </div>
+
+{% block content %}
+<h2>Step {{ wizard.steps.step1 }} of {{ wizard.steps.count }}</h2>
+<form action="" method="post">{% csrf_token %}
+
+		{{ formset }}
+
+<nav class="steps navbar navbar-form navbar-fixed-bottom">
+	{% if wizard.steps.prev %}
+	<button class="btn btn-default" name="wizard_goto_step" type="submit" value="{{ wizard.steps.first }}">First step</button>
+	<button class="btn btn-default" name="wizard_goto_step" type="submit" value="{{ wizard.steps.prev }}">Previous</button>
+	<a class="btn  btn-primary pull-middle" onclick="extract(cleanString(document.getElementById('initial').value));">Save current version</a>
+	{% else %}
+	<a class="btn  btn-primary pull-centered" onclick="document.getElementById('load').click();">Load previous version</a>
+	<input id="load" type="file" name="load" style="display: none;" onchange="importOld();" />
+	{% endif %}
+	<input class="btn btn-default" type="submit" value="Next"/>
+</nav>
+</form>
+{% endblock %}
+    </div>
+    <script>
+    
+        /*
+      	* Method that verify if any session variable is set for this window and import it 
+      	* if no other value have been set.
+      	*/
+		window.onload = function() {
+			for (var k in sessionStorage){
+    			if (k.charAt(0)=={{ wizard.steps.step0 }}) {
+         			var field = document.getElementById('id_' + k);
+         			field.value = sessionStorage.getItem(k);
+    			}
+			}
+		};
+		</script>
+      	<script src="{% static 'formular/scripts/importExport.js' %}"></script>
+    	<script src="{% static 'bower_components/jquery/dist/jquery.js' %}"></script>
+    	<script src="{% static 'bower_components/angular/angular.js' %}"></script>
+    	<script src="{% static 'bower_components/angular-bbp-config/angular-bbp-config.js' %}"></script>
+    	<script src="{% static 'bower_components/angular-bootstrap/ui-bootstrap.js' %}"></script>
+    	<script src="{% static 'bower_components/angular-bootstrap/ui-bootstrap-tpls.js' %}"></script>
+    	<script src="{% static 'bower_components/angular-hbp-common/dist/angular-hbp-common.js' %}"></script>
+    	<script src="{% static 'bower_components/angular-resource/angular-resource.js' %}"></script>
+    	<script src="{% static 'bower_components/angular-ui-router/release/angular-ui-router.js' %}"></script>
+    	<script src="{% static 'bower_components/bbp-oidc-client/angular-bbp-oidc-client.js' %}"></script>
+    	<script src="{% static 'bower_components/lodash/lodash.js' %}"></script>
+    	<script src="{% static 'bower_components/marked-hbp/marked.js' %}"></script>
+    	
+    	<script src="{% static 'formular/scripts/app.js' %}"></script>
+  </body>
+</html>

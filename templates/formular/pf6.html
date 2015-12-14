@@ -1,0 +1,211 @@
+<!-- 
+==========================
+Content layout for step 6. 
+==========================
+-->
+{% extends "formular/layout.html" %}
+
+{% block content %}
+<h2>Step {{ wizard.steps.step1 }} of {{ wizard.steps.count }}: {{ form.title }}</h2>
+<form action="" method="post"  ng-controller="Step6 as vm">{% csrf_token %}
+<div id="info">
+<table border="0" cellpadding="0" cellspacing="0" width="100%" style="padding-bottom:10px;padding-top:10px;">
+	<td style="width:50%; vertical-align:top">
+		<label>Human Ressources Summary</label><br>
+		Total Person/Month: <input type="number" disabled id="totalPM"><br>
+		<div style="overflow: auto;height:80px; padding-left:10px" id="memberList">
+		</div>
+	</td>
+	<td style="width:50%; vertical-align:top">
+		<label>Computing Ressources Summary</label><br>
+		Total cycles number: <input type="number" disabled id="cycle"><br>
+		Total storage space:  <input type="number" disabled id="storage">
+	</td>
+</table>
+<hr>
+</div>
+<div id="content">
+<input type="hidden" id ="id_form_delivrable-TOTAL_FORMS" value=0>
+</div>
+<input type="button" value="Add More" onclick="addMore('')">
+<table>
+<input id="id_proposal_wizard-current_step" name="proposal_wizard-current_step" type="hidden" value="5">
+</table>
+
+<nav class="steps navbar navbar-form navbar-fixed-bottom">
+	<input id="initial" type="hidden" value="{{ form.initial}}">
+	<button class="btn btn-default" name="wizard_goto_step" type="submit" value="{{ wizard.steps.first }}" onclick="saveValues({{ wizard.steps.step0 }})">First step</button>
+	<button class="btn btn-default" name="wizard_goto_step" type="submit" value="{{ wizard.steps.prev }}" onclick="saveValues({{ wizard.steps.step0 }})">Previous</button>
+	<a class="btn  btn-primary pull-middle" onclick="extract(cleanString(document.getElementById('initial').value));" onclick="saveValues({{ wizard.steps.step0 }})">Save current version</a>
+	<input class="btn btn-default" type="submit" value="Next"  onclick="saveValues({{ wizard.steps.step0 }})"/>
+</nav>
+</form>
+
+<script>
+function initOnload(step,callback) {
+	addMembers();
+	var i = 1;
+	var doc = sessionStorage.getItem("5-id_form_delivrable_1-number");
+	if(doc == undefined){
+		addMore('delivrable');
+	} else {
+		while(doc != undefined){
+			addMore('delivrable');
+			setValue('id_form_delivrable_'+i+'-number');
+			setValue('id_form_delivrable_'+i+'-date');
+			setValue('id_form_delivrable_'+i+'-description');
+			setValue('id_form_delivrable_'+i+'-cycle',0);
+			setValue('id_form_delivrable_'+i+'-storage',0);
+			var j = 0;
+			var doc2 = sessionStorage.getItem('5-id_form_delivrable_'+i+'-HR_'+j+'-member');
+			while(doc2 != undefined){
+				var total = document.getElementById('id_form_delivrable_'+i+'-HR-TOTAL_FORMS').value;
+				if(!(j < total)){
+					addMore('delivrable_'+i+'-HR');
+				}
+				setValue('id_form_delivrable_'+i+'-HR_'+j+'-role');
+				setValue('id_form_delivrable_'+i+'-HR_'+j+'-pm',0);
+				var member =setValue('id_form_delivrable_'+i+'-HR_'+j+'-member');
+				if(member!=''){
+					updatePM(member,null);
+				}
+				setValue('id_form_delivrable_'+i+'-HR_'+j+'-description');
+				j++;
+				doc2 = sessionStorage.getItem('5-id_form_delivrable_'+i+'-HR_'+j+'-member');
+			}
+			i++;
+			doc = sessionStorage.getItem('5-id_form_delivrable_'+i+'-number');
+		}
+		updateRessources('cycle');
+		updateRessources('storage');
+	}
+    callback.call();
+}
+
+function setValue(toSet,defaultValue){
+	defaultValue = (typeof defaultValue === 'undefined') ? '' : defaultValue;
+	var val = sessionStorage.getItem('5-'+toSet);
+	var txt = defaultValue;
+	if (val != null && val != undefined && val !=''){
+		txt = val;
+	}
+	document.getElementById(toSet).value = txt;
+	return txt;
+}
+
+
+
+function addMore(where){
+	if(where.indexOf('-')>-1){
+		var people = '<option value="'+sessionStorage.getItem('2-id_name_1')+'">'+sessionStorage.getItem('2-id_name_1')+'</option>';
+		if(sessionStorage.getItem('2-id_name_2') != '' && sessionStorage.getItem('2-id_name_2') != undefined){
+			people += '<option value="'+sessionStorage.getItem('2-id_name_2')+'">'+sessionStorage.getItem('2-id_name_2')+'</option>';
+		}
+		var i= 1;
+		var key = '4-id_form-'+i+'-name';
+	
+		while (key in sessionStorage){
+			people += '<option value="'+sessionStorage.getItem(key)+'">'+sessionStorage.getItem(key)+'</option>';
+			i++;
+			key = '4-id_form-'+i+'-name';
+		}
+	
+		var role = '<option value="role1">Role1</option><option value="role2">Role2</option><option value="role3">Role3</option><option value="role4">Role4</option>';
+	
+		var form_idx = parseInt(document.getElementById('id_form_'+where+'-TOTAL_FORMS').value);
+		var inH = '<label style="padding-right:130px;">Member</label><label style="padding-right:25px;">Role</label><label style="padding-right:65px;">Person/Month</label><label style="padding-right:100px;">Description</label><br />';
+		inH += '<select id="id_form_'+where+'_'+form_idx+'-member" onclick="document.getElementById(this.id+\'-old\').value=this.value;" onchange="updatePM(this.value,document.getElementById(this.id+\'-old\').value);">'+people+'</select><input type="hidden" id="id_form_'+where+'_'+form_idx+'-member-old"><select id="id_form_'+where+'_'+form_idx+'-role">'+role+'</select><input id="id_form_'+where+'_'+form_idx+'-pm" type="number" min="0" step="0.01" onchange="updatePM(this.parentNode.getElementsByTagName(\'select\')[0].value,null);"><input id="id_form_'+where+'_'+form_idx+'-description" type="text" maxlength="200"><br />';
+		
+		var newD = document.createElement('div');
+		newD.innerHTML= inH;
+	    document.getElementById(where).appendChild(newD);
+	    document.getElementById('id_form_'+where+'-TOTAL_FORMS').value = form_idx + 1;
+	}
+	else {
+		var form_idx = parseInt(document.getElementById('id_form_delivrable-TOTAL_FORMS').value)+1;
+		var inH = '<label>Delivrable n°'+form_idx+':</label><br><div style="padding-left:20px;">';
+		inH += '<input type="hidden" id ="id_form_delivrable_'+form_idx+'-HR-TOTAL_FORMS" value=0><br />';
+		inH += '<div style="padding-bottom:10px;"><label style="padding-right:105px;">Number</label><label style="padding-right:120px;">Date</label><label>Description</label><br />';
+		inH += '<input id="id_form_delivrable_'+form_idx+'-number" type="number" min="1"><input id="id_form_delivrable_'+form_idx+'-date" type="date" style="height:21px"><input id="id_form_delivrable_'+form_idx+'-description" type="text" maxlength="200"></div><br />';
+		inH += '<div style="padding-bottom:10px;"><label style="padding-right:65px;">Cycle Number</label><label>Storage space</label><br />';
+		inH += '<input id="id_form_delivrable_'+form_idx+'-cycle" type="number" min="0" onchange="updateRessources(\'cycle\')"><input id="id_form_delivrable_'+form_idx+'-storage" type="number" min="0" onchange="updateRessources(\'storage\')"></div><br />';
+		inH += '<div id="delivrable_'+form_idx+'-HR"></div><input type="button" value="Add More" onclick="addMore(\'delivrable_'+form_idx+'-HR\')"><hr />';
+		
+		var newD = document.createElement('div');
+		newD.innerHTML= inH;
+	    document.getElementById('content').appendChild(newD);
+	    document.getElementById('id_form_delivrable-TOTAL_FORMS').value = form_idx ;
+		
+		addMore('delivrable_'+form_idx+'-HR');
+	}
+}
+
+function addMembers(){
+	var people = '<table border="0" cellpadding="0" cellspacing="0" width="100%">';
+	people += '<tr><td style="width:85%; vertical-align:top">' + sessionStorage.getItem('2-id_name_1')+'</td><td style="width:15%;" align="right"> <input type="number" disabled id="'+sessionStorage.getItem('2-id_name_1')+'" style="width:50px; align:right;" value="0"></td></tr>';
+	if(sessionStorage.getItem('2-id_name_2') != '' && sessionStorage.getItem('2-id_name_2') != undefined){
+		people += '<tr><td style="width:85%; vertical-align:top">' + sessionStorage.getItem('2-id_name_2')+'</td><td style="width:15%;" align="right"> <input type="number" disabled id="'+sessionStorage.getItem('2-id_name_2')+'" style="width:50px; align:right;" value="0"></td></tr>';
+	}
+	var i= 1;
+	var key = '4-id_form-'+i+'-name';
+	
+	while (key in sessionStorage){
+		people += '<tr><td style="width:85%; vertical-align:top">' + sessionStorage.getItem(key)+'</td><td style="width:15%;" align="right"> <input type="number" disabled id="'+sessionStorage.getItem(key)+'" style="width:50px; align:right;" value="0"></td></tr>';
+		i++;
+		key = '4-id_form-'+i+'-name';
+	}
+	people +='</table>';
+	document.getElementById('memberList').innerHTML = people;
+}
+
+function updateRessources(type){
+	var total = 0;
+	var i = 1;
+	var temp = document.getElementById('id_form_delivrable_'+i+'-'+type);
+	while(temp != undefined){
+		total += parseInt(temp.value);
+		i++;
+		temp = document.getElementById('id_form_delivrable_'+i+'-'+type);
+	}
+	document.getElementById(type).value = total;
+}
+
+function updatePM(name,old){
+	var total = 0;
+	var i=1;
+	var counter = 0;
+	var tmp = document.getElementById('id_form_delivrable_'+i+'-HR_0-member');
+	while(tmp != undefined){
+		var j=0;
+		var temp = document.getElementById('id_form_delivrable_'+i+'-HR_'+j+'-member');
+		while(temp != undefined){
+			if(temp.value == name){
+				total += parseFloat(document.getElementById('id_form_delivrable_'+i+'-HR_'+j+'-pm').value);
+			}
+			j++;
+			temp = document.getElementById('id_form_delivrable_'+i+'-HR_'+j+'-member');
+		}
+		i++;
+		tmp = document.getElementById('id_form_delivrable_'+i+'-HR_0-member');
+	}
+	document.getElementById(name).value = total;
+	if(old!=null && old!=undefined ){
+		updatePM(old,null);
+	}
+	updateTotal();
+}
+
+function updateTotal(){
+	var arrayInput = document.getElementById('memberList').getElementsByTagName('input');
+	var total = 0;
+	for(var i= 0; i<arrayInput.length;i++){
+		var val = parseFloat(arrayInput[i].value);
+		total += val;
+	}
+	document.getElementById('totalPM').value = total;
+}
+
+
+</script>
+
+{% endblock %}
