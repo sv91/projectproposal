@@ -97,6 +97,7 @@ function setValue(toSet,defaultValue){
 
 function addMore(where){
 	if(where.indexOf('-')>-1){
+		var roleList = ['Project Leader','Technical Leader','Developper','Scientist'];
 		var people = '<option value="'+sessionStorage.getItem('2-id_name_1')+'">'+sessionStorage.getItem('2-id_name_1')+'</option>';
 		if(sessionStorage.getItem('2-id_name_2') != '' && sessionStorage.getItem('2-id_name_2') != undefined){
 			people += '<option value="'+sessionStorage.getItem('2-id_name_2')+'">'+sessionStorage.getItem('2-id_name_2')+'</option>';
@@ -110,7 +111,10 @@ function addMore(where){
 			key = '4-id_form-'+i+'-name';
 		}
 	
-		var role = '<option value="role1">Role1</option><option value="role2">Role2</option><option value="role3">Role3</option><option value="role4">Role4</option>';
+		var role = '';
+		for(k in roleList){
+			role += '<option value="'+roleList[k]+'">'+roleList[k]+'</option>';
+		}
 	
 		var form_idx = parseInt(document.getElementById('id_form_'+where+'-TOTAL_FORMS').value);
 		var inH = '<label style="padding-right:130px;">Member</label><label style="padding-right:25px;">Role</label><label style="padding-right:65px;">Person/Month</label><label style="padding-right:100px;">Description</label><br />';
