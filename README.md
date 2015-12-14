@@ -9,11 +9,11 @@ If you don't have pip installed: [Install pip](https://pip.pypa.io/en/stable/ins
 
 Go to [Collab portal: Client creation](collab.humanbrainproject.eu/#/collab/54/nav/1051) and click on the <code>+ Create new Client</code> button.<br />
 Fill the formular with those informations:
-	* Name: 'HPC Computing Platform: Production Project Request'
-	* Application type: Server flow
-	* Authorized redirect URLs: 'https://localhost:8000'
-	* Authorized scopes: openid, profile, offline_access, hbp.users
-	* Leave the logo as it is.
+* Name: 'HPC Computing Platform: Production Project Request'
+* Application type: Server flow
+* Authorized redirect URLs: 'https://localhost:8000'
+* Authorized scopes: openid, profile, offline_access, hbp.users
+* Leave the logo as it is.
 Press save and stay on the page that will appear.
 
 Create a file 'projectproposal/projectproposal/localsettings.py' and write:
