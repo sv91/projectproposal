@@ -4,7 +4,7 @@ Multi step form created through Django in order to serve as a proposal generator
 
 ## Installation
 
-Execute the command <code>pip install -i https://bbpteam.epfl.ch/repository/devpi/simple --pre -r "requirements.txt"</code>.<br />
+Execute first the command <code>pip install pip==1.4.1</code> followed by <code>pip install -i https://bbpteam.epfl.ch/repository/devpi/simple --pre -r "requirements.txt"</code>.<br />
 If you don't have pip installed: [Install pip](https://pip.pypa.io/en/stable/installing/) .
 
 Go to [Collab portal: Client creation](collab.humanbrainproject.eu/#/collab/54/nav/1051) and click on the <code>+ Create new Client</code> button.<br />
@@ -32,7 +32,7 @@ Open your browser and go to [LocalHost](https://localhost:8000/formular) and aut
 ## TODO List
 
 - [ ] Visual Design
-	- [ ]
+	- [ ] .
 	
 - [ ] Steps
 	- [ ] Step 7: Summary of step 6
