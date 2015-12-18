@@ -45,7 +45,7 @@ Open your browser and go to [LocalHost](https://localhost:8000/formular) and aut
 	- [ ] Delete "Add more" parts
 		- [ ] Remove the formular part on the screen
 		- [ ] Delete the session Variable
-		- [ ] Delete the linked session Variable
+		- [x] Delete the linked session Variable
 		- [ ] Adapt numbering
 
 - [ ] Information treatment
