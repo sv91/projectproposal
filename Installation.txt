@@ -3,7 +3,7 @@
 Unzip the 'projectproposal' archive.
 
 Open a terminal and go to the unzipped folder.
-Execute the command 'pip install -i https://bbpteam.epfl.ch/repository/devpi/simple --pre -r "requirements.txt"'.
+Execute the command 'pip install pip==1.4.1' followed by 'pip install -i https://bbpteam.epfl.ch/repository/devpi/simple --pre -r "requirements.txt"'.
 If you don't have pip installed: https://pip.pypa.io/en/stable/installing/ .
 
 Go to 'collab.humanbrainproject.eu/#/collab/54/nav/1051' and click on the '+ Create new Client' button.
