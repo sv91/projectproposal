@@ -12,7 +12,7 @@ Content layout for step 4.
 <form action="" method="post">{% csrf_token %}
 {{ wizard.management_form }}
 <div class="form-group" id="task">
-</div>
+</div><div></div>
 
 <div class="form-group">
    	<label for="id_3-project_title">Project Title:</label> {{ form.project_title.errors }}
@@ -106,8 +106,8 @@ function initOnload(step,callback) {
         		txt = 'BBP';
         		break;
     		case 'none':		
-    			callback.call();
-        		return;
+    			txt = sessionStorage.getItem('0-id_0-other');
+        		break;
     		default:
         		txt = 'HBP';
 		}
@@ -115,7 +115,7 @@ function initOnload(step,callback) {
 		inH = '<label for="id_3-task">Choose the '+txt+' task(s) this allocation will support:</label> {{ form.hbp_task.errors }}';
     	inH +='<input type="hidden" id="taskNumber" value="0">';
     	inH +='<div><div style="padding:0px 20px;" id="tasks">';
-    	inH +='</div></div><div><br /></div><br /><input type="button" value="Add a Task" id="add_task" onclick="addTask()">';
+    	inH +='</div></div><div style="padding-left:20px"><input type="button" value="Add a Task" id="add_task" onclick="addTask()" ></div>';
 	}
     var newD = document.createElement('div');
     newD.innerHTML= inH;
@@ -186,16 +186,19 @@ function initOnload(step,callback) {
         			array = taskBBP;
 	        		break;
     			case 'none':		
-        			return;
+        			break;
     			default:
         			array = taskHBP;
 			}
-	
-			inH ='<select id="id_3-task-'+i+'" >';
-    		for(var j=0;j<array.length;j++){
-    			inH += '<option name="3-task-'+i+'-'+array[j]+'" id="id_3-task-'+i+'-'+array[j]+'" value="'+array[j]+'">'+array[j]+'</option>';
+			if(val!='none'){
+				inH ='<select id="id_3-task-'+i+'" >';
+    			for(var j=0;j<array.length;j++){
+    				inH += '<option name="3-task-'+i+'-'+array[j]+'" id="id_3-task-'+i+'-'+array[j]+'" value="'+array[j]+'">'+array[j]+'</option>';
+    			}
+    			inH +='</select>';
+    		} else {
+    			inH = '<input type="text" name="3-task-'+i+'" id="id_3-task-'+i+'">';
     		}
-    		inH +='</select>';
 		}
 		var newD = document.createElement('div');
 		newD.innerHTML = inH;

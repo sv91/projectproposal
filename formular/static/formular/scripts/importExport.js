@@ -195,6 +195,7 @@ function importAddMore(k,type) {
 function saveValues(step){
 	if(step == 0){
 		saveValue('id_0-grant', 0);
+		saveValue('id_0-other', 0);
 	}
 	if(step == 1){
     	var form_idx = document.getElementById('id_form-TOTAL_FORMS').value;
@@ -239,6 +240,7 @@ function saveValues(step){
 		var deli_idx = document.getElementById('id_form_delivrable-TOTAL_FORMS').value;
 		for(i=1; i<parseInt(deli_idx)+1; i++){
 			saveValue('id_form_delivrable_'+i+'-date',5);
+			saveValue('id_form_delivrable_'+i+'-title',5);
 			saveValue('id_form_delivrable_'+i+'-description',5);
 			saveValue('id_form_delivrable_'+i+'-cycle',5);
 			saveValue('id_form_delivrable_'+i+'-storage',5);
