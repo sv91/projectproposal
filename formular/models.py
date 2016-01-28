@@ -1,6 +1,6 @@
 from django.db import models
 from django.utils import timezone
-	
+import tagulous.models
 
 	
 # Data model corresponding to the first page of the form.
@@ -27,7 +27,7 @@ class Proposal3(models.Model):
 class Proposal4(models.Model):
 	task = models.CharField(max_length=300)
 	project_title = models.CharField(max_length=300)
-	project_tags = models.CharField(max_length=300)
+	project_tags = tagulous.models.TagField()
 	executive_summary = models.TextField(max_length=1000)
 	impact_statement = models.TextField(max_length=1000)
 	benefit_to_community = models.TextField(max_length=1000)

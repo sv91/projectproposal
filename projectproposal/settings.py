@@ -39,6 +39,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'tagulous',
     'widget_tweaks',
     'formtools',
     'formular',
@@ -114,3 +115,4 @@ HBP_ENV_URL = 'https://collab.humanbrainproject.eu/config.json'
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 
 STATIC_URL = '/static/'
+

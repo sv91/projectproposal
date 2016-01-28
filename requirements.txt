@@ -10,6 +10,7 @@ django-formtools==1.0
 django-jsonify==0.3.0
 django-sslserver==0.15
 django-widget-tweaks==1.4.1
+django-tagulous==0.11.1
 hbp-app-python-auth==0.0.4
 html5lib==1.0b8
 oauthlib==1.0.3
