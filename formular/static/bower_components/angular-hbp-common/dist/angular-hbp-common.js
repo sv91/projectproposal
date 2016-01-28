@@ -339,7 +339,7 @@ angular.module('hbpCommon').directive('hbpUserSelector', [
             }, hbpUtil.ferr);
           };
           $scope.selectUser = function () {
-            var result = $scope.onUserSelect({ user: $scope.newUser });
+            var result = $scope.onUserSelect()({ user: $scope.newUser });
             $scope.selectionDisabled = true;
             var reEnableSelector = function () {
               $scope.selectionDisabled = false;
