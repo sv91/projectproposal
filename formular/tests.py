@@ -12,7 +12,7 @@ class ConnectTestCase(unittest.TestCase):
 	def tearDown(self):
 		self.browser.close()
 
-	def testConnection(self):
+	def testLogin(self):
 		driver = self.browser
 		driver.get('https://localhost:8000/formular/')
 		element = WebDriverWait(driver, 10).until(EC.title_contains('OpenID'))
@@ -21,6 +21,7 @@ class ConnectTestCase(unittest.TestCase):
 		driver.find_element_by_xpath("html/body/div/div/div/form/div/input").click()
 		element = WebDriverWait(driver, 10).until(EC.title_contains('HPC'))
 		self.assertIn('HPC', driver.title)
+	
 
 if __name__ == '__main__':
 	unittest.main(verbosity=2)
