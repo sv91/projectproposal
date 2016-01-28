@@ -5,7 +5,8 @@ Content layout for step 4.
 -->
 {% extends "formular/layout.html" %}
 {% load staticfiles %}
-<link rel="stylesheet" type="text/css" href="bower_components/ng-tags-input/ng-tags-input.min.css">
+    <link rel="stylesheet" type="text/css" href="{% static 'bower_components/ng-tags-input/ng-tags-input.min.css' %}">
+
 
 {% block content %}
 <h2>Step {{ wizard.steps.step1 }} of {{ wizard.steps.count }}: {{ form.title }}</h2>
@@ -24,9 +25,8 @@ Content layout for step 4.
 <div class="form-group">
 	<label for="id_3-project_tags">Project Key Words:</label> {{ form.project_tags.errors }}
     <div style="padding:0px 20px;">
-		<p>
-			{{ form.project_tags}}
-		</p>
+		<tags-input ng-model="tags" class="project-keywords" id="projectTags">
+        </tags-input>
 	</div>
 </div>
 
@@ -90,7 +90,16 @@ Content layout for step 4.
 </nav>
 </form>
 <script src="{% static 'bower_components/angular/angular.js' %}"></script>
-<script src="{% static 'bower_components/ng-tags-input/ng-tags-input.js' %}"></script>
+<script src="{% static 'bower_components/jquery/dist/jquery.min.js' %}"></script>
+<script src="{% static 'bower_components/lodash/dist/lodash.min.js' %}"></script>
+<script src="{% static 'bower_components/angular-bbp-config/angular-bbp-config.js' %}"></script>
+<script src="{% static 'bower_components/bbp-oidc-client/angular-bbp-oidc-client.js' %}"></script>
+<script src="{% static 'bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js' %}"></script>
+<script src="{% static 'bower_components/angular-ui-router/release/angular-ui-router.min.js' %}"></script>
+<script src="{% static 'bower_components/angular-resource/angular-resource.min.js' %}"></script>
+<script src="{% static 'bower_components/angular-hbp-common/dist/angular-hbp-common.min.js' %}"></script>
+<script src="{% static 'bower_components/ng-tags-input/ng-tags-input.min.js' %}"></script>
+
 
 <script>
 function initOnload(step,callback) {
