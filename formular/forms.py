@@ -63,9 +63,7 @@ class ProposalForm6(forms.Form):
 	members = mem(queryset=MembersPosition.objects.order_by('camipro'))
 
 class ProposalForm7(forms.Form):
-	title = "Computing Ressources"
-	delivrablesComp = modelformset_factory(DelivrableComp,extra=1, exclude=('proposal',))
-	deli = delivrablesComp(queryset=DelivrableComp.objects.order_by('idN'))
+	title = "Proposal Review"
 			
 # Eighth page with skill assessment	
 class ProposalForm8(forms.ModelForm):

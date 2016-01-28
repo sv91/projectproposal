@@ -4,6 +4,7 @@ Content layout for step 3.
 ==========================
 -->
 {% extends "formular/layout.html" %}
+{% load staticfiles %}
 
 {% block content %}
 <h2>Step {{ wizard.steps.step1 }} of {{ wizard.steps.count }}: {{ form.title }}</h2>
@@ -32,6 +33,7 @@ Content layout for step 3.
 </nav>
 </form>
 
+    
 <script>
 function initOnload(step,callback) {
 	var val = sessionStorage.getItem('2-id_name_1');
