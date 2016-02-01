@@ -39,7 +39,6 @@ class ProposalForm4(forms.ModelForm):
 	title = "Project Description Overview"
 	task = forms.CharField(max_length=300,required = False)
 	project_title = forms.CharField(max_length=300, label="Project Title")
-	project_tags = forms.CharField(max_length=300, label="Project Key Words")
 	executive_summary = forms.CharField(widget=forms.Textarea(attrs={'rows':5, 'cols':100}), max_length=1000, label="Executive Summary")
 	impact_statement = forms.CharField(widget=forms.Textarea(attrs={'rows':5, 'cols':100}), max_length=1000, label="Impact Statement")
 	benefit_to_community = forms.CharField(widget=forms.Textarea(attrs={'rows':5, 'cols':100}), max_length=1000, label="Benefit to Community")

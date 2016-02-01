@@ -121,10 +121,12 @@ function setValue(toSet,defaultValue){
 
 function addMore(where){
 	if(where.indexOf('-')>-1){
+		var num =1;
 		var roleList = ['Deliverable lead','Technical Lead','Scientific Lead','Developper','Scientist'];
 		var people = '<option value="'+sessionStorage.getItem('2-id_name_1')+'">'+sessionStorage.getItem('2-id_name_1')+'</option>';
 		if(sessionStorage.getItem('2-id_name_2') != '' && sessionStorage.getItem('2-id_name_2') != undefined){
 			people += '<option value="'+sessionStorage.getItem('2-id_name_2')+'">'+sessionStorage.getItem('2-id_name_2')+'</option>';
+			num++;
 		}
 		var i= 1;
 		var key = '4-id_form-'+i+'-name';
@@ -132,8 +134,10 @@ function addMore(where){
 		while (key in sessionStorage){
 			people += '<option value="'+sessionStorage.getItem(key)+'">'+sessionStorage.getItem(key)+'</option>';
 			i++;
+			num++;
 			key = '4-id_form-'+i+'-name';
 		}
+		setSize(num);
 	
 		var role = '';
 		for(k in roleList){
@@ -153,8 +157,10 @@ function addMore(where){
 		var form_idx = parseInt(document.getElementById('id_form_delivrable-TOTAL_FORMS').value)+1;
 		var inH = '<img src="/static/formular/images/plus.jpg" style="float:left; padding-right:5px; display:none" id="plus_d_'+form_idx+'" onclick="openD(\'d_'+form_idx+'\')"><img src="/static/formular/images/minus.jpg" style="float:left; padding-right:5px" id="minus_d_'+form_idx+'"  onclick="closeD(\'d_'+form_idx+'\')"><label>Delivrable '+form_idx+' </label><label id="label_d_'+form_idx+'"></label><br><div style="padding-left:20px;"><div id="d_'+form_idx+'">';
 		inH += '<input type="hidden" id ="id_form_delivrable_'+form_idx+'-HR-TOTAL_FORMS" value=0><br />';
-		inH += '<div style="padding-bottom:10px;"><label style="padding-right:120px;">Title</label><label style="padding-right:120px;">Date</label><label>Description</label> (max. 150 characters)<br />';
-		inH += '<input id="id_form_delivrable_'+form_idx+'-title" type="text" style="height:21px; width:120px;vertical-align:top" onchange="editLabel(\'label_d_'+form_idx+'\',\'id_form_delivrable_'+form_idx+'-title\')" ><span style="padding-left:27px;"></span><input id="id_form_delivrable_'+form_idx+'-date" type="date" style="height:21px; width:120px;vertical-align:top"><span style="padding-left:28px;"></span><textarea id="id_form_delivrable_'+form_idx+'-description" maxlength="150" rows="1" cols="58"></textarea></div><br />';
+		inH += '<div style="padding-bottom:10px;"><label style="padding-right:120px;">Title</label><label style="padding-right:120px;">Date</label><label>Dependency</label><br />';
+		inH += '<input id="id_form_delivrable_'+form_idx+'-title" type="text" style="height:21px; width:120px;vertical-align:top" onchange="editLabel(\'label_d_'+form_idx+'\',\'id_form_delivrable_'+form_idx+'-title\')" ><span style="padding-left:27px;"></span><input id="id_form_delivrable_'+form_idx+'-date" type="date" style="height:21px; width:120px;vertical-align:top"><span style="padding-left:28px;"></span><select id="id_form_delivrable_'+form_idx+'-dependency"></select></div><br />';
+		inH += '<div style="padding-bottom:10px;"><label>Description</label> (max. 150 characters)<br />';
+		inH += '<textarea id="id_form_delivrable_'+form_idx+'-description" maxlength="150" rows="1" cols="58"></textarea></div><br />';
 		inH += '<div style="padding-bottom:10px;"><label style="padding-right:195px;">Core hours</label><label style="padding-right:158px;">Disk storage(TB)</label><label>Tape storage(TB)</label><br />';
 		inH += '<input id="id_form_delivrable_'+form_idx+'-cycle" type="number" min="0" onchange="updateRessources(\'cycle\')" style="width:200px"><span style="padding-left:60px;"></span><input id="id_form_delivrable_'+form_idx+'-storage" type="number" min="0" onchange="updateRessources(\'storage\')" style="width:200px"><span style="padding-left:60px;"></span><input id="id_form_delivrable_'+form_idx+'-tape" type="number" min="0" onchange="updateRessources(\'tape\')" style="width:200px"></div><br />';
 		inH += '<div style="padding-bottom:10px;"><label >Risks</label> (max. 150 characters)<br />';
@@ -165,6 +171,14 @@ function addMore(where){
 		newD.innerHTML= inH;
 	    document.getElementById('content').appendChild(newD);
 	    document.getElementById('id_form_delivrable-TOTAL_FORMS').value = form_idx ;
+	    
+	    if(form_idx==1){
+	    	document.getElementById('id_form_delivrable_'+form_idx+'-dependency').innerHTML ='<option value="0">None</option>';
+	    } else {
+	    	document.getElementById('id_form_delivrable_'+form_idx+'-dependency').innerHTML = document.getElementById('id_form_delivrable_1-dependency').innerHTML;
+	    }
+	    
+	    updateDependency(0,'Delivrable '+form_idx);
 		
 		addMore('delivrable_'+form_idx+'-HR');
 	}
@@ -249,6 +263,33 @@ function openD(deli){
 
 function editLabel(label,val){
 	document.getElementById(label).innerHTML = ' - '+document.getElementById(val).value;
+}
+
+function updateDependency(num,name){
+	var i = 1;
+	var key='id_form_delivrable_'+i+'-dependency';
+	if (num == 0){
+		var sel = document.getElementById(key);
+		while(sel!=null && sel!=undefined){
+			var slected = sel.options[sel.selectedIndex].value;
+			sel.innerHTML = sel.innerHTML + '<option value="'+name.substring(11)+'">'+name+'</option>';
+			sel.options[slected].selected = true;
+			i++;
+			key='id_form_delivrable_'+i+'-dependency';
+			sel = document.getElementById(key);
+		}
+	}
+}
+
+function setSize(size){
+	var s = document.getElementById('totalPM').style.width;
+	var toSet = '60px';
+	if(size >3){
+		toSet = '75px';
+	}
+	if(s!=toSet){
+		document.getElementById('totalPM').style.width = toSet;
+	}
 }
 
 

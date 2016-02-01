@@ -116,3 +116,9 @@ HBP_ENV_URL = 'https://collab.humanbrainproject.eu/config.json'
 
 STATIC_URL = '/static/'
 
+SERIALIZATION_MODULES = {
+    'xml':    'tagulous.serializers.xml_serializer',
+    'json':   'tagulous.serializers.json',
+    'python': 'tagulous.serializers.python',
+    'yaml':   'tagulous.serializers.pyyaml',
+}

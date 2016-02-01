@@ -15,40 +15,122 @@ Content layout for step 7.
 <input id="id_proposal_wizard-current_step" name="proposal_wizard-current_step" type="hidden" value="6">
 </table>
 
+<div><br />
+	<div id="choice">
+	</div><br />
+	<div id="info">
+	</div>
+</div>
+
+
 <nav class="steps navbar navbar-form navbar-fixed-bottom">
 	<input id="initial" type="hidden" value="{{ form.initial}}">
 	<button class="btn btn-default" name="wizard_goto_step" type="submit" value="{{ wizard.steps.first }}" onclick="saveValues({{ wizard.steps.step0 }})">First step</button>
 	<button class="btn btn-default" name="wizard_goto_step" type="submit" value="{{ wizard.steps.prev }}" onclick="saveValues({{ wizard.steps.step0 }})">Previous</button>
 	<a class="btn  btn-primary pull-middle" onclick="extract(cleanString(document.getElementById('initial').value));" onclick="saveValues({{ wizard.steps.step0 }})">Save current version</a>
-	<input class="btn btn-default" type="submit" value="Next"  onclick="saveValues({{ wizard.steps.step0 }})"/>
+	<input class="btn btn-default" type="submit" value="Validate"  onclick="saveValues({{ wizard.steps.step0 }})"/>
 </nav>
 </form>
 
 <script>
 function initOnload(step,callback) {
-	var i= 0;
-	var key = '3-id_form_deli-'+i+'-idN';
-	var key2 = '3-id_form_deli-'+i+'-description';
+	var i= 1;
+	var key = '5-id_form_delivrable_'+i;
+	var list = '<option value="0">Whole proposal</option>';
+	var memberList = [];
+	var divs = '';
+	var totalCycle = 0;
+	var totalStorage = 0;
+	var totalTape = 0;
+	var totalPM = 0;
 	
-	while (key in sessionStorage){
+	while (key+'-title' in sessionStorage){
+		var title = sessionStorage.getItem(key+'-title');
+		var date = sessionStorage.getItem(key+'-date');
+		var description = sessionStorage.getItem(key+'-description');
+		var risk = sessionStorage.getItem(key+'-risk');
+		var cycle = parseInt(sessionStorage.getItem(key+'-cycle'));
+		var storage = parseInt(sessionStorage.getItem(key+'-storage'));
+		var tape = parseInt(sessionStorage.getItem(key+'-tape'));
+		var memberListDeli = [];
+		var totalPMDeli = 0;
+		
+		list+='<option value="'+i+'">Delivrable '+i+' - '+title+'</option>';
+		
+		var j = 0;
+		var keyMember = '5-id_form_delivrable_'+i+'-HR_'+j;
+		while (keyMember+'-member' in sessionStorage){
+			var name = sessionStorage.getItem(keyMember+'-member');
+			var pm = parseInt(sessionStorage.getItem(keyMember+'-pm'));
+			totalPMDeli += pm;
+			if (name in memberListDeli){
+				memberListDeli[name] += pm; 
+			} else {
+				memberListDeli[name] = pm;
+			}
+			if (name in memberList){
+				memberList[name] += pm; 
+			} else {
+				memberList[name] = pm;
+			}
+			j++;
+			keyMember = '5-id_form_delivrable_'+i+'-HR_'+j;
+		}
+		
 	
-		var inH ='<label>Delivrable Id:</label> '+sessionStorage.getItem(key)+'<br>';
-		inH +='<label>Delivrable Description:</label> '+sessionStorage.getItem(key2)+'<br>';
-		inH += '<label for="id_form_delivrable-'+i+'-cycle">Cycles number:</label><label for="id_form_delivrable-'+i+'-storage" style="padding-left:62px">Storage Amount:</label> <br/>'
-    	inH += '<input id="id_form_delivrable-'+i+'-cycle" min="0" type="number">  <input id="id_form_delivrable-'+i+'-storage"  min="0" type="number">';
-    	inH += '<hr>';
+		var inH ='<div id="'+i+'" style="display:none"><label>Delivrable '+i+' - '+title+'</label><br>';
+		inH += '<div style="padding-bottom:10px;"><label style="padding-right:120px;">Date</label><label>Description</label> (max. 150 characters)<br />';
+		inH += '<input style="height:21px; width:120px;vertical-align:top" readonly value="'+date+'"><span style="padding-left:28px;"></span><textarea maxlength="150" rows="1" cols="58" readonly>'+description+'</textarea></div><br />';
+		inH += '<div style="padding-bottom:10px;"><label style="padding-right:195px;">Core hours</label><label style="padding-right:158px;">Disk storage(TB)</label><label>Tape storage(TB)</label><br />';
+		inH += '<input type="number" readonly style="width:200px" value="'+cycle+'"><span style="padding-left:60px;"></span><input type="number" readonly style="width:200px" value="'+storage+'"><span style="padding-left:60px;"></span><input type="number" value="'+tape+'" readonly style="width:200px"></div><br />';
+		inH += '<div style="padding-bottom:10px;"><label >Risks</label> (max. 150 characters)<br />';
+		inH += '<textarea readonly maxlength="150" rows="1" cols="100">'+risk+'</textarea></div>';
+		inH += '<div><label style="padding-right:175px;">Member</label><label style="padding-right:53px;">Person/Month Total</label><br /></div><div>'
+    
+    	for(var keyName in memberListDeli){
+    		inH += '<input readonly style="width:180px" value="'+keyName+'"><span style="padding-left:40px;"><input readonly type="number" value="'+memberListDeli[keyName]+'" style="width:100px"><br />';
+    	}
     	
-    	var newD = document.createElement('div');
-    	newD.id = 'delivrable-'+ i;
-        newD.innerHTML= inH.replace(/__prefix__/g, i);
-        
-    	document.getElementById('content').appendChild(newD);
+		totalCycle += cycle;
+		totalStorage += storage;
+		totalTape += tape;
+		totalPM += totalPMDeli;
+    	
+    	document.getElementById('info').innerHTML += inH+'</div><br /><hr /></div>';
     	i++;
-    	key = '3-id_form_deli-'+i+'-idN';
-		key2 = '3-id_form_deli-'+i+'-description';
+		key = '5-id_form_delivrable_'+i;
     }
-    document.getElementById('id_form_delivrable-TOTAL_FORMS').value = i;
+    var inHTotal= "";
+    var inHTotal ='<div id="0"><label>'+sessionStorage.getItem('1-id_form_0-project_title')+'</label><br>';
+	inHTotal += '<div style="padding-bottom:10px;"><label style="padding-right:95px;">Start Date</label><label style="padding-right:95px;"> End Date</label><br />';
+	inHTotal += '<input style="height:21px; width:120px;vertical-align:top" readonly value="'+date+'"><span style="padding-left:28px;"></span><input style="height:21px; width:120px;vertical-align:top" readonly value="'+date+'"></div><br />';
+	inHTotal += '<div style="padding-bottom:10px;"><label style="padding-right:195px;">Core hours</label><label style="padding-right:158px;">Disk storage(TB)</label><label>Tape storage(TB)</label><br />';
+	inHTotal += '<input type="number" readonly style="width:200px" value="'+totalCycle+'"><span style="padding-left:60px;"></span><input type="number" readonly style="width:200px" value="'+totalStorage+'"><span style="padding-left:60px;"></span><input type="number" value="'+totalTape+'" readonly style="width:200px"></div><br />';
+	inHTotal += '<div><label style="padding-right:175px;">Member</label><label style="padding-right:53px;">Person/Month Total</label><br /></div><div>'
+	 
+    for(var keyName in memberList){
+    	inHTotal += '<input readonly style="width:180px" value="'+keyName+'"><span style="padding-left:40px;"><input readonly type="number" value="'+memberList[keyName]+'" style="width:100px"><br />';
+    }	
+
+
+    document.getElementById('info').innerHTML = inHTotal+'</div><br /><hr /></div>'+document.getElementById('info').innerHTML;
+    document.getElementById('choice').innerHTML = '<select id="selectChoice" style="width:730px" onchange="changeFocus()">'+list+'</select>';
     callback.call();
+}
+
+function changeFocus(){
+	var i = 0;
+	var j = parseInt(document.getElementById('selectChoice').value);
+	var div = document.getElementById(i);
+	while (div!=null || div !=undefined){
+		if(i == j){
+			div.style.display = "";
+		} else {
+			div.style.display = "none";
+		}
+		i++;
+		div = document.getElementById(i);
+	}
 }
 </script>
 
