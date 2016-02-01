@@ -32,10 +32,11 @@ Open your browser and go to [LocalHost](https://localhost:8000/formular) and aut
 ## TODO List
 
 - [ ] Visual Design
-	- [ ] .
+	- [ ] Step 6: Description and dependency
+	- [ ] Step 7: Improve visual
 	
 - [ ] Steps
-	- [ ] Step 7: Summary of step 6
+	- [x] Step 7: Summary of step 6
 	- [ ] Legal agreement
 	- [ ] PDF generation and update
 
@@ -55,3 +56,6 @@ Open your browser and go to [LocalHost](https://localhost:8000/formular) and aut
 
 - [ ] Development
 	- [ ] Continuous integration
+	- [ ] Testing
+	- [ ] Comment
+	- [ ] Documentation
