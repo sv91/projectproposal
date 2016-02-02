@@ -234,9 +234,8 @@ function addMore(where){
 		inH += '<div style="padding-bottom:10px;"><label>Description</label> (max. 150 characters)<br />';
 		inH += '<textarea id="id_form_delivrable_'+form_idx+'-description" maxlength="150" rows="1" cols="58"></textarea></div><br />';
 		
-		
-		//inH += '<div style="padding-bottom:10px;"><label style="padding-right:195px;">Core hours</label><label style="padding-right:158px;">Disk storage(TB)</label><label>Tape storage(TB)</label><br />';
-		//inH += '<input id="id_form_delivrable_'+form_idx+'-cycle" type="number" min="0" onchange="updateRessources(\'cycle\')" style="width:200px"><span style="padding-left:60px;"></span><input id="id_form_delivrable_'+form_idx+'-storage" type="number" min="0" onchange="updateRessources(\'storage\')" style="width:200px"><span style="padding-left:60px;"></span><input id="id_form_delivrable_'+form_idx+'-tape" type="number" min="0" onchange="updateRessources(\'tape\')" style="width:200px"></div><br />';
+		inH += '<div style="padding-bottom:10px;"><label >Risks</label> (max. 150 characters)<br />';
+		inH += '<textarea id="id_form_delivrable_'+form_idx+'-risk" maxlength="150" rows="1" cols="100" placeholder="External Dependency, ..."></textarea></div>';
 		
 		inH += '<table border="0" cellpadding="0" cellspacing="0" width="100%" style="padding-bottom:10px;">';
 		inH += '<td style="width:32%; vertical-align:top">';
@@ -304,21 +303,8 @@ function addMore(where){
 		inH += '<div><input type="checkbox" name="type" value="strorage" id="id_form_delivrable_'+form_idx+'-type_devl_stor" onchange="closeOpen(\'id_form_delivrable_'+form_idx+'-type_devl_stor\')"> <label>Storage</label><br>';
 		inH += '<div style="padding-left:10px; display:none">Number of artefacts <br /><input type="number" onchange="updateRessources(\'arte\')" onchange="updateRessources(\'arte\')" value="0" id="id_form_delivrable_'+form_idx+'-type_devl_stor_arte" min="0"><br />';
 		inH += 'Average size of artefacts (in GB) <br /><input type="number" onchange="updateRessources(\'size\')" value="0" id="id_form_delivrable_'+form_idx+'-type_devl_stor_size" min="0"></div></div></div></div></div><br />';
-		inH += '</td></table>';
-/*		
-		Preferred platform: x86, Blue Gene/Q, GPU (Users should be able to   select multiple choices)
-    Preferred hardware interface: Virtualized hardware, Direct hardware (Users should be able to   select multiple choices)
-  [X] Computing 
-    Total number of runs (should be an integer >0)
-    Average partition size (Number of processors. should be an integer >0)
-    Time to solution (In hours. should be an integer >0)
-  [X] Storage
-    Number of artefacts (should be an integer >0)
-    Average size of artefacts (in GB, should be an integer >0) */
+		inH += '</td></table>';		
 		
-		
-		inH += '<div style="padding-bottom:10px;"><label >Risks</label> (max. 150 characters)<br />';
-		inH += '<textarea id="id_form_delivrable_'+form_idx+'-risk" maxlength="150" rows="1" cols="100" placeholder="External Dependency, ..."></textarea></div>';
 		inH += '<div id="delivrable_'+form_idx+'-HR"><label style="padding-right:175px;">Member</label><label style="padding-right:130px;">Role</label><label style="padding-right:53px;">Person/Month</label><label>Description</label></div><input type="button" value="Add More" onclick="addMore(\'delivrable_'+form_idx+'-HR\')"><hr /><br /></div>';
 		
 		var newD = document.createElement('div');
