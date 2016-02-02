@@ -242,10 +242,53 @@ function saveValues(step){
 			saveValue('id_form_delivrable_'+i+'-date',5);
 			saveValue('id_form_delivrable_'+i+'-title',5);
 			saveValue('id_form_delivrable_'+i+'-description',5);
-			saveValue('id_form_delivrable_'+i+'-cycle',5);
-			saveValue('id_form_delivrable_'+i+'-storage',5);
-			saveValue('id_form_delivrable_'+i+'-tape',5);
+			//saveValue('id_form_delivrable_'+i+'-cycle',5);
+			//saveValue('id_form_delivrable_'+i+'-storage',5);
+			//saveValue('id_form_delivrable_'+i+'-tape',5);
 			saveValue('id_form_delivrable_'+i+'-risk',5);
+			saveValue('id_form_delivrable_'+i+'-type_prod',5);
+			
+			saveValue('id_form_delivrable_'+form_idx+'-type_prod-plat_x86',5);
+			saveValue('id_form_delivrable_'+form_idx+'-type_prod-plat_bgq',5);
+			saveValue('id_form_delivrable_'+form_idx+'-type_prod-plat_gpu',5);
+			saveValue('id_form_delivrable_'+form_idx+'-type_prod-hard_vh',5);
+			saveValue('id_form_delivrable_'+form_idx+'-type_prod-hard_dh',5);
+			saveValue('id_form_delivrable_'+form_idx+'-type_prod_comp',5);
+			saveValue('id_form_delivrable_'+form_idx+'-type_prod_comp_runs',5);
+			saveValue('id_form_delivrable_'+form_idx+'-type_prod_comp_partition',5);
+			saveValue('id_form_delivrable_'+form_idx+'-type_prod_comp_time',5);
+			saveValue('id_form_delivrable_'+form_idx+'-type_prod_stor',5);
+			saveValue('id_form_delivrable_'+form_idx+'-type_prod_stor_arte',5);
+			saveValue('id_form_delivrable_'+form_idx+'-type_prod_stor_size',5);
+			
+			saveValue('id_form_delivrable_'+form_idx+'-type_test-plat_x86',5);
+			saveValue('id_form_delivrable_'+form_idx+'-type_test-plat_bgq',5);
+			saveValue('id_form_delivrable_'+form_idx+'-type_test-plat_gpu',5);
+			saveValue('id_form_delivrable_'+form_idx+'-type_test-hard_vh',5);
+			saveValue('id_form_delivrable_'+form_idx+'-type_test-hard_dh',5);
+			saveValue('id_form_delivrable_'+form_idx+'-type_test_comp',5);
+			saveValue('id_form_delivrable_'+form_idx+'-type_test_comp_runs',5);
+			saveValue('id_form_delivrable_'+form_idx+'-type_test_comp_partition',5);
+			saveValue('id_form_delivrable_'+form_idx+'-type_test_comp_time',5);
+			saveValue('id_form_delivrable_'+form_idx+'-type_test_stor',5);
+			saveValue('id_form_delivrable_'+form_idx+'-type_test_stor_arte',5);
+			saveValue('id_form_delivrable_'+form_idx+'-type_test_stor_size',5);
+			
+			saveValue('id_form_delivrable_'+form_idx+'-type_devl-plat_x86',5);
+			saveValue('id_form_delivrable_'+form_idx+'-type_devl-plat_bgq',5);
+			saveValue('id_form_delivrable_'+form_idx+'-type_devl-plat_gpu',5);
+			saveValue('id_form_delivrable_'+form_idx+'-type_devl-hard_vh',5);
+			saveValue('id_form_delivrable_'+form_idx+'-type_devl-hard_dh',5);
+			saveValue('id_form_delivrable_'+form_idx+'-type_devl_comp',5);
+			saveValue('id_form_delivrable_'+form_idx+'-type_devl_comp_runs',5);
+			saveValue('id_form_delivrable_'+form_idx+'-type_devl_comp_partition',5);
+			saveValue('id_form_delivrable_'+form_idx+'-type_devl_comp_time',5);
+			saveValue('id_form_delivrable_'+form_idx+'-type_devl_stor',5);
+			saveValue('id_form_delivrable_'+form_idx+'-type_devl_stor_arte',5);
+			saveValue('id_form_delivrable_'+form_idx+'-type_devl_stor_size',5);
+			
+			
+			
 			var hr_idx = document.getElementById('id_form_delivrable_'+i+'-HR-TOTAL_FORMS').value;
 			for(j=0; j<hr_idx; j++){
 				saveValue('id_form_delivrable_'+i+'-HR_'+j+'-member',5);
@@ -269,8 +312,12 @@ function saveValues(step){
 */
 function saveValue(id,step){
 	var doc = document.getElementById(id);
-	var val = doc.value;
 	var key = step + '-' + id;
+	if(doc.getAttribute("type")=="checkbox" && doc.checked == false){
+		sessionStorage.setItem(key,"");
+		return;
+	}
+	var val = doc.value;
 	sessionStorage.setItem(key,val);
 }
 
