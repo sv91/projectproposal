@@ -237,6 +237,9 @@ function addMore(where){
 		inH += '<div style="padding-bottom:10px;"><label >Risks</label> (max. 150 characters)<br />';
 		inH += '<textarea id="id_form_delivrable_'+form_idx+'-risk" maxlength="150" rows="1" cols="100" placeholder="External Dependency, ..."></textarea></div>';
 		
+				
+		inH += '<label>Ressources</label><br /><label>Computing Ressources</label><br />';
+		
 		inH += '<table border="0" cellpadding="0" cellspacing="0" width="100%" style="padding-bottom:10px;">';
 		inH += '<td style="width:32%; vertical-align:top">';
 		
@@ -304,6 +307,8 @@ function addMore(where){
 		inH += '<div style="padding-left:10px; display:none">Number of artefacts <br /><input type="number" onchange="updateRessources(\'arte\')" onchange="updateRessources(\'arte\')" value="0" id="id_form_delivrable_'+form_idx+'-type_devl_stor_arte" min="0"><br />';
 		inH += 'Average size of artefacts (in GB) <br /><input type="number" onchange="updateRessources(\'size\')" value="0" id="id_form_delivrable_'+form_idx+'-type_devl_stor_size" min="0"></div></div></div></div></div><br />';
 		inH += '</td></table>';		
+		
+		inH += '<label>Human Ressources</label><br />';
 		
 		inH += '<div id="delivrable_'+form_idx+'-HR"><label style="padding-right:175px;">Member</label><label style="padding-right:130px;">Role</label><label style="padding-right:53px;">Person/Month</label><label>Description</label></div><input type="button" value="Add More" onclick="addMore(\'delivrable_'+form_idx+'-HR\')"><hr /><br /></div>';
 		
