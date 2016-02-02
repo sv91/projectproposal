@@ -163,27 +163,27 @@ function addMore(where){
 		inH += '<textarea id="id_form_delivrable_'+form_idx+'-description" maxlength="150" rows="1" cols="58"></textarea></div><br />';
 		
 		
-		inH += '<div style="padding-bottom:10px;"><label style="padding-right:195px;">Core hours</label><label style="padding-right:158px;">Disk storage(TB)</label><label>Tape storage(TB)</label><br />';
-		inH += '<input id="id_form_delivrable_'+form_idx+'-cycle" type="number" min="0" onchange="updateRessources(\'cycle\')" style="width:200px"><span style="padding-left:60px;"></span><input id="id_form_delivrable_'+form_idx+'-storage" type="number" min="0" onchange="updateRessources(\'storage\')" style="width:200px"><span style="padding-left:60px;"></span><input id="id_form_delivrable_'+form_idx+'-tape" type="number" min="0" onchange="updateRessources(\'tape\')" style="width:200px"></div><br />';
+		//inH += '<div style="padding-bottom:10px;"><label style="padding-right:195px;">Core hours</label><label style="padding-right:158px;">Disk storage(TB)</label><label>Tape storage(TB)</label><br />';
+		//inH += '<input id="id_form_delivrable_'+form_idx+'-cycle" type="number" min="0" onchange="updateRessources(\'cycle\')" style="width:200px"><span style="padding-left:60px;"></span><input id="id_form_delivrable_'+form_idx+'-storage" type="number" min="0" onchange="updateRessources(\'storage\')" style="width:200px"><span style="padding-left:60px;"></span><input id="id_form_delivrable_'+form_idx+'-tape" type="number" min="0" onchange="updateRessources(\'tape\')" style="width:200px"></div><br />';
 		
-		inH += '<div style="padding-left:5px; padding-bottom:10px;"><input type="checkbox" name="type" value="production" id="id_form_delivrable_'+form_idx+'-type_prod"> <label>Production</label><br>';
-		inH += '<div style="padding-left:5px;"><label>Preferred platform:</label><br />';
+		inH += '<div style="padding-left:5px; padding-bottom:10px;"><input type="checkbox" name="type" value="production" id="id_form_delivrable_'+form_idx+'-type_prod" onchange="closeOpen(\'id_form_delivrable_'+form_idx+'-type_prod\')"> <label>Production</label><br>';
+		inH += '<div style="padding-left:5px; display:none"><label>Preferred platform:</label><br />';
 		inH += '<div style="padding-left:5px;"><input type="checkbox" name="platform" value="x86" id="id_form_delivrable_'+form_idx+'-type_prod-plat_x86"> x86<br />';
 		inH += '<input type="checkbox" name="platform" value="BGQ" id="id_form_delivrable_'+form_idx+'-type_prod-plat_bgq"> Blue Gene/Q<br />';
-		inH += '<input type="checkbox" name="platform" value="GPU" id="id_form_delivrable_'+form_idx+'-type_prod-plat_gpu"> GPU<br /></div></div>';
+		inH += '<input type="checkbox" name="platform" value="GPU" id="id_form_delivrable_'+form_idx+'-type_prod-plat_gpu"> GPU<br /></div>';
 		
-		inH += '<div style="padding-left:5px;"><label>Preferred hardware interface:</label><br />';
+		inH += '<label>Preferred hardware interface:</label><br />';
 		inH += '<div style="padding-left:5px;"><input type="checkbox" name="hardware" value="x86" id="id_form_delivrable_'+form_idx+'-type_prod-hard_vh"> Virtualized hardware<br />';
-		inH += '<input type="checkbox" name="hardware" value="BGQ" id="id_form_delivrable_'+form_idx+'-type_prod-hard_dh"> Direct hardware<br /></div></div>';
+		inH += '<input type="checkbox" name="hardware" value="BGQ" id="id_form_delivrable_'+form_idx+'-type_prod-hard_dh"> Direct hardware<br /></div>';
 		
-		inH += '<div style="padding-left:5px;"><input type="checkbox" name="type" value="computing" id="id_form_delivrable_'+form_idx+'-type_prod_comp"> <label>Computing</label><br>';
-		inH += '<div style="padding-left:5px;">Total number of runs <br /><input type="number" id="id_form_delivrable_'+form_idx+'-type_prod_comp_runs" min="0"><br />';
+		inH += '<div><input type="checkbox" name="type" value="computing" id="id_form_delivrable_'+form_idx+'-type_prod_comp" onchange="closeOpen(\'id_form_delivrable_'+form_idx+'-type_prod_comp\')"> <label>Computing</label><br>';
+		inH += '<div style="padding-left:5px; display:none">Total number of runs <br /><input type="number" id="id_form_delivrable_'+form_idx+'-type_prod_comp_runs" min="0"><br />';
 		inH += 'Average partition size (Number of processors) <br /><input type="number" id="id_form_delivrable_'+form_idx+'-type_prod_comp_partition" min="0"><br />';
 		inH += 'Time to solution (In hours) <br /><input type="number" id="id_form_delivrable_'+form_idx+'-type_prod_comp_time" min="0"></div></div>';
 		
-		inH += '<div style="padding-left:5px;"><input type="checkbox" name="type" value="strorage" id="id_form_delivrable_'+form_idx+'-type_prod_stor"> <label>Storage</label><br>';
-		inH += '<div style="padding-left:5px;">Number of artefacts <br /><input type="number" id="id_form_delivrable_'+form_idx+'-type_prod_stor_arte" min="0"><br />';
-		inH += 'Average size of artefacts (in GB) <br /><input type="number" id="id_form_delivrable_'+form_idx+'-type_prod_stor_size" min="0"></div></div>';
+		inH += '<div><input type="checkbox" name="type" value="strorage" id="id_form_delivrable_'+form_idx+'-type_prod_stor" onchange="closeOpen(\'id_form_delivrable_'+form_idx+'-type_prod_stor\')"> <label>Storage</label><br>';
+		inH += '<div style="padding-left:5px; display:none">Number of artefacts <br /><input type="number" id="id_form_delivrable_'+form_idx+'-type_prod_stor_arte" min="0"><br />';
+		inH += 'Average size of artefacts (in GB) <br /><input type="number" id="id_form_delivrable_'+form_idx+'-type_prod_stor_size" min="0"></div></div></div></div></div><br />';
 		
 		
 		
@@ -199,7 +199,7 @@ function addMore(where){
     Average size of artefacts (in GB, should be an integer >0) */
 		
 		
-		inH += '</div></div><div style="padding-bottom:10px;"><label >Risks</label> (max. 150 characters)<br />';
+		inH += '<div style="padding-bottom:10px;"><label >Risks</label> (max. 150 characters)<br />';
 		inH += '<textarea id="id_form_delivrable_'+form_idx+'-risk" maxlength="150" rows="1" cols="100" placeholder="External Dependency, ..."></textarea></div>';
 		inH += '<div id="delivrable_'+form_idx+'-HR"><label style="padding-right:175px;">Member</label><label style="padding-right:130px;">Role</label><label style="padding-right:53px;">Person/Month</label><label>Description</label></div><input type="button" value="Add More" onclick="addMore(\'delivrable_'+form_idx+'-HR\')"><hr /><br /></div>';
 		
@@ -295,6 +295,15 @@ function openD(deli){
 	document.getElementById(deli).style.display = "";
 	document.getElementById('minus_'+deli).style.display = "";
 	document.getElementById('plus_'+deli).style.display = "none";
+}
+
+function closeOpen(checkBox){
+	var cb = document.getElementById(checkBox);
+	if(cb.checked){
+		cb.parentNode.childNodes[4].style.display = "";
+	} else {
+		cb.parentNode.childNodes[4].style.display = "none";
+	}
 }
 
 function editLabel(label,val){
