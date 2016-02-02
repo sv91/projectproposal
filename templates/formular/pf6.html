@@ -161,9 +161,45 @@ function addMore(where){
 		inH += '<input id="id_form_delivrable_'+form_idx+'-title" type="text" style="height:21px; width:120px;vertical-align:top" onchange="editLabel(\'label_d_'+form_idx+'\',\'id_form_delivrable_'+form_idx+'-title\')" ><span style="padding-left:27px;"></span><input id="id_form_delivrable_'+form_idx+'-date" type="date" style="height:21px; width:120px;vertical-align:top"><span style="padding-left:28px;"></span><select id="id_form_delivrable_'+form_idx+'-dependency"></select></div><br />';
 		inH += '<div style="padding-bottom:10px;"><label>Description</label> (max. 150 characters)<br />';
 		inH += '<textarea id="id_form_delivrable_'+form_idx+'-description" maxlength="150" rows="1" cols="58"></textarea></div><br />';
+		
+		
 		inH += '<div style="padding-bottom:10px;"><label style="padding-right:195px;">Core hours</label><label style="padding-right:158px;">Disk storage(TB)</label><label>Tape storage(TB)</label><br />';
 		inH += '<input id="id_form_delivrable_'+form_idx+'-cycle" type="number" min="0" onchange="updateRessources(\'cycle\')" style="width:200px"><span style="padding-left:60px;"></span><input id="id_form_delivrable_'+form_idx+'-storage" type="number" min="0" onchange="updateRessources(\'storage\')" style="width:200px"><span style="padding-left:60px;"></span><input id="id_form_delivrable_'+form_idx+'-tape" type="number" min="0" onchange="updateRessources(\'tape\')" style="width:200px"></div><br />';
-		inH += '<div style="padding-bottom:10px;"><label >Risks</label> (max. 150 characters)<br />';
+		
+		inH += '<div style="padding-left:5px; padding-bottom:10px;"><input type="checkbox" name="type" value="production" id="id_form_delivrable_'+form_idx+'-type_prod"> <label>Production</label><br>';
+		inH += '<div style="padding-left:5px;"><label>Preferred platform:</label><br />';
+		inH += '<div style="padding-left:5px;"><input type="checkbox" name="platform" value="x86" id="id_form_delivrable_'+form_idx+'-type_prod-plat_x86"> x86<br />';
+		inH += '<input type="checkbox" name="platform" value="BGQ" id="id_form_delivrable_'+form_idx+'-type_prod-plat_bgq"> Blue Gene/Q<br />';
+		inH += '<input type="checkbox" name="platform" value="GPU" id="id_form_delivrable_'+form_idx+'-type_prod-plat_gpu"> GPU<br /></div></div>';
+		
+		inH += '<div style="padding-left:5px;"><label>Preferred hardware interface:</label><br />';
+		inH += '<div style="padding-left:5px;"><input type="checkbox" name="hardware" value="x86" id="id_form_delivrable_'+form_idx+'-type_prod-hard_vh"> Virtualized hardware<br />';
+		inH += '<input type="checkbox" name="hardware" value="BGQ" id="id_form_delivrable_'+form_idx+'-type_prod-hard_dh"> Direct hardware<br /></div></div>';
+		
+		inH += '<div style="padding-left:5px;"><input type="checkbox" name="type" value="computing" id="id_form_delivrable_'+form_idx+'-type_prod_comp"> <label>Computing</label><br>';
+		inH += '<div style="padding-left:5px;">Total number of runs <br /><input type="number" id="id_form_delivrable_'+form_idx+'-type_prod_comp_runs" min="0"><br />';
+		inH += 'Average partition size (Number of processors) <br /><input type="number" id="id_form_delivrable_'+form_idx+'-type_prod_comp_partition" min="0"><br />';
+		inH += 'Time to solution (In hours) <br /><input type="number" id="id_form_delivrable_'+form_idx+'-type_prod_comp_time" min="0"></div></div>';
+		
+		inH += '<div style="padding-left:5px;"><input type="checkbox" name="type" value="strorage" id="id_form_delivrable_'+form_idx+'-type_prod_stor"> <label>Storage</label><br>';
+		inH += '<div style="padding-left:5px;">Number of artefacts <br /><input type="number" id="id_form_delivrable_'+form_idx+'-type_prod_stor_arte" min="0"><br />';
+		inH += 'Average size of artefacts (in GB) <br /><input type="number" id="id_form_delivrable_'+form_idx+'-type_prod_stor_size" min="0"></div></div>';
+		
+		
+		
+/*		
+		Preferred platform: x86, Blue Gene/Q, GPU (Users should be able to   select multiple choices)
+    Preferred hardware interface: Virtualized hardware, Direct hardware (Users should be able to   select multiple choices)
+  [X] Computing 
+    Total number of runs (should be an integer >0)
+    Average partition size (Number of processors. should be an integer >0)
+    Time to solution (In hours. should be an integer >0)
+  [X] Storage
+    Number of artefacts (should be an integer >0)
+    Average size of artefacts (in GB, should be an integer >0) */
+		
+		
+		inH += '</div></div><div style="padding-bottom:10px;"><label >Risks</label> (max. 150 characters)<br />';
 		inH += '<textarea id="id_form_delivrable_'+form_idx+'-risk" maxlength="150" rows="1" cols="100" placeholder="External Dependency, ..."></textarea></div>';
 		inH += '<div id="delivrable_'+form_idx+'-HR"><label style="padding-right:175px;">Member</label><label style="padding-right:130px;">Role</label><label style="padding-right:53px;">Person/Month</label><label>Description</label></div><input type="button" value="Add More" onclick="addMore(\'delivrable_'+form_idx+'-HR\')"><hr /><br /></div>';
 		
