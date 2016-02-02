@@ -75,10 +75,52 @@ function initOnload(step,callback) {
 			setValue('id_form_delivrable_'+i+'-title');
 			setValue('id_form_delivrable_'+i+'-date');
 			setValue('id_form_delivrable_'+i+'-description');
-			setValue('id_form_delivrable_'+i+'-cycle',0);
-			setValue('id_form_delivrable_'+i+'-storage',0);
-			setValue('id_form_delivrable_'+i+'-tape',0);
 			setValue('id_form_delivrable_'+i+'-risk');
+			
+			setValue('id_form_delivrable_'+i+'-type_prod');
+			setValue('id_form_delivrable_'+i+'-type_test');
+			setValue('id_form_delivrable_'+i+'-type_devl');
+			
+			setValue('id_form_delivrable_'+i+'-type_prod-plat_x86');
+			setValue('id_form_delivrable_'+i+'-type_prod-plat_bgq');
+			setValue('id_form_delivrable_'+i+'-type_prod-plat_gpu');
+			setValue('id_form_delivrable_'+i+'-type_prod-hard_vh');
+			setValue('id_form_delivrable_'+i+'-type_prod-hard_dh');
+			setValue('id_form_delivrable_'+i+'-type_prod_comp');
+			setValue('id_form_delivrable_'+i+'-type_prod_comp_runs');
+			setValue('id_form_delivrable_'+i+'-type_prod_comp_partition');
+			setValue('id_form_delivrable_'+i+'-type_prod_comp_time');
+			setValue('id_form_delivrable_'+i+'-type_prod_stor');
+			setValue('id_form_delivrable_'+i+'-type_prod_stor_arte');
+			setValue('id_form_delivrable_'+i+'-type_prod_stor_size');
+			
+			setValue('id_form_delivrable_'+i+'-type_test-plat_x86');
+			setValue('id_form_delivrable_'+i+'-type_test-plat_bgq');
+			setValue('id_form_delivrable_'+i+'-type_test-plat_gpu');
+			setValue('id_form_delivrable_'+i+'-type_test-hard_vh');
+			setValue('id_form_delivrable_'+i+'-type_test-hard_dh');
+			setValue('id_form_delivrable_'+i+'-type_test_comp');
+			setValue('id_form_delivrable_'+i+'-type_test_comp_runs');
+			setValue('id_form_delivrable_'+i+'-type_test_comp_partition');
+			setValue('id_form_delivrable_'+i+'-type_test_comp_time');
+			setValue('id_form_delivrable_'+i+'-type_test_stor');
+			setValue('id_form_delivrable_'+i+'-type_test_stor_arte');
+			setValue('id_form_delivrable_'+i+'-type_test_stor_size');
+			
+			setValue('id_form_delivrable_'+i+'-type_devl-plat_x86');
+			setValue('id_form_delivrable_'+i+'-type_devl-plat_bgq');
+			setValue('id_form_delivrable_'+i+'-type_devl-plat_gpu');
+			setValue('id_form_delivrable_'+i+'-type_devl-hard_vh');
+			setValue('id_form_delivrable_'+i+'-type_devl-hard_dh');
+			setValue('id_form_delivrable_'+i+'-type_devl_comp');
+			setValue('id_form_delivrable_'+i+'-type_devl_comp_runs');
+			setValue('id_form_delivrable_'+i+'-type_devl_comp_partition');
+			setValue('id_form_delivrable_'+i+'-type_devl_comp_time');
+			setValue('id_form_delivrable_'+i+'-type_devl_stor');
+			setValue('id_form_delivrable_'+i+'-type_devl_stor_arte');
+			setValue('id_form_delivrable_'+i+'-type_devl_stor_size');
+			
+			
 	    	editLabel('label_d_'+i,'id_form_delivrable_'+i+'-title');
 			var j = 0;
 			var doc2 = sessionStorage.getItem('5-id_form_delivrable_'+i+'-HR_'+j+'-member');
@@ -112,6 +154,19 @@ function setValue(toSet,defaultValue){
 	var txt = defaultValue;
 	if (val != null && val != undefined && val !=''){
 		txt = val;
+	}
+	try {
+		if(document.getElementById(toSet).getAttribute("type")=="checkbox"){
+			if(val!=null && val!=undefined && val!=""){
+				document.getElementById(toSet).checked = true;
+				closeOpen(toSet);
+			} else {
+				document.getElementById(toSet).checked = false;
+				closeOpen(toSet);
+			}
+			return;
+		}
+	} catch(err){
 	}
 	document.getElementById(toSet).value = txt;
 	return txt;
@@ -176,7 +231,7 @@ function addMore(where){
 		inH += '<input type="checkbox" name="platform" value="GPU" id="id_form_delivrable_'+form_idx+'-type_prod-plat_gpu"> GPU<br /></div>';
 		
 		inH += '<label>Preferred hardware interface:</label><br />';
-		inH += '<div style="padding-left:10px;"><input type="checkbox" name="hardware" value="x86" id="id_form_delivrable_'+form_idx+'-type_prod-hard_vh"> Virtualized hardware<br />';
+		inH += '<div style="padding-left:10px;"><input type="checkbox" name="hardware" value="vh" id="id_form_delivrable_'+form_idx+'-type_prod-hard_vh"> Virtualized hardware<br />';
 		inH += '<input type="checkbox" name="hardware" value="BGQ" id="id_form_delivrable_'+form_idx+'-type_prod-hard_dh"> Direct hardware<br /></div>';
 		
 		inH += '<div><input type="checkbox" name="type" value="computing" id="id_form_delivrable_'+form_idx+'-type_prod_comp" onchange="closeOpen(\'id_form_delivrable_'+form_idx+'-type_prod_comp\')"> <label>Computing</label><br>';
@@ -191,7 +246,7 @@ function addMore(where){
 		inH += '</td><td style="width:1%; vertical-align:top"></td><td style="width:1%; vertical-align:top;border-left:1px solid #EEEEEE;"></td>';
 		inH += '<td style="width:32%; vertical-align:top">';
 		
-		inH += '<div><input type="checkbox" name="type" value="testuction" id="id_form_delivrable_'+form_idx+'-type_test" onchange="closeOpen(\'id_form_delivrable_'+form_idx+'-type_test\')"> <label>Testing</label><br>';
+		inH += '<div><input type="checkbox" name="type" value="testing" id="id_form_delivrable_'+form_idx+'-type_test" onchange="closeOpen(\'id_form_delivrable_'+form_idx+'-type_test\')"> <label>Testing</label><br>';
 		inH += '<div style="padding-left:10px; display:none"><label>Preferred platform:</label><br />';
 		inH += '<div style="padding-left:10px;"><input type="checkbox" name="platform" value="x86" id="id_form_delivrable_'+form_idx+'-type_test-plat_x86"> x86<br />';
 		inH += '<input type="checkbox" name="platform" value="BGQ" id="id_form_delivrable_'+form_idx+'-type_test-plat_bgq"> Blue Gene/Q<br />';
@@ -214,11 +269,11 @@ function addMore(where){
 		
 		inH += '<td style="width:32%; vertical-align:top">';
 		
-		inH += '<div><input type="checkbox" name="type" value="devluction" id="id_form_delivrable_'+form_idx+'-type_devl" onchange="closeOpen(\'id_form_delivrable_'+form_idx+'-type_devl\')"> <label>Development</label><br>';
+		inH += '<div><input type="checkbox" name="type" value="development" id="id_form_delivrable_'+form_idx+'-type_devl" onchange="closeOpen(\'id_form_delivrable_'+form_idx+'-type_devl\')"> <label>Development</label><br>';
 		inH += '<div style="padding-left:10px; display:none"><label>Preferred platform:</label><br />';
-		inH += '<div style="padding-left:10px;"><input type="checkbox" name="platform" value="x86" id="id_form_delivrable_'+form_idx+'-type_devl-plat_x86"> x86<br />';
-		inH += '<input type="checkbox" name="platform" value="BGQ" id="id_form_delivrable_'+form_idx+'-type_devl-plat_bgq"> Blue Gene/Q<br />';
-		inH += '<input type="checkbox" name="platform" value="GPU" id="id_form_delivrable_'+form_idx+'-type_devl-plat_gpu"> GPU<br /></div>';
+		inH += '<div style="padding-left:10px;"><input type="checkbox" name="platform" value="1" id="id_form_delivrable_'+form_idx+'-type_devl-plat_x86"> x86<br />';
+		inH += '<input type="checkbox" value="2" id="id_form_delivrable_'+form_idx+'-type_devl-plat_bgq"> Blue Gene/Q<br />';
+		inH += '<input type="checkbox" id="id_form_delivrable_'+form_idx+'-type_devl-plat_gpu"> GPU<br /></div>';
 		
 		inH += '<label>Preferred hardware interface:</label><br />';
 		inH += '<div style="padding-left:10px;"><input type="checkbox" name="hardware" value="x86" id="id_form_delivrable_'+form_idx+'-type_devl-hard_vh"> Virtualized hardware<br />';
@@ -346,10 +401,14 @@ function openD(deli){
 
 function closeOpen(checkBox){
 	var cb = document.getElementById(checkBox);
+	var cN = cb.parentNode.childNodes[4];
+	if(cN == null || cN == undefined){
+		return;
+	}
 	if(cb.checked){
-		cb.parentNode.childNodes[4].style.display = "";
+		cN.style.display = "";
 	} else {
-		cb.parentNode.childNodes[4].style.display = "none";
+		cN.style.display = "none";
 	}
 }
 
