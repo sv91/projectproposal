@@ -77,24 +77,30 @@ Content layout for step 6.
 </form>
 
 <script>
+/*
+ * Function called at the creation of the page to fill the page.
+ */
 function initOnload(step,callback) {
 	addMembers();
 	var i = 1;
 	var doc = sessionStorage.getItem("5-id_form_delivrable_1-date");
+	// If the session variables do not contain values for this step, create an empty deliverable.
 	if(doc == undefined){
 		addMore('delivrable');
+	// Else load the stocked values.
 	} else {
 		while(doc != undefined){
 			addMore('delivrable');
+			// General values
 			setValue('id_form_delivrable_'+i+'-title');
 			setValue('id_form_delivrable_'+i+'-date');
 			setValue('id_form_delivrable_'+i+'-description');
 			setValue('id_form_delivrable_'+i+'-risk');
-			
+			// The type of ressources
 			setValue('id_form_delivrable_'+i+'-type_prod');
 			setValue('id_form_delivrable_'+i+'-type_test');
 			setValue('id_form_delivrable_'+i+'-type_devl');
-			
+			// Values for "Production"
 			setValue('id_form_delivrable_'+i+'-type_prod-plat_x86');
 			setValue('id_form_delivrable_'+i+'-type_prod-plat_bgq');
 			setValue('id_form_delivrable_'+i+'-type_prod-plat_gpu');
@@ -107,7 +113,7 @@ function initOnload(step,callback) {
 			setValue('id_form_delivrable_'+i+'-type_prod_stor');
 			setValue('id_form_delivrable_'+i+'-type_prod_stor_arte');
 			setValue('id_form_delivrable_'+i+'-type_prod_stor_size');
-			
+			// Values for "Testing"
 			setValue('id_form_delivrable_'+i+'-type_test-plat_x86');
 			setValue('id_form_delivrable_'+i+'-type_test-plat_bgq');
 			setValue('id_form_delivrable_'+i+'-type_test-plat_gpu');
@@ -120,7 +126,7 @@ function initOnload(step,callback) {
 			setValue('id_form_delivrable_'+i+'-type_test_stor');
 			setValue('id_form_delivrable_'+i+'-type_test_stor_arte');
 			setValue('id_form_delivrable_'+i+'-type_test_stor_size');
-			
+			// Values for "Development"
 			setValue('id_form_delivrable_'+i+'-type_devl-plat_x86');
 			setValue('id_form_delivrable_'+i+'-type_devl-plat_bgq');
 			setValue('id_form_delivrable_'+i+'-type_devl-plat_gpu');
@@ -134,8 +140,9 @@ function initOnload(step,callback) {
 			setValue('id_form_delivrable_'+i+'-type_devl_stor_arte');
 			setValue('id_form_delivrable_'+i+'-type_devl_stor_size');
 			
-			
 	    	editLabel('label_d_'+i,'id_form_delivrable_'+i+'-title');
+	    	
+			// Loading the members values
 			var j = 0;
 			var doc2 = sessionStorage.getItem('5-id_form_delivrable_'+i+'-HR_'+j+'-member');
 			while(doc2 != undefined){
@@ -156,6 +163,7 @@ function initOnload(step,callback) {
 			i++;
 			doc = sessionStorage.getItem('5-id_form_delivrable_'+i+'-date');
 		}
+		// Update the summary
 		updateRessources('size');
 		updateRessources('time');
 		updateRessources('partition');
@@ -165,6 +173,13 @@ function initOnload(step,callback) {
     callback.call();
 }
 
+/*
+ *	Set the value from a specified object to its value stocked in the session variables.
+ *
+ *	Input:
+ *		toSet 			Object which value have to be changed
+ *		defaultValue 	Value to put if the session variable does not exist.
+ */
 function setValue(toSet,defaultValue){
 	defaultValue = (typeof defaultValue === 'undefined') ? '' : defaultValue;
 	var val = sessionStorage.getItem('5-'+toSet);
@@ -172,6 +187,7 @@ function setValue(toSet,defaultValue){
 	if (val != null && val != undefined && val !=''){
 		txt = val;
 	}
+	// For checkboxes, if a value exist, the box is checked.
 	try {
 		if(document.getElementById(toSet).getAttribute("type")=="checkbox"){
 			if(val!=null && val!=undefined && val!=""){
@@ -190,8 +206,15 @@ function setValue(toSet,defaultValue){
 }
 
 
-
+/*
+ *	Add a new object at the specified position. The type of object depends on the position
+ * 	it is added to.
+ *
+ *	Input:
+ *		where 		Element where the new object should be.
+ */
 function addMore(where){
+	// Case to add a Member
 	if(where.indexOf('-')>-1){
 		var num =1;
 		var roleList = ['Deliverable lead','Technical Lead','Scientific Lead','Developper','Scientist'];
@@ -225,6 +248,7 @@ function addMore(where){
 	    document.getElementById(where).appendChild(newD);
 	    document.getElementById('id_form_'+where+'-TOTAL_FORMS').value = form_idx + 1;
 	}
+	// Case to add a deliverable.
 	else {
 		var form_idx = parseInt(document.getElementById('id_form_delivrable-TOTAL_FORMS').value)+1;
 		var inH = '<img src="/static/formular/images/plus.jpg" style="float:left; padding-right:5px; display:none" id="plus_d_'+form_idx+'" onclick="openD(\'d_'+form_idx+'\')"><img src="/static/formular/images/minus.jpg" style="float:left; padding-right:5px" id="minus_d_'+form_idx+'"  onclick="closeD(\'d_'+form_idx+'\')"><label>Delivrable '+form_idx+' </label><label id="label_d_'+form_idx+'"></label><br><div style="padding-left:20px;"><div id="d_'+form_idx+'">';
@@ -347,6 +371,13 @@ function addMembers(){
 	document.getElementById('memberList').innerHTML = people;
 }
 
+/*
+ *	Method used to update the ressources summary.
+ * 	It goes through all the instances of the specified ressource and sums it up.
+ *
+ *	Input:
+ *		type 		The ressource to update.
+ */
 function updateRessources(type){
 	var total = 0;
 	var i = 1;
@@ -359,6 +390,14 @@ function updateRessources(type){
 	document.getElementById(type).value = total;
 }
 
+/*
+ *	Method that update the HR summary.
+ * 	It update only the specified name and the previous name if it is provided.
+ *
+ *	Input:
+ *		name 		The name to update.
+ *		old 		The previous name, if moving ressources from one person to another.
+ */
 function updatePM(name,old){
 	var total = 0;
 	var i=1;
@@ -384,6 +423,10 @@ function updatePM(name,old){
 	updateTotal();
 }
 
+/*
+ *	Method that update the HR summary total.
+ *
+ */
 function updateTotal(){
 	var arrayInput = document.getElementById('memberList').getElementsByTagName('input');
 	var total = 0;
@@ -394,18 +437,36 @@ function updateTotal(){
 	document.getElementById('totalPM').value = total;
 }
 
+/*
+ *	Method that hides the specified deliverable.
+ *
+ *	Input:
+ *		deli 	The deliverable to hide.
+ */
 function closeD(deli){
 	document.getElementById(deli).style.display = "none";
 	document.getElementById('minus_'+deli).style.display = "none";
 	document.getElementById('plus_'+deli).style.display = "";
 }
 
+/*
+ *	Method that shows the specified deliverable.
+ *
+ *	Input:
+ *		deli 	The deliverable to show.
+ */
 function openD(deli){
 	document.getElementById(deli).style.display = "";
 	document.getElementById('minus_'+deli).style.display = "";
 	document.getElementById('plus_'+deli).style.display = "none";
 }
 
+/*
+ *	Method that hides or shows the element link to the specified checkbox.
+ *
+ *	Input:
+ *		checkBox 	The checkbox linked to the element to hide or show.
+ */
 function closeOpen(checkBox){
 	var cb = document.getElementById(checkBox);
 	var cN = cb.parentNode.childNodes[4];
@@ -423,6 +484,14 @@ function editLabel(label,val){
 	document.getElementById(label).innerHTML = ' - '+document.getElementById(val).value;
 }
 
+
+/*
+ *	Method that update the dependency lists.
+ *
+ *	Input:
+ *		num 	Number of the deliverable to update.
+ *		name 	The name of the deliverable.
+ */
 function updateDependency(num,name){
 	var i = 1;
 	var key='id_form_delivrable_'+i+'-dependency';
@@ -439,6 +508,14 @@ function updateDependency(num,name){
 	}
 }
 
+
+/*
+ *	Method used to resize the field for the total number of person month depending of the 
+ * 	number of members.
+ *
+ *	Input:
+ *		size 	The number of members.
+ */
 function setSize(size){
 	var s = document.getElementById('totalPM').style.width;
 	var toSet = '60px';
