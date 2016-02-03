@@ -33,26 +33,26 @@ Content layout for step 6.
 			</tr>
 			<tr>
 				<td style="width:85%; vertical-align:top">Total number of runs</td> 
-				<td style="width:15%;" align="right"><input type="number" disabled id="runs" style="width:60px; align:right;"></td>
+				<td style="width:15%;" align="right"><input type="number" disabled id="comp_runs" style="width:60px; align:right;"></td>
 			</tr>
 			<tr>
 				<td style="width:85%; vertical-align:top">Average partition size (Number of processors)</td> 
-				<td style="width:15%;" align="right"><input type="number" disabled id="partition" style="width:60px; align:right;"></td>
+				<td style="width:15%;" align="right"><input type="number" disabled id="comp_partition" style="width:60px; align:right;"></td>
 			</tr>
 			<tr>
 				<td style="width:85%; vertical-align:top">Time to solution (Hours)</td> 
-				<td style="width:15%;" align="right"><input type="number" disabled id="time" style="width:60px; align:right;"></td>
+				<td style="width:15%;" align="right"><input type="number" disabled id="comp_time" style="width:60px; align:right;"></td>
 			</tr>
 			<tr>
 				<td><label>Storage</label></td> 
 			</tr>
 			<tr>
 				<td style="width:85%; vertical-align:top">Number of artefacts </td> 
-				<td style="width:15%;" align="right"><input type="number" disabled id="arte" style="width:60px; align:right;"></td>
+				<td style="width:15%;" align="right"><input type="number" disabled id="stor_arte" style="width:60px; align:right;"></td>
 			</tr>
 			<tr>
 				<td style="width:85%; vertical-align:top">Average size of artefacts (GB)</td> 
-				<td style="width:15%;" align="right"><input type="number" disabled id="size" style="width:60px; align:right;"></td>
+				<td style="width:15%;" align="right"><input type="number" disabled id="stor_size" style="width:60px; align:right;"></td>
 			</tr>
 		</table>
 	</td>
@@ -164,11 +164,11 @@ function initOnload(step,callback) {
 			doc = sessionStorage.getItem('5-id_form_delivrable_'+i+'-date');
 		}
 		// Update the summary
-		updateRessources('size');
-		updateRessources('time');
-		updateRessources('partition');
-		updateRessources('arte');
-		updateRessources('runs');
+		updateRessources('stor_size');
+		updateRessources('comp_time');
+		updateRessources('comp_partition');
+		updateRessources('stor_arte');
+		updateRessources('comp_runs');
 	}
     callback.call();
 }
@@ -278,13 +278,13 @@ function addMore(where){
 		inH += '<input type="checkbox" name="hardware" value="BGQ" id="id_form_delivrable_'+form_idx+'-type_prod-hard_dh"> Direct hardware<br /></div>';
 		
 		inH += '<div><input type="checkbox" name="type" value="computing" id="id_form_delivrable_'+form_idx+'-type_prod_comp" onchange="closeOpen(\'id_form_delivrable_'+form_idx+'-type_prod_comp\')"> <label>Computing</label><br>';
-		inH += '<div style="padding-left:10px; display:none">Total number of runs <br /><input type="number" onchange="updateRessources(\'runs\')" value="0" id="id_form_delivrable_'+form_idx+'-type_prod_comp_runs" min="0"><br />';
-		inH += 'Average partition size (Number of processors) <br /><input type="number" onchange="updateRessources(\'partition\')" value="0" id="id_form_delivrable_'+form_idx+'-type_prod_comp_partition" min="0"><br />';
-		inH += 'Time to solution (In hours) <br /><input type="number" onchange="updateRessources(\'time\')" value="0" id="id_form_delivrable_'+form_idx+'-type_prod_comp_time" min="0"></div></div>';
+		inH += '<div style="padding-left:10px; display:none">Total number of runs <br /><input type="number" onchange="updateRessources(\'comp_runs\')" value="0" id="id_form_delivrable_'+form_idx+'-type_prod_comp_runs" min="0"><br />';
+		inH += 'Average partition size (Number of processors) <br /><input type="number" onchange="updateRessources(\'comp_partition\')" value="0" id="id_form_delivrable_'+form_idx+'-type_prod_comp_partition" min="0"><br />';
+		inH += 'Time to solution (In hours) <br /><input type="number" onchange="updateRessources(\'comp_time\')" value="0" id="id_form_delivrable_'+form_idx+'-type_prod_comp_time" min="0"></div></div>';
 		
 		inH += '<div><input type="checkbox" name="type" value="strorage" id="id_form_delivrable_'+form_idx+'-type_prod_stor" onchange="closeOpen(\'id_form_delivrable_'+form_idx+'-type_prod_stor\')"> <label>Storage</label><br>';
-		inH += '<div style="padding-left:10px; display:none">Number of artefacts <br /><input type="number" onchange="updateRessources(\'arte\')" onchange="updateRessources(\'arte\')" value="0" id="id_form_delivrable_'+form_idx+'-type_prod_stor_arte" min="0"><br />';
-		inH += 'Average size of artefacts (in GB) <br /><input type="number" onchange="updateRessources(\'size\')" value="0" id="id_form_delivrable_'+form_idx+'-type_prod_stor_size" min="0"></div></div></div></div></div><br />';
+		inH += '<div style="padding-left:10px; display:none">Number of artefacts <br /><input type="number" onchange="updateRessources(\'stor_arte\')" value="0" id="id_form_delivrable_'+form_idx+'-type_prod_stor_arte" min="0"><br />';
+		inH += 'Average size of artefacts (in GB) <br /><input type="number" onchange="updateRessources(\'stor_size\')" value="0" id="id_form_delivrable_'+form_idx+'-type_prod_stor_size" min="0"></div></div></div></div></div><br />';
 		
 		inH += '</td><td style="width:1%; vertical-align:top"></td><td style="width:1%; vertical-align:top;border-left:1px solid #EEEEEE;"></td>';
 		inH += '<td style="width:32%; vertical-align:top">';
@@ -300,16 +300,15 @@ function addMore(where){
 		inH += '<input type="checkbox" name="hardware" value="BGQ" id="id_form_delivrable_'+form_idx+'-type_test-hard_dh"> Direct hardware<br /></div>';
 		
 		inH += '<div><input type="checkbox" name="type" value="computing" id="id_form_delivrable_'+form_idx+'-type_test_comp" onchange="closeOpen(\'id_form_delivrable_'+form_idx+'-type_test_comp\')"> <label>Computing</label><br>';
-		inH += '<div style="padding-left:10px; display:none">Total number of runs <br /><input type="number" onchange="updateRessources(\'runs\')" value="0" id="id_form_delivrable_'+form_idx+'-type_test_comp_runs" min="0"><br />';
-		inH += 'Average partition size (Number of processors) <br /><input type="number" onchange="updateRessources(\'partition\')" value="0" id="id_form_delivrable_'+form_idx+'-type_test_comp_partition" min="0"><br />';
-		inH += 'Time to solution (In hours) <br /><input type="number" onchange="updateRessources(\'time\')" value="0" id="id_form_delivrable_'+form_idx+'-type_test_comp_time" min="0"></div></div>';
+		inH += '<div style="padding-left:10px; display:none">Total number of runs <br /><input type="number" onchange="updateRessources(\'comp_runs\')" value="0" id="id_form_delivrable_'+form_idx+'-type_test_comp_runs" min="0"><br />';
+		inH += 'Average partition size (Number of processors) <br /><input type="number" onchange="updateRessources(\'comp_partition\')" value="0" id="id_form_delivrable_'+form_idx+'-type_test_comp_partition" min="0"><br />';
+		inH += 'Time to solution (In hours) <br /><input type="number" onchange="updateRessources(\'comp_time\')" value="0" id="id_form_delivrable_'+form_idx+'-type_test_comp_time" min="0"></div></div>';
 		
 		inH += '<div><input type="checkbox" name="type" value="strorage" id="id_form_delivrable_'+form_idx+'-type_test_stor" onchange="closeOpen(\'id_form_delivrable_'+form_idx+'-type_test_stor\')"> <label>Storage</label><br>';
-		inH += '<div style="padding-left:10px; display:none">Number of artefacts <br /><input type="number" onchange="updateRessources(\'arte\')" onchange="updateRessources(\'arte\')" value="0" id="id_form_delivrable_'+form_idx+'-type_test_stor_arte" min="0"><br />';
-		inH += 'Average size of artefacts (in GB) <br /><input type="number" onchange="updateRessources(\'size\')" value="0" id="id_form_delivrable_'+form_idx+'-type_test_stor_size" min="0"></div></div></div></div></div><br />';
+		inH += '<div style="padding-left:10px; display:none">Number of artefacts <br /><input type="number" onchange="updateRessources(\'stor_arte\')" value="0" id="id_form_delivrable_'+form_idx+'-type_test_stor_arte" min="0"><br />';
+		inH += 'Average size of artefacts (in GB) <br /><input type="number" onchange="updateRessources(\'stor_size\')" value="0" id="id_form_delivrable_'+form_idx+'-type_test_stor_size" min="0"></div></div></div></div></div><br />';
 		
 		inH += '</td><td style="width:1%; vertical-align:top"></td><td style="width:1%; vertical-align:top;border-left:1px solid #EEEEEE;"></td>';
-		
 		inH += '<td style="width:32%; vertical-align:top">';
 		
 		inH += '<div><input type="checkbox" name="type" value="development" id="id_form_delivrable_'+form_idx+'-type_devl" onchange="closeOpen(\'id_form_delivrable_'+form_idx+'-type_devl\')"> <label>Development</label><br>';
@@ -323,13 +322,13 @@ function addMore(where){
 		inH += '<input type="checkbox" name="hardware" value="BGQ" id="id_form_delivrable_'+form_idx+'-type_devl-hard_dh"> Direct hardware<br /></div>';
 		
 		inH += '<div><input type="checkbox" name="type" value="computing" id="id_form_delivrable_'+form_idx+'-type_devl_comp" onchange="closeOpen(\'id_form_delivrable_'+form_idx+'-type_devl_comp\')"> <label>Computing</label><br>';
-		inH += '<div style="padding-left:10px; display:none">Total number of runs <br /><input type="number" onchange="updateRessources(\'runs\')" value="0" id="id_form_delivrable_'+form_idx+'-type_devl_comp_runs" min="0"><br />';
-		inH += 'Average partition size (Number of processors) <br /><input type="number" onchange="updateRessources(\'partition\')" value="0" id="id_form_delivrable_'+form_idx+'-type_devl_comp_partition" min="0"><br />';
-		inH += 'Time to solution (In hours) <br /><input type="number" onchange="updateRessources(\'time\')" value="0" id="id_form_delivrable_'+form_idx+'-type_devl_comp_time" min="0"></div></div>';
+		inH += '<div style="padding-left:10px; display:none">Total number of runs <br /><input type="number" onchange="updateRessources(\'comp_runs\')" value="0" id="id_form_delivrable_'+form_idx+'-type_devl_comp_runs" min="0"><br />';
+		inH += 'Average partition size (Number of processors) <br /><input type="number" onchange="updateRessources(\'comp_partition\')" value="0" id="id_form_delivrable_'+form_idx+'-type_devl_comp_partition" min="0"><br />';
+		inH += 'Time to solution (In hours) <br /><input type="number" onchange="updateRessources(\'comp_time\')" value="0" id="id_form_delivrable_'+form_idx+'-type_devl_comp_time" min="0"></div></div>';
 		
 		inH += '<div><input type="checkbox" name="type" value="strorage" id="id_form_delivrable_'+form_idx+'-type_devl_stor" onchange="closeOpen(\'id_form_delivrable_'+form_idx+'-type_devl_stor\')"> <label>Storage</label><br>';
-		inH += '<div style="padding-left:10px; display:none">Number of artefacts <br /><input type="number" onchange="updateRessources(\'arte\')" onchange="updateRessources(\'arte\')" value="0" id="id_form_delivrable_'+form_idx+'-type_devl_stor_arte" min="0"><br />';
-		inH += 'Average size of artefacts (in GB) <br /><input type="number" onchange="updateRessources(\'size\')" value="0" id="id_form_delivrable_'+form_idx+'-type_devl_stor_size" min="0"></div></div></div></div></div><br />';
+		inH += '<div style="padding-left:10px; display:none">Number of artefacts <br /><input type="number" onchange="updateRessources(\'stor_arte\')" value="0" id="id_form_delivrable_'+form_idx+'-type_devl_stor_arte" min="0"><br />';
+		inH += 'Average size of artefacts (in GB) <br /><input type="number" onchange="updateRessources(\'stor_size\')" value="0" id="id_form_delivrable_'+form_idx+'-type_devl_stor_size" min="0"></div></div></div></div></div><br />';
 		inH += '</td></table>';		
 		
 		inH += '<label>Human Ressources</label><br />';
@@ -381,11 +380,11 @@ function addMembers(){
 function updateRessources(type){
 	var total = 0;
 	var i = 1;
-	var temp = document.getElementById('id_form_delivrable_'+i+'-type_devl_comp_'+type);
+	var temp = document.getElementById('id_form_delivrable_'+i+'-type_devl_'+type);
 	while(temp != undefined){
-		total += parseInt(temp.value) + parseInt(document.getElementById('id_form_delivrable_'+i+'-type_test_comp_'+type).value) + parseInt(document.getElementById('id_form_delivrable_'+i+'-type_prod_comp_'+type).value) ;
+		total += parseInt(temp.value) + parseInt(document.getElementById('id_form_delivrable_'+i+'-type_test_'+type).value) + parseInt(document.getElementById('id_form_delivrable_'+i+'-type_prod_'+type).value) ;
 		i++;
-		temp = document.getElementById('id_form_delivrable_'+i+'-type_devl_comp_'+type);
+		temp = document.getElementById('id_form_delivrable_'+i+'-type_devl_'+type);
 	}
 	document.getElementById(type).value = total;
 }
