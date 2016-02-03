@@ -8,19 +8,37 @@ Content layout for step 1.
 {% block content %}
 <h2>Step {{ wizard.steps.step1 }} of {{ wizard.steps.count }}: {{ form.title }}</h2>
 <form action="" method="post">{% csrf_token %}
-	<table>
-		{{ wizard.management_form }}
-		{% for field in form %}
-	 	   <div class="form-group">
-		     	<label>{{ field.label_tag }} </label>
-				<div style="padding:0px 20px;">{{ field.errors }}<p>{{ field }}</p>
-					{% if field.help_text %}
- 		     		  	<p class="help">{{ field.help_text|safe }}</p>
-					{% endif %}
-		      	</div>
-			</div>	
-		{% endfor %}
-	</table>
+	<div class="form-group">
+		<label for="id_0-project_type">Project Type</label>
+		<div style="padding:0px 20px;">
+			<p>
+				<select id="id_0-project_type" name="0-project_type">
+					<option value="test" selected="selected">Testing</option>
+					<option value="dev">Development</option>
+					<option value="prod">Production</option>
+				</select>
+			</p>		
+		</div>
+	</div>
+	<div class="form-group" style="float:left">
+		<label for="id_0-grant">Grant(s)</label>
+		<div style="padding:0px 20px;" id="grants">
+		</div>
+	</div>
+	<div class="form-group">
+		<label for="id_0-other">Grant name</label>
+		<div style="padding:0px 20px;" id="others">
+		</div>
+	</div>
+	<div><br />
+		<input type="button" value="Add More" id="add_more" onclick="addMore('publi')">
+	</div>
+<table>
+<input id="id_proposal_wizard-current_step" name="proposal_wizard-current_step" type="hidden" value="0">
+<input id="grantNum" name="grantNum" type="hidden" value="0">
+</table>
+
+
 	<nav class="steps navbar navbar-form navbar-fixed-bottom">
 		<a class="btn  btn-primary pull-centered" onclick="document.getElementById('load').click();">Load previous version</a>
 		<input id="load" type="file" name="load" style="display: none;" onchange="importOld();" />
@@ -28,29 +46,60 @@ Content layout for step 1.
 	</nav>
 </form>
 
-{% load staticfiles %}
-<script src="{% static 'bower_components/jquery/dist/jquery.js' %}"></script>
 <script>
-// Show or hide the Other Grant input depending of the saved value.
-$(document).ready(function(){
-	if($("#id_0-grant").val() == "none"){
-		$('#id_0-other').parent().parent().parent().show();
+
+/*	
+ *	Function that show or hide the "Other Grant" name field depending of the selection.
+ *
+ *	Input:
+ *		val		The number of the Id of the grant.
+ */
+function showHide(val){
+	var keySelection = 'id_0-grant_'+val;
+	var keyOther = 'id_0-other_'+val;
+	if(document.getElementById(keySelection).value=="none"){
+		document.getElementById(keyOther).style.visibility='visible';
 	} else {
-		$('#id_0-other').parent().parent().parent().hide();
+		document.getElementById(keyOther).style.visibility='hidden';
 	}
-});
-</script>
-<script>
-// Show or hide the Other Grant input depending of the selected value.
-$(document).ready(function(){
-	$("#id_0-grant").change(function(){
-		if($("#id_0-grant").val() == "none"){
-			$('#id_0-other').parent().parent().parent().show();
-		} else {
-			$('#id_0-other').parent().parent().parent().hide();
+}
+
+function initOnload(step,callback) {
+	var key = '0-id_0-grant_1';
+	if(key in sessionStorage){
+		var cI = 1;
+		while(key in sessionStorage){
+			addMore();
+			setValue('0-id_0-grant_'+cI);
+			setValue('0-id_0-other_'+cI);
+			showHide(cI);
+			cI++;
+			key = '0-id_0-grant_'+cI;
 		}
-	});
-});	
+	} else {
+		addMore();
+	}
+	callback.call();
+}
+
+function setValue(key) {
+	var val = sessionStorage.getItem(key);
+	var divName = key.substring(2);
+	document.getElementById(divName).value=val;
+}
+
+function addMore(){
+	var i = parseInt(document.getElementById('grantNum').value) +1;
+	var inH1 = '<select id="id_0-grant_'+i+'" name="0-grant_'+i+'" onchange="showHide('+i+')"><option value="hbp">Human Brain Project</option><option value="bbp">Blue Brain Project</option><option value="none">Other Grant</option></select>';
+	var inH2 = '<input id="id_0-other_'+i+'" maxlength="200" name="0-other_'+i+'" style="visibility:hidden;" type="text">';
+	var p1 = document.createElement('p');
+	p1.innerHTML=inH1;
+	var p2 = document.createElement('p');
+	p2.innerHTML=inH2;
+	document.getElementById('grants').appendChild(p1);
+	document.getElementById('others').appendChild(p2);
+	document.getElementById('grantNum').value = i;
+}
 
 </script>
 

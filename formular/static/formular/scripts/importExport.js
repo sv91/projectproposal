@@ -194,8 +194,14 @@ function importAddMore(k,type) {
 */
 function saveValues(step){
 	if(step == 0){
-		saveValue('id_0-grant', 0);
-		saveValue('id_0-other', 0);
+		var key = document.getElementById('id_0-grant_1');
+		var cI = 1;
+		while(key!=undefined){
+			saveValue('id_0-grant_'+cI, 0);
+			saveValue('id_0-other_'+cI, 0);
+			cI++;
+			key = document.getElementById('id_0-grant_'+cI);
+		}
 	}
 	if(step == 1){
     	var form_idx = document.getElementById('id_form-TOTAL_FORMS').value;

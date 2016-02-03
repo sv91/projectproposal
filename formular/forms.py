@@ -11,7 +11,7 @@ class ProposalForm1(forms.ModelForm):
 		fields = '__all__'
 	title = "What type of project would you like to apply for?"
 	project_type = forms.ChoiceField(choices=Proposal1.possible_types, label="Project Type")
-	grant = forms.ChoiceField(choices=Proposal1.possible_grants, label="Grant")
+	grant = forms.ChoiceField(choices=Proposal1.possible_grants, label="Grant", required=False)
 	other = forms.CharField(max_length=200, label="Grant name", required=False)
 
 # Second page with two data fields and two multi-fields.
